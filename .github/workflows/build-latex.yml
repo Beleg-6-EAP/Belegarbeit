@@ -3,7 +3,7 @@ name: Build LaTeX document
 permissions:
   contents: write
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build_latex:
