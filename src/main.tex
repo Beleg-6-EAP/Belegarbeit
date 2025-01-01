@@ -77,8 +77,45 @@ Blah \ldots
 \section{Klassische Enterprise-Architekturen}
 Blah \ldots
 
+\section{Moderne Enterprise-Architekturen}
+
+\subsection{Event-Driven Architecture}
+\begin{itemize}
+  \item Event-Driven-Architecture: System reagiert asynchron auf Zustandsänderungen \cite{eda}
+  \item Alte Idee (Garlan and Shaw (1993)) findet mittlerweile Anwendung, besonders in datenintensiven Echtzeit-Anwendungen wie IoT und Analytics
+  \item Basis-Komponenten:
+  \begin{itemize}
+    \item Event: Kapselt Information einer Zustandsänderung
+    \item Produzent (Producer): Erzeugt Event
+    \item Publisher: Publiziert von Produzenten erzeugte Events
+    \item Konsument (Consumer): Erhält Events und reagiert auf diese
+    \item Vermittler (Mediator): Zwischen Produzenten und Konsumenten - filtert Events und verteilt auf Konsument
+    \item Event-Bus: Oft auch Broker - Infrastruktur für Gesamtheit der Vermittler
+    \item Kanal (Channel): Infrastruktur zur Übertragung von Events
+  \end{itemize}
+  \item Event ist Vertrag am Event-Bus: Produzent implementiert Spezifikation, Konsument nutzt (abonniert) Spezifikation => Starke Kohäsion => Lose Kopplung
+  \item Abwandlungen möglich: Schichten von Mediatoren und Konsumenten, spezialisierte Mediatoren passen Event-Daten an, extra Event-Processor (Konsument, der Reaktion auf Event ausführt)
+  \item Kombinationen möglich: SOA + EDA, Microservices + EDA, Serverless + EDA cloud-nativ
+  \item Maximale Agilität
+  \begin{itemize}
+    \item Skalierung sehr einfach dank asynchroner Behandlung, einfache Cloud-Integration
+    \item Einfache Iterationen durch lose Kopplung: Neue Events
+    \item Kontinuierliche Auslieferung sehr einfach
+    \item Geringe Ausfallanfälligkeit durch lose Kopplung
+    \item Stark domain-driven: Event = Ereignis in Geschäftsprozess
+  \end{itemize}
+  \item Hohe Anforderung an Entwickler
+  \begin{itemize}
+    \item Zuverlässigkeit Message-Broker essentiell
+    \item Testung aufgrund Asynchronität schwer
+    \item Gründliche Fehlerbehandlung notwendig: Event-Verlust, Latenz, Reihenfolge von Events, Inkonsistenz
+  \end{itemize}
+\end{itemize}
+
+
+
 \section{Fallstudien und Praxisbeispiele}
-Blah \ldots \cite{dummy}
+Blah \ldots
 
 \section{Diskussion}
 
