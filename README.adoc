@@ -1,0 +1,8 @@
+
+= Abgabe 
+
+Enterprise Architecture Patterns
+
+Autoren: Abdellah Filali, Luca Franke und Julian Bruder.
+
+Modul “Software Engineering” (Prof. Dr. Andreas Both, Wintersemester 2024/2025) an der HTWK Leipzig
