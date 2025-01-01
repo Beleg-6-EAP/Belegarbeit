@@ -1,5 +1,8 @@
 name: Build LaTeX document
 
+permissions:
+  contents: write
+
 on: [push, pull_request]
 
 jobs:
