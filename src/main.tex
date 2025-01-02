@@ -57,7 +57,7 @@
 %% headers. Often, this list is too long, and will overlap
 %% other information printed in the page headers. This command allows
 %% the author to define a more concise list
-%% of authors names for this purpose.
+%% of authors' names for this purpose.
 \renewcommand{\shortauthors}{Bruder, Filali, Franke}
 
 %%
@@ -78,11 +78,84 @@ Blah \ldots
 
 \section{Klassische Enterprise-Architekturen}
 Im folgenden Abschnitt werden klassische Architektur-Patterns vorgestellt. Dabei liegt der Fokus auf der monolithischen 
-Architektur und der geschichteten (Layered) Architektur.
+Architektur und der Layered Architektur.
+
+\subsection{Monolith}
+Die monolithische Architektur ist ein Softwarearchitektur-Pattern, bei dem die gesamte Funktionen in 
+einer einzigen Anwendung zusammengefasst wird. 
+In der Vergangenheit wurde diese Architektur von großen Internetdiensten wie Netflix, 
+Amazon und eBay genutzt.\cite{mono}[S. 466]
+
+Alle Komponenten in einer solchen Architektur sind voneinander abhängig (Siehe Abb. ~\ref{fig:mono}), sodass sie 
+weder eigenständig laufen noch in manchen Fällen überhaupt nicht isoliert kompiliert werden können. \cite{mono3}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.2\textwidth]{images/mono.pdf}
+    \caption{Monolith Architektur}
+    \label{fig:mono}
+\end{figure}
+
+Einfachere Anwendungen, die diese Architektur nutzen, profitieren von einigen Vorteile. 
+Sie ermöglicht eine unkomplizierte Integration von querschnittlichen Belangen 
+wie Logging oder Sicherheit, da alle Komponenten in derselben Anwendung laufen. 
+Ein weiterer Vorteil ist die Reduzierung des Betriebsaufwands, da nur eine 
+zentrale Anwendung deployed und betrieben werden muss. \cite{mono2}[S. 1]
+
+Nachteile entstehen jedoch, wenn die Anwendung tatsächlich sehr groß und komplex 
+wird. In diesem Fall kann die Komplexität und Unübersichtlichkeit des Code-Bases 
+die Weiterentwicklung erschweren und Bugfixes behindern. \cite{mono}[S. 466]
+
+Große Unternehmen wie Amazon und Netflix versuchen, von Microservices 
+zu profitieren. Allerdings ist die Migration zu Microservices nicht immer 
+die beste Wahl. So war es beispielsweise bei Amazon Prime Video, wo die Migration
+rückgängig gemacht wurde und man zum Monolithen zurückkehrte. \cite{modular-mono2}[S. 10]
+In Rahmen von solchen Migrationen die modulare Monolith-Architektur wurde immer populärer.
+Diese kombiniert die Einfachheit der Monolithen Architektur mit den 
+Vorteile der Microservice-Architektur, was einen Mittelweg zwischen 
+den beiden Architekturen darstellt. \cite{modular-mono2}[S. 10 - S. 11]
+Diese Architektur wird durch die Anwendung von Domain-Driven Design auf 
+eine traditionelle monolithische Architektur realisiert.
+Dadurch wird eine große Domäne in mehrere isolierte Module unterteilt, was das Aufteilen 
+ eines großen Teams in mehrere kleinere Teams ermöglicht. \cite{modular-mono1}[S. 49]
+ Außerdem besteht die Möglichkeit, die Architektur zu einem 
+späteren Zeitpunkt in eine Microservices-Architektur zu 
+überführen, was eine flexiblere und effizientere Alternative darstellt
+als eine direkte Migration \cite{modular-mono1}[S. 11].
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/mono-modular.pdf}
+    \caption{Modular Monolith Architektur}
+    \label{fig:modular-mono}
+\end{figure}
+
+Laut \cite{modular-mono2} die Haupteigenschaften von dieser Architektur sind:
+\begin{itemize}
+  \item Segregation der Module: Jedes Modul besitzt seine eigenen 
+    Schichten mit klaren Grenzen und ist unabhängig. Zudem
+    die Komunikation erfolgt über API und oft asynchron.
+  \item Modularität mit losem Koppelung und hoher Kohäsion: Module 
+    sind lose gekoppelt, weisen jedoch eine hohe interne Kohäsion auf.
+  \item Vereinheitlichtes Datenbankschema: Alle Module interagieren 
+    mit einem einzigen Datenschema.
+  \item Monolithische Deploymentsstruktur: Alle Module laufen auf 
+    eine einzige Virtuale Maschine (VM). Jedoch es besteht weiterhin 
+    die Möglichkeit, die Module in einzeln VMs laufen zu lassen.
+  \item Vereinheitlichter Anwendungsprozess: Die Anwendung läuft 
+    als ein einzelner Prozess, wobei es keine strikten Grenzen für 
+    den Datenbesitz zwischen den Modulen gibt.
+  \item Verbesserte Wartbarkeit und Skalierbarkeit: Im Vergleich zu
+    traditionellen Monolithen fördern modulare Monolithen die 
+    Wartbarkeit und Skalierung, indem sie eine bessere Bewältigung 
+    zunehmender Komplexität und eine Erleichterung des Wachstums ermöglichen.
+\end{itemize}
+
+
 
 \subsection{Layered}
 Das Layered Architektur-Pattern, auch bekannt als n-Tier-Archite
-ktur-Pattern, gehört zu den am häufigsten verwendeten Architekturen. Laut \cite{layered}[S. 1] 
+ktur-Pattern, gehörte zu den am häufigsten verwendeten Architekturen. Laut \cite{layered}[S. 1] 
 spiegelte diese Achitektur sowohl die Struktur der IT-Kommunikation als auch die organisatorische Struktur vieler Unternehmen wider,
 was es zur bevorzugten Wahl für die meisten geschäftlichen Anwendungsarchitekturen machte. 
 
@@ -110,7 +183,7 @@ bestehen die Layered Architectures meistens aus 3 Schichten \cite {layered2}:
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.2\textwidth]{images/layer.pdf}
+    \includegraphics[width=0.3\textwidth]{images/layer.pdf}
     \caption{Layered Architektur}
     \label{fig:layered}
 \end{figure}
@@ -144,69 +217,6 @@ bestehender Schichten vorzunehmen, ohne dabei umfangreiche Anpassungen am gesamt
 System vornehmen zu müssen \cite{layered2}[S. 35].
 Allerdings führt die Nutzung dieser Architektur zu einer geringeren Performance, da für 
 den Zugriff auf Dienste in unteren Schichten eine Kette von Anfrageweiterleitungen erforderlich ist \cite{layered4}[S. 11].
-
-\subsection{Monolith}
-Die monolithische Architektur ist ein Softwarearchitektur-Pattern, bei dem die gesamte Funktionen in 
-einer einzigen Anwendung zusammengefasst wird. 
-In der Vergangenheit wurde diese Architektur von großen Internetdiensten wie Netflix, 
-Amazon und eBay genutzt.\cite{mono}[S. 466]
-Alle Komponenten in einer solchen Architektur sind voneinander abhängig, sodass sie 
-weder eigenständig laufen noch in manchen Fällen überhaupt nicht isoliert kompiliert werden können. \cite{mono3}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.2\textwidth]{images/mono.pdf}
-    \caption{Monolith Architektur}
-    \label{fig:mono}
-\end{figure}
-
-Einfachere Anwendungen, die diese Architektur nutzen, bieten einige Vorteile. 
-Sie ermöglichen eine unkomplizierte Integration von querschnittlichen Belangen 
-wie Logging oder Sicherheit, da alle Komponenten in derselben Anwendung laufen. 
-Ein weiterer Vorteil ist die Reduzierung des Betriebsaufwands, da nur eine 
-zentrale Anwendung deployed und betrieben werden muss. \cite{mono2}[S. 1]
-
-Nachteile entstehen jedoch, wenn die Anwendung tatsächlich sehr groß und komplex 
-wird. In diesem Fall kann die Komplexität und Unübersichtlichkeit des Code-Bases 
-die Weiterentwicklung erschweren und Bugfixes behindern. \cite{mono}[S. 466]
-
-Große Unternehmen wie Amazon und Netflix versuchen, von Microservices 
-zu profitieren. Allerdings ist die Migration zu Microservices nicht immer 
-die beste Wahl. So war es beispielsweise bei Amazon Prime Video, wo die Migration
-rückgängig gemacht wurde und man zum Monolithen zurückkehrte. \cite{modular-mono2}[S. 10]
-In Rahmen von solchen Migrationen die modulare Monolith-Architektur wurde immer populärer.
-Diese kombiniert die Einfachheit der Monolithen Architektur mit den 
-Vorteile der Microservice-Architektur, was einen Mittelweg zwischen 
-den beiden Architekturen darstellt. \cite{modular-mono2}[S. 10 - S. 11]
-Dieser Architektur wird erreicht, indem Domain-Driven Design auf eine
- traditionelle monolitische Architektur angewendet wird. Dadurch wird eine 
- große Domäne in mehrere isolierte Module unterteilt, was das Aufteilen 
- eines großen Teams in mehrere kleinere Teams ermöglicht. \cite{modular-mono1}[S. 49]
- Außerdem besteht die Möglichkeit, die Architektur zu einem 
-späteren Zeitpunkt in eine Microservices-Architektur zu 
-überführen, was eine flexiblere und effizientere Alternative darstellt
-als eine direkte Migration \cite{modular-mono1}[S. 11].
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/mono-modular.pdf}
-    \caption{Modular Monolith Architektur}
-    \label{fig:modular-mono}
-\end{figure}
-
-Laut \cite{modular-mono2} die Haupteigenschaften von dieser Architektur sind:
-\begin{itemize}
-  \item Segregation der Module: Jedes Modul besitzt seine eigenen Schichten mit klaren Grenzen und ist unabhängig
-    Die Komunikation erfolgt über API und oft asynchrone.
-  \item Modularität mit losem Koppelung und hoher Kohäsion: Module sind lose gekoppelt aber mit hoche interne Kohäsionz. 
-  \item Vereinheitlichtes Datenbankschema: Alle Module interagieren mit einem einzigen Datenschema
-  \item Monolithische Deploymentsstruktur: Alle Module laufen auf eine einzigen Virtuale Maschine (VM). Jedoch es besteht weiterhin 
-    die Möglichkeit die Module in einzeln VMs.
-  \item Vereinheitlichter Anwendungsprozess: Die Anwendung läuft als ein einzelner Prozess, wobei es keine strikten Grenzen für den Datenbesitz zwischen den Modulen gibt.
-  \item Verbesserte Wartbarkeit und Skalierbarkeit: Im Vergleich zu traditionellen Monolithen fördern modulare Monolithen die Wartbarkeit und Skalierung, indem sie eine bessere Bewältigung zunehmender Komplexität und eine Erleichterung des Wachstums ermöglichen.
-\end{itemize}
-
-
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
