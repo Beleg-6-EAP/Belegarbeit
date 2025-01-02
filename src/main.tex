@@ -13,6 +13,7 @@
 \citestyle{acmauthoryear}
 
 \usepackage[figurename=Fig.]{caption}
+\usepackage{csquotes}
 \setcopyright{none}
 \makeatletter
 \renewcommand{\fnum@figure}{Abb. \thefigure}
@@ -80,39 +81,47 @@ Blah \ldots
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
+Die Event-Driven Architecture wählt als Basis einen anderen Ausgangspunkt als die bisherigen Architekturmuster.
+Während bei letzteren Komponenten Dienste bereitstellen, welche von anderen Komponenten explizit genutzt werden,
+verhalten sich Dienst-bereitstellende Komponenten in der Event-Driven Architecture reaktiv,
+werden also implizit von Dienst-konsumierenden Komponenten genutzt \cite{garlanShawImplizit}.
+Ein System reagiert somit asynchron auf Zustandsänderungen, also Ereignisse in diesem System \cite{eda}.
+Die in dieser Architektur minimalen Einheiten, welche Informationen einer Zustandsänderung kapseln, werden \textit{Events} genannt.
+Die Idee der impliziten Behandlung von Ereignissen ist nicht neu und taucht erstmals 1994 im von Garlan und Shaw publizierten Papier
+\textit{\enquote{An introduction to Software Architecture}} auf.
+
+Betrachten wir im Folgenden die Basis-Bestandteile der Event-Driven Architecture:
 \begin{itemize}
-  \item Event-Driven-Architecture: System reagiert asynchron auf Zustandsänderungen \cite{eda}
-  \item Alte Idee (Garlan and Shaw (1993)) findet mittlerweile Anwendung, besonders in datenintensiven Echtzeit-Anwendungen wie IoT und Analytics
-  \item Basis-Komponenten:
-  \begin{itemize}
-    \item Event: Kapselt Information einer Zustandsänderung
-    \item Produzent (Producer): Erzeugt Event
-    \item Publisher: Publiziert von Produzenten erzeugte Events
-    \item Konsument (Consumer): Erhält Events und reagiert auf diese
-    \item Vermittler (Mediator): Zwischen Produzenten und Konsumenten - filtert Events und verteilt auf Konsument
-    \item Event-Bus: Oft auch Broker - Infrastruktur für Gesamtheit der Vermittler
-    \item Kanal (Channel): Infrastruktur zur Übertragung von Events
-  \end{itemize}
-  \item Event ist Vertrag am Event-Bus: Produzent implementiert Spezifikation, Konsument nutzt (abonniert) Spezifikation => Starke Kohäsion => Lose Kopplung
-  \item Abwandlungen möglich: Schichten von Mediatoren und Konsumenten, spezialisierte Mediatoren passen Event-Daten an, extra Event-Processor (Konsument, der Reaktion auf Event ausführt)
-  \item Kombinationen möglich: SOA + EDA, Microservices + EDA, Serverless + EDA cloud-nativ
-  \item Maximale Agilität
-  \begin{itemize}
-    \item Skalierung sehr einfach dank asynchroner Behandlung, einfache Cloud-Integration
-    \item Einfache Iterationen durch lose Kopplung: Neue Events
-    \item Kontinuierliche Auslieferung sehr einfach
-    \item Geringe Ausfallanfälligkeit durch lose Kopplung
-    \item Stark domain-driven: Event = Ereignis in Geschäftsprozess
-  \end{itemize}
-  \item Hohe Anforderung an Entwickler
-  \begin{itemize}
-    \item Zuverlässigkeit Message-Broker essentiell
-    \item Testung aufgrund Asynchronität schwer
-    \item Gründliche Fehlerbehandlung notwendig: Event-Verlust, Latenz, Reihenfolge von Events, Inkonsistenz
-  \end{itemize}
+  \item Ereignis (englisch \textit{Event}): Kapselt Information einer Zustandsänderung eines Systems
+  \item Produzent (englisch \textit{Producer}): Komponente, die Event erzeugt
+  \item Herausgeber (englisch \textit{Publisher}): Komponente, die, von Produzenten erzeugte, Events publiziert
+  \item Konsument (englisch \textit{Consumer}): Reagiert auf publizierte Events
+  \item Vermittler (englisch \textit{Mediator}): Liegt zwischen Produzenten und Konsumenten - filtert Events und verteilt diese auf Konsumenten
+  \item Event-Bus: Oft auch \textit{Event-Broker} genannt - bietet die Infrastruktur für die Gesamtheit der Vermittler
 \end{itemize}
+Abstrakt kann ein Event als ein Vertrag zwischen Produzenten und Konsumenten am Event-Bus betrachtet werden.
+Der Konsument nutzt die Spezifikation des Events am Bus, der Produzent implementiert jene Spezifikation.
 
+% TODO: Hier eine Grafik
 
+Dadurch weisen die Events am Event-Bus starke Kohäsion und somit lose Kopplung auf.
+Diese lose Kopplung minimiert nicht nur kaskadierende Fehler, sondern ermöglicht agilen Entwickler-Teams durch klar abgegrenzte Features einfach definierbare Iterationen
+- eine Menge von Events, deren Erzeugung und Konsumierung.
+
+Weiter sind Events oft nah an dem, was Ereignisse in realen Prozessen sind, also domain-driven.
+Gebündelt ermöglichen obige Punkte die kontinuierliche Auslieferung von Software in kurzen Intervallen.
+
+Außerdem garantiert die asynchrone Behandlung von Ereignissen zusammen mit der loosen Kopplung maximale Skalierung.
+Daher sind Event-Driven Architekturen besonders für datenintensive Echtzeit-Anwendungen wie IoT (Internet of Things) und Analytics geeignet \cite{iotEda}.
+
+Die Agilität der Architektur kann weiter erhöht werden, indem der event-basierte Aspekt mit weiteren agilen Strukturen wie Microservices oder cloud-nativen Serverless-Functions kombiniert wird.
+Die damit einhergehende Komplexität stellt teilweise hohe Anforderungen an die Entwickler.
+Aufgrund der Asynchronität der Behandlung von Ereignissen ist die Testung des Systems meist schwer und die Fehlerbehandlung essentiell.
+Mögliche Problemquellen schließen dabei unter anderem Event-Verlust, erhöhte Latenz und Inkonsistenz ein.
+Die hohen Anforderungen an die Entwickler verlangen viel Vertrauen in jene, einer der zentralen Punkte des agilen Manifests \cite{agileManifesto}.
+Insgesamt weist die Event-Driven Architecture also eine sehr hohe Agilität auf und ist damit besonders für moderne Software und ihre stetig wechselnden Anforderungen geeignet.
+
+% TODO: Jetzt bestenfalls übergreifendes Beispiel
 
 \section{Fallstudien und Praxisbeispiele}
 Blah \ldots
