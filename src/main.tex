@@ -101,10 +101,16 @@ Betrachten wir im Folgenden die Basis-Bestandteile der Event-Driven Architecture
 \end{itemize}
 Abstrakt kann ein Event als ein Vertrag zwischen Produzenten und Konsumenten am Event-Bus betrachtet werden.
 Der Konsument nutzt die Spezifikation des Events am Bus, der Produzent implementiert jene Spezifikation.
+Abbildung \ref{fig:eda} stellt diesen Vertrag dar.
 
-% TODO: Hier eine Grafik
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/eda/eda.drawio}
+  \caption{Vertrag zwischen Produzenten und Konsumenten am Event-Bus}
+  \label{fig:eda}
+\end{figure}
 
-Dadurch weisen die Events am Event-Bus starke Kohäsion und somit lose Kopplung auf.
+Durch den Vertrag weisen die Events am Event-Bus starke Kohäsion und somit lose Kopplung auf.
 Diese lose Kopplung minimiert nicht nur kaskadierende Fehler, sondern ermöglicht agilen Entwickler-Teams durch klar abgegrenzte Features einfach definierbare Iterationen
 - eine Menge von Events, deren Erzeugung und Konsumierung.
 
