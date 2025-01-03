@@ -22,6 +22,8 @@
 \settopmatter{printacmref=false} % Removes citation information below abstract
 \renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
 
+\usepackage{minted}
+
 %%
 %% end of the preamble, start of the body of the document source.
 \begin{document}
@@ -47,7 +49,6 @@
   \institution{Hochschule für Technik, Wirtschaft und Kultur Leipzig (HTWK Leipzig)}
   \streetaddress{Karl-Liebknecht-Str. 132}
   \city{Leipzig}
-  %\state{Ohio}
   \country{Deutschland}
   \postcode{04277}
 }
@@ -63,17 +64,24 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-Blah \ldots
+Blah abstrakt\ldots
 \end{abstract}
 
 \maketitle
 
 \section{Einleitung}
 % (Beschreibung von Kontext, Problemen, Anforderungen und Zielen)
-Blah \ldots
+Mit E-Commerce-Beispiel motivieren
 
 \section{Grundlagen von Enterprise-Architekturen}
-Blah \ldots
+Verteilte Systeme \ldots
+
+Architekturen \ldots
+
+Komponenten \ldots
+
+\ldots
+
 
 \section{Klassische Enterprise-Architekturen}
 Blah \ldots
@@ -95,11 +103,11 @@ Betrachten wir im Folgenden die Basis-Bestandteile der Event-Driven Architecture
   \item Ereignis (englisch \textit{Event}): Kapselt Information einer Zustandsänderung eines Systems
   \item Produzent (englisch \textit{Producer}): Komponente, die Event erzeugt
   \item Herausgeber (englisch \textit{Publisher}): Komponente, die, von Produzenten erzeugte, Events publiziert
-  \item Konsument (englisch \textit{Consumer}): Reagiert auf publizierte Events
-  \item Vermittler (englisch \textit{Mediator}): Liegt zwischen Produzenten und Konsumenten - filtert Events und verteilt diese auf Konsumenten
+  \item Konsument (englisch \textit{Consumer}): Komponente, die auf publizierte Events reagiert
+  \item Vermittler (englisch \textit{Mediator}): Komponente zwischen Produzenten und Konsumenten - filtert Events und verteilt diese auf Konsumenten
   \item Event-Bus: Oft auch \textit{Event-Broker} genannt - bietet die Infrastruktur für die Gesamtheit der Vermittler
 \end{itemize}
-Abstrakt kann ein Event als ein Vertrag zwischen Produzenten und Konsumenten am Event-Bus betrachtet werden.
+Abstrakt kann ein Event als Vertrag zwischen Produzenten und Konsumenten am Event-Bus betrachtet werden.
 Der Konsument nutzt die Spezifikation des Events am Bus, der Produzent implementiert jene Spezifikation.
 Abbildung \ref{fig:eda} stellt diesen Vertrag dar.
 
@@ -120,14 +128,34 @@ Gebündelt ermöglichen obige Punkte die kontinuierliche Auslieferung von Softwa
 Außerdem garantiert die asynchrone Behandlung von Ereignissen zusammen mit der loosen Kopplung maximale Skalierung.
 Daher sind Event-Driven Architekturen besonders für datenintensive Echtzeit-Anwendungen wie IoT (Internet of Things) und Analytics geeignet \cite{iotEda}.
 
-Die Agilität der Architektur kann weiter erhöht werden, indem der event-basierte Aspekt mit weiteren agilen Strukturen wie Microservices oder cloud-nativen Serverless-Functions kombiniert wird.
+Betrachten wir erneut das E-Commerce-Beispiel aus der Einleitung.
+Dafür definieren wir drei Arten von Events:
+\begin{itemize}
+  \item \texttt{OrderCreated}: Ein Event, das genau dann erzeugt wird, wenn eine neue Bestellung aufgegeben wird
+  \item \texttt{PaymentProcessed}: Ein Event, das genau dann erzeugt wird, wenn der Bezahlvorgang abgeschlossen wird
+  \item \texttt{ShipmentInitiated}: Ein Event, das genau dann erzeugt wird, wenn die Bestellung versandt wird
+\end{itemize}
+
+Weiter teilen wir die Funktionalität ähnlich wie bei der Microservice-Architektur in die drei verschiedenen Dienste \texttt{OrderService}, \texttt{PaymentService} und \texttt{ShipmentService} auf.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/eda/eda-ecommerce.drawio}
+  \caption{E-Commerce-Beispiel mit Event-Driven Architecture}
+  \label{fig:edaecommerce}
+\end{figure}
+Wie Abbildung \ref{fig:edaecommerce} zeigt, sind alle drei Dienste Produzenten und Publisher, erzeugen also Events und veröffentlichen diese.
+Die Dienste \texttt{PaymentService} und \texttt{ShipmentService} sind zudem Konsumenten,
+sodass ersterer auf Events des Typs \texttt{OrderCreated} und zweiterer auf Events des Typs \texttt{ShipmentInitiated} reagiert.
+Eine beispielhafte Implementierung des \texttt{PaymentService} mit Apache Kafka als Event-Broker ist im Anhang \ref{app:code:eda:paymentservice} zu finden.
+Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-eda-ecommerce} zu finden.
+
+Das Beispiel zeigt, dass die Event-Driven Architektur mit weiteren agilen Strukturen wie Microservices kombiniert werden kann, was die Agilität der Architektur weiter erhöht.
 Die damit einhergehende Komplexität stellt teilweise hohe Anforderungen an die Entwickler.
 Aufgrund der Asynchronität der Behandlung von Ereignissen ist die Testung des Systems meist schwer und die Fehlerbehandlung essentiell.
 Mögliche Problemquellen schließen dabei unter anderem Event-Verlust, erhöhte Latenz und Inkonsistenz ein.
 Die hohen Anforderungen an die Entwickler verlangen viel Vertrauen in jene, einer der zentralen Punkte des agilen Manifests \cite{agileManifesto}.
 Insgesamt weist die Event-Driven Architecture also eine sehr hohe Agilität auf und ist damit besonders für moderne Software und ihre stetig wechselnden Anforderungen geeignet.
-
-% TODO: Jetzt bestenfalls übergreifendes Beispiel
 
 \section{Fallstudien und Praxisbeispiele}
 Blah \ldots
@@ -147,12 +175,19 @@ Blah \ldots
 
 \appendix
 
-\section{Anhang 1}
+\section{Code-Beispiele}
 
-\subsection{Übungsaufgaben}
-Blah \ldots
+\subsection{Event-Driven-Architecture}
+\label{app:code:eda:paymentservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{java}{code/eda/PaymentService.java}
+  \caption{Service-Implementierung des \texttt{PaymentService} in Java Spring Boot 3.4.1 mit Apache Kafka als Event-Broker}
+  \label{listing:semigroup}
+\end{listing}
 
-\section{Anhang 2}
+\section{Übungsaufgaben}
+\subsection{Übungsaufgabe 1 }
 Blah \ldots
 
 \end{document}
