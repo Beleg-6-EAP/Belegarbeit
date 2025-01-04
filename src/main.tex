@@ -84,8 +84,42 @@ Komponenten \ldots
 
 
 \section{Klassische Enterprise-Architekturen}
-Blah \ldots
 
+\subsection{Service-oriented}
+Die Service-oriented Achitectur (SOA) basiert sich auf die Verwendung von Services. 
+Ein Service kapselt ein Dienst, das über eine definierte Schnittstelle interagiert \cite{soa}[S. 3]. 
+Dieses kann aus einer Reihe von Komponenten bestehen, die gemeinsam eine 
+bestimmte Funktionalität bereitstellen. Der Zugriff auf den Service erfolgt über das Netzwerk,
+typischerweise mithilfe eines Namens oder eines Locators \cite{soa2}[S. 3].
+
+Betrachten wir im Folgenden die Hauptbestandteile einer SOA:
+\begin{itemize}
+  \item Service Provider: Liefert ein bestimmtes Dienst
+  \item Service Broker: Dienst, das die Komunikation zwischen Service Requester und Service Broker reguliert und koordiniert.
+  \item Service Request: Nutzt einen bereitgestelten Dienst 
+\end{itemize}
+
+Der Sevice Broker kann als ein Vermittler interpretiert werden. In der SOA ein Sevice 
+Provider sendet den Service Broker Informationen (publisch), die den Service Requester helfen den Dienst zu verwenden.
+Der Sevice Provieder sendet eine Beschreibung den angeförderten Diest (publish) und 
+Der Service Broker liefert den am besten passenden Dienst, indem er die Provider-ID 
+des entsprechenden Dienstanbieters mitteilt.Schließlich nehmen sowohl der Service Provider 
+als auch der Service Requester direktr miteinander Kontakt auf, und die Eigentümer der 
+jeweiligen Dienste führen diese gemeinsam aus (bind) . \cite{soa}[S. 4]
+Die Abbildung ~\ref{fig:soa} fasst diese Beziehung zusammen.
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/soa/soa.pdf}
+  \caption{Aufbau Service-oriented Architecture}
+  \label{fig:soa}
+\end{figure}
+
+Die lose Kopplung von den Services ermöglicht die Änderung von diesen ohne 
+großen Einflüsse auf das gesamten System, was die Agilität fördert.
+Außerdem jedes Service kann von kleinen Agile-Teams entwicklt werden 
+was die maximale Skalierung ermöglicht.
+
+Insgesamt weist die Service-oriented Architecture also eine sehr hohe Agilität auf.
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
