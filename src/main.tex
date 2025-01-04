@@ -105,11 +105,11 @@ Der Sevice Provieder sendet eine Beschreibung den angeförderten Diest (publish)
 Der Service Broker liefert den am besten passenden Dienst, indem er die Provider-ID 
 des entsprechenden Dienstanbieters mitteilt.Schließlich nehmen sowohl der Service Provider 
 als auch der Service Requester direktr miteinander Kontakt auf, und die Eigentümer der 
-jeweiligen Dienste führen diese gemeinsam aus (bind) . \cite{soa}[S. 4]
+jeweiligen Dienste führen diese gemeinsam aus (bind) . \cite{soa2}[S. 4]
 Die Abbildung ~\ref{fig:soa} fasst diese Beziehung zusammen.
-\begin{figure}[!h]
+\begin{figure}[h]
   \centering
-  \includegraphics[width=\linewidth]{images/soa/soa.pdf}
+  \includegraphics[width=0.85\linewidth]{images/soa/soa.pdf}
   \caption{Aufbau Service-oriented Architecture}
   \label{fig:soa}
 \end{figure}
@@ -120,6 +120,41 @@ Außerdem jedes Service kann von kleinen Agile-Teams entwicklt werden
 was die maximale Skalierung ermöglicht.
 
 Insgesamt weist die Service-oriented Architecture also eine sehr hohe Agilität auf.
+
+Betrachten wir erneut das E-Commerce-Beispiel aus der Einleitung.
+Dafür definieren wir drei Arten von Services:
+\begin{itemize}
+  \item \texttt{OrderService}: Ein Dienst, das genau dann angesprochen wird, wenn eine neue Bestellung aufgegeben wird
+  \item \texttt{PaymentService}: Ein Dienst, das genau dann angesprochen wird, wenn der Bezahlvorgang gestartet wird
+  \item \texttt{ShipmentService}: Ein Dienst, das genau dann angeprochen wird, wenn der Bezahlvorgang erfolgreich war und der Versandvorgang gestart wird
+\end{itemize}
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.8\linewidth]{images/soa/soa-example.pdf}
+  \caption{E-Commerce-Beispiel mit Service-oriented Architecture}
+  \label{fig:soaecommerce}
+\end{figure}
+
+Wie Abbildung \ref{fig:soaecommerce} zeigt, die Dienste\texttt{ShipmentService} 
+und \texttt{PaymentService} werden als externe Dienste betrachtet, die ihre Informationen 
+(Name, Bescheibung des Dienstes und Endpoint) bei dem Broker veröffentlichen.
+Der \texttt{OrderService} ist ein interner Dienst, der die beiden externen Dienste
+ verwendet. Dies erfolgt durch Anfragen an den Broker, der die entsprechenden Endpoints
+ der Dienste ermittelt, sodass der \texttt{OrderService} über HTTP-Requests auf die benötigten 
+ Dienste zugreifen kann.
+
+Das Beispiel zeigt, wie die Service-oriented Architecture die Agilität fördern kann.
+Externe Dienste können ohne große Anpassungen integriert werden und in internen 
+Dienste kombiniert und verwendet werden. Neue Entwickler können an einzelnen Diensten arbeiten, 
+ohne das gesamte System verstehen zu müssen, da die Dienste über definierte 
+Schnittstellen miteinander kommunizieren.
+
+
+Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} zu finden.
+
+
+
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
