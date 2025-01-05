@@ -86,26 +86,33 @@ Komponenten \ldots
 \section{Klassische Enterprise-Architekturen}
 
 \subsection{Service-oriented}
-Die Service-oriented Achitectur (SOA) basiert sich auf die Verwendung von Services. 
-Ein Service kapselt ein Dienst, das über eine definierte Schnittstelle interagiert \cite{soa}[S. 3]. 
-Dieses kann aus einer Reihe von Komponenten bestehen, die gemeinsam eine 
-bestimmte Funktionalität bereitstellen. Der Zugriff auf den Service erfolgt über das Netzwerk,
-typischerweise mithilfe eines Namens oder eines Locators \cite{soa2}[S. 3].
-
-Betrachten wir im Folgenden die Hauptbestandteile einer SOA:
+Die Service-orientierte Achitektur (SOA) basiert auf die Verwendung von Diensten
+- sogenannten Services. 
+Ein Dienst kapselt eine Funktionalität und stellst diese über eine
+ fest definirte Schnittstelle bereit \cite{soa2}[S. 3].
+Dieses kann aus verschienen Diesten bestehen.
+ Betrachten wir im Folgenden die Hauptbestandteile der SOA \cite{soa4}:
 \begin{itemize}
-  \item Service Provider: Liefert ein bestimmtes Dienst
-  \item Service Broker: Dienst, das die Komunikation zwischen Service Requester und Service Broker reguliert und koordiniert.
-  \item Service Request: Nutzt einen bereitgestelten Dienst 
+  \item Service Provider: Bietet einen spezifischen Dienst an
+  \item Service Bus: Dienst, das die Orchestierung zwischen Service Requester und Service Provider gewährleistet.
+  \item Service Consumer: Nutzt einen bereitgestelten Dienst, dieses kann einen End-User oder ein anderer Dienst sein.
+  \item Service Registry: Dient als zentrales Verzeichnis, die Informationen über die verfügbare Services speichert.
 \end{itemize}
 
-Der Sevice Broker kann als ein Vermittler interpretiert werden. In der SOA ein Sevice 
-Provider sendet den Service Broker Informationen (publisch), die den Service Requester helfen den Dienst zu verwenden.
-Der Sevice Provieder sendet eine Beschreibung den angeförderten Diest (publish) und 
-Der Service Broker liefert den am besten passenden Dienst, indem er die Provider-ID 
-des entsprechenden Dienstanbieters mitteilt.Schließlich nehmen sowohl der Service Provider 
-als auch der Service Requester direktr miteinander Kontakt auf, und die Eigentümer der 
-jeweiligen Dienste führen diese gemeinsam aus (bind) . \cite{soa2}[S. 4]
+Ein Service Provider registriert die Informationen seines Diensts in den Service Registry.
+ Die speicherte Informationen sind der Interface-Vertrag und der Endpoint des Services. 
+Der Endpoint stellt die Schnittstelle zum Dienst dar, währen der Interface-Vertrag des 
+Service Provider festlegt, wie der Service Consumer den Dienst nutzen kann.
+
+Der Service Consumer kann dann über den Broker den benötigten Service im Service 
+Registry finden und den Service Provider gemäß dem klar definierten Vertrag nutzen.
+
+Ein Service Broker ist für die Komunikation zwischen ein Service Consumer und ein 
+Service Provider zuständig, während ein Service Bus, insbesondere ein Enterprise 
+Service Bus, kann als ein erweiteres Service Broker angesehen werden. Dieses ist nicht nur dafür verantowortlich, für die
+ Nachrichtvermitlung zwischen Diensten , sondern auch für die Steuerung und die 
+ Übersetzung aller Nachrichten, unabhängig davon welches Nachrichtenprotokoll verwendet wird \cite{soa4}.
+
 Die Abbildung ~\ref{fig:soa} fasst diese Beziehung zusammen.
 \begin{figure}[h]
   \centering
@@ -114,20 +121,27 @@ Die Abbildung ~\ref{fig:soa} fasst diese Beziehung zusammen.
   \label{fig:soa}
 \end{figure}
 
-Die lose Kopplung von den Services ermöglicht die Änderung von diesen ohne 
-großen Einflüsse auf das gesamten System, was die Agilität fördert.
-Außerdem jedes Service kann von kleinen Agile-Teams entwicklt werden 
-was die maximale Skalierung ermöglicht.
+Da jeder Service einen spezifischen Dienst anbieten und diese durch eine
+ klar definirte Schnitstellen, können Dienste unabhängig von einandere 
+ weiterentwickelt werden, was zu einer höheren agilität führt.
+Außerdem neue Dienste erfüllen einen klar abgegrenzten  und diese kann 
+in rahmen in 
+
+Dienste können an anderen Stellen in der Software erneut eingesetzt oder 
+mit anderen Diensten kombiniert werden, um die Bedürfnisse eines Unternehmens
+zu erfüllen. Dies führt zu weniger Duplikaten von Ressourcen, einer höheren 
+Wiederverwendbarkeit von Code und reduzierten Kosten \cite{soa4}.
 
 Insgesamt weist die Service-oriented Architecture also eine sehr hohe Agilität auf.
 
 Betrachten wir erneut das E-Commerce-Beispiel aus der Einleitung.
 Dafür definieren wir drei Arten von Services:
 \begin{itemize}
-  \item \texttt{OrderService}: Ein Dienst, das genau dann angesprochen wird, wenn eine neue Bestellung aufgegeben wird
-  \item \texttt{PaymentService}: Ein Dienst, das genau dann angesprochen wird, wenn der Bezahlvorgang gestartet wird
-  \item \texttt{ShipmentService}: Ein Dienst, das genau dann angeprochen wird, wenn der Bezahlvorgang erfolgreich war und der Versandvorgang gestart wird
+  \item \texttt{OrderService}: Ein Dienst, das den gesamenten Bestellvorgang initiiert
+  \item \texttt{PaymentService}: Ein Dienst, das der Bezahlvorgang startet
+  \item \texttt{ShipmentService}: Ein Dienst, das der Versandvorgang startet
 \end{itemize}
+
 
 \begin{figure}[!h]
   \centering
