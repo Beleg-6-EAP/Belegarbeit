@@ -88,11 +88,11 @@ Blah \ldots
 
 \section{Moderne Enterprise-Architekturen}
 
-\label{subsec:microservice}
 \subsection{Microservice-Architecture}
+\label{subsec:microservice}
 
-\label{subsec:eda}
 \subsection{Event-Driven Architecture}
+\label{subsec:eda}
 Die Event-Driven Architecture wählt als Basis einen anderen Ausgangspunkt als die bisherigen Architekturmuster.
 Während bei letzteren Komponenten Dienste bereitstellen, welche von anderen Komponenten explizit genutzt werden,
 verhalten sich Dienst-bereitstellende Komponenten in der Event-Driven Architecture reaktiv,
@@ -183,15 +183,33 @@ die vollständige Verwaltung der Infrastruktur übernimmt.
 Zentral dabei ist der Aspekt der Containerisierung, bei welchem jede Komponente eines Systems in einen Container gepackt wird.
 Der Cloud-Vendor kann die Gesamtheit der Container dann dynamisch orchestrieren und somit gezielt den Ressourcenverbrauch optimieren.
 
+Im Folgenden greifen wir erneut das Beispiel E-Commerce aus der Einleitung auf und betrachten die Anpassung der in
+Abschnitt \ref{subsec:eda} angewendeten Event-Driven-Architecture auf die Cloud-Native Architecture mit Cloud-Vendor AWS\@.
+Dabei ersetzen wir den dort verwendeten Broker durch eine \textit{Event-Bridge} \footnote{https://aws.amazon.com/de/eventbridge/, abgerufen am 06.01.2025}
+- ein serverless Cloud-Service von AWS zum Routen von Ereignissen.
+Weiter werden die drei Services für Bestellung, Bezahlung und Versand als \textit{Lambda} \footnote{https://aws.amazon.com/de/lambda/, abgerufen am 06.01.2025},
+also Serverless-Function implementiert.
+Abbildung \ref{fig:cloudnativeecommerce} stellt diese cloud-native Architektur dar.
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/cloud-native/cloud-native-ecommerce.drawio}
+  \caption{E-Commerce-Beispiel mit Cloud-Native Architecture}
+  \label{fig:cloudnativeecommerce}
+\end{figure}
+
+Damit kombiniert die Cloud-Native Architecture die agilen Vorteile der Microservice- und Event-Driven Architecture.
+Weiter ermöglichen die Cloud-Vendors nahtlose und einfache Möglichkeiten zur Auslieferung der Software,
+wie beispielsweise Code-Deploy \footnote{https://aws.amazon.com/de/codedeploy/, abgerufen am 06.01.2024} von AWS\@.
+Die Option, allen Fokus von der Infrastruktur auf die Entwicklung zu legen, ermöglicht gemeinsam mit der einfachen Auslieferung kurze Iterationen in agilen Teams
+und somit noch kürzere Zyklen in der Bereitstellung von Software.
+Dabei ist besonders die Time-to-Market sehr gering, sodass Tech-Start-Ups häufig cloud-native Architekturen für ihre Software wählen. % TODO: Quelle!
+
+Nicht zu vergessen ist zudem die extrem hohe Flexibilität der eingesetzten Ressourcen durch das Auto-Scaling.
+Das damit verbundene Modell Pay-as-you-go ermöglicht weiter auch finanzielle Agilität, wodurch zum Beispiel keine Vorab-Investitionen für Infrastruktur notwendig sind.
+
 \begin{itemize}
   \item Sehr hohe Agilität
-  \begin{itemize}
-    \item Alles was bei Microservices + EDD bisher kam
-    \item Mehr Entwicklung, weniger Infrastruktur, einfaches Deployment => Kurze Zyklen, schnell auf dem Markt, sehr schnelle Reaktionen
-    \item Extrem hohe Flexibilität für Nutzeraufkommen: Auto-Scaling
-    \item Finanzielle Agilität: Pay-as-you-go
-  \end{itemize}
-  \item: Aber Kostenrisiken: Pay-as-you-go + Auto-Scaling sind Kostenfalle, Vendor-Lock-In - teure Migration
+  \item Aber Kostenrisiken: Pay-as-you-go + Auto-Scaling sind Kostenfalle, Vendor-Lock-In - teure Migration
 \end{itemize}
 
 \section{Fallstudien und Praxisbeispiele}
