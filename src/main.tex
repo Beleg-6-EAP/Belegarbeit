@@ -89,15 +89,54 @@ Blah \ldots
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Microservices Architecture}\label{subsec:microservices}
-Die Microservices Architecture zeichnet sich grundlegend durch die Unterteilung der Anwendung in Service Komponenten aus.
-Jede Service Komponente kann vom Umfang und Granularität variieren und stellt jeweils entweder eine einzige isolierte Funktionalität
-oder einen unabhängigen, größeren Teil der Business Logik dar.
-Die richtige Granularität der Services ist dabei entscheidend, um die Vorteile der Microservices Architecture voll auszuschöpfen und stellt hier auch die Größte Herausforderung im Design der Architektur dar~\cite[27-28]{architecturePatterns}.
+Die Microservices Architecture zeichnet sich grundlegend durch die Unterteilung der Anwendung in einzelne Service Komponenten aus.
+Jede Service Komponente kann vom Umfang und Granularität variieren und enthält bestenfalls eine einzige isolierte Funktionalität
+oder einen unabhängigen, größeren Teil der Business Logik.
+Diese Service Komponenten bestehen aus einen oder mehreren Modulen, die die Funktionalität des Services implementieren.
 
-Ein weiteres Maßgebendes Merkmal dieser Architektur-Pattern ist die Entkopplung der einzelnen Services voneinander.
-Dies wird dadurch erreicht, dass alle Services nur über ihre definierten Schnittstellen, meist über das Netzwerk per HTTP/HTTPS, miteinander kommunizieren können.
+Wie in Abbildung~\ref{fig:microservices} dargestellt, werden alle von Clients ausgehenden API-Anfragen zunächst von einem API-Gateway entgegengenommen.
+Dieser kommuniziert dann wiederrum über REST-Anfragen mit den Service-Komponenten, die dann die Anfrage verarbeiten und ein Resultat an das Gateway zurückgeben~\cite[30]{architecturePatterns}.
 
-Die Anwendung wird zunächst in Komponenten unterteilt, die separat voneinander deployt werden.
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/microservices/microservices}
+  \caption{Aufbau einer Microservices Architecture}
+  \label{fig:microservices}
+\end{figure}
+
+Ein maßgebendes Merkmal dieser Architektur-Pattern ist die Entkopplung der einzelnen Services voneinander.
+Dies wird dadurch erreicht, dass alle Services nur über ihre definierten Schnittstellen, miteinander kommunizieren können.
+Die hohe Entkopplung der Komponenten ermöglicht es, Services unabhängig voneinander zu entwickeln, zu testen und zu deployen.
+Pipeline- und Deploymentprozesse finden also isoliert voneinander statt, was die Auslieferung der Software beschleunigt~\cite[27]{architecturePatterns}.
+
+Die richtige Granularität der Services ist entscheidend, um die Vorteile der Microservices Architecture voll auszuschöpfen und stellt hier die größte Herausforderung im Design der Architektur dar.
+Werden die Komponenten zu groß gewählt, so kann es passieren, dass die Vorteile der Microservices Architecture nicht mehr greifen.
+Innerhalb der Komponenten entstehen Abhängigkeiten, die das isolierte Entwickeln oder Testen von Features verhindern.
+Auf der anderen Seite führt eine zu kleine Granularität dazu, dass die Anzahl der Services zu groß wird und das Orchestrieren dieser einen zu großen Overhead verursacht.
+Komplexität und Wartungsaufwand steigen stark an und die Schwächen einer klassischen SOA-Architektur treten wieder auf~\cite[32]{architecturePatterns}.
+
+%% Hier Beispiel E-Commerce Anwendung
+
+Die Microservices Architektur löst viele der Probleme, die in klassischen monolithischen oder SOA-Architekturen auftreten.
+Durch die Aufteilung der Anwendung in kleinere, separat deployte Services, entstehen inhärent robustere und besser skalierbare Systeme.
+Da Änderungen oft nur einzelne Service Komponenten betreffen, muss nicht das ganze System neu deployt werden.
+Es reicht stattdessen, nur den betroffenen Service zu aktualisieren, was die Ausfallzeiten minimiert und die Wartbarkeit der Software erhöht.
+Vor allem in agilen Umgebungen, in denen viele Iterationen und schnelle Auslieferungen notwendig sind, ist die Microservices Architektur daher besonders geeignet~\cite[33]{architecturePatterns}.
+
+Auch können Services in Produktiven-Umgebungen ohne Ausfallzeiten ausgetauscht werden.
+Solange, wie der neue Service deployt wird, leitet das API-Gateway Anfragen an den alten Service weiter.
+Erst wenn der neue Service bereit ist, werden Anfragen an diesen weitergeleitet und der alte Service kann abgeschaltet werden.
+
+Microservices sind außerdem sehr gut testbar.
+Tests können durch die strikte Trennung der Funktionalitäten isoliert auf einzelne Services angewendet werden, ohne dass andere Services betrachtet werden müssen.
+Auch Regressionstests nehmen dadurch weniger Zeit in Anspruch.
+Kleine Änderungen haben nicht zur Folge, dass die gesamte Anwendung neu getestet werden muss.
+
+Time-to-market bei Microservice Architekturen ist in der Regel kürzer, da deployments schnell sind und parallel an verschiedenen Services gearbeitet werden kann.
+Es gibt keine zentrale Abhängigkeit, die sich schwerwiegend auf die Entwicklung einzelner Komponenten auswirken kann.
+
+Der größte Nachteil der sich hier ergibt, ist die vergleichsweise niedrige Performance aufgrund der verteilten Natur des Systems.
+Kommunikation zwischen Services findet meist über das Netzwerk statt, was zu erhöhten Latenzzeiten führen kann\cite[34]{architecturePatterns}.
 
 
 \subsection{Microkernel Architecture}\label{subsec:microkernel-architecture}
