@@ -133,15 +133,15 @@ Ein Beispiel dafür stellt die Entwicklung von Betriebssystem-Kernels dar, die a
 Deren Kern Komponenten sind in der Regel sehr stabil und implementieren vor allem grundlegende Funktionen wie Speicherverwaltung, Prozessverwaltung und I/O-Operationen.
 Weitere low-level Funktionalitäten wie beispielsweise Geräte Treiber oder Dateisysteme werden als Module in den Kernel geladen und können bei Bedarf hinzugefügt oder entfernt werden, was vor allem für die Unterstützung neuer Hardware wichtig ist.
 
-Auch IDEs zur Entwicklung von Software nutzen oft Microkernel Architekturen, um die Support für verschiedene Programmiersprachen und Frameworks zu ermöglichen.
+Auch Entwicklungsumgebungen in der Softwareentwicklung nutzen oft Microkernel Architekturen, um die Support für verschiedene Programmiersprachen und Frameworks zu ermöglichen.
 
-Zwar bietet das Beispiel der E-Commerce Anwendung keinen klassischen Anwendungsfall für Microkernel Architekturen, jedoch kann die Verwendung von Microkernel Architekturen in teilen der Anwendung trotzdem sinnvoll sein.
+Zwar bietet das Beispiel der E-Commerce Anwendung keinen klassischen Anwendungsfall für Microkernel Architekturen, jedoch kann die Verwendung von Microkernel Architekturen in Teilen der Anwendung trotzdem sinnvoll sein.
 Sowohl Zahlungs- als auch Versandfunktionalitäten könnten, wie in Abbildung~\ref{fig:ecommerce-microkernel} dargestellt, in Module ausgelagert werden, um die Anwendung durch weitere Dienstleister erweitern zu können.
 
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\linewidth]{images/microkernel/ecommerce-mikrokernel}
-  \caption{Aufbau einer Microkernel Architecture}
+  \caption{Aufbau der E-Commerce Anwendung mit Microkernel Architektur}
   \label{fig:ecommerce-microkernel}
 \end{figure}
 
