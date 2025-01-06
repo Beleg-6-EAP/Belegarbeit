@@ -157,6 +157,31 @@ Mögliche Problemquellen schließen dabei unter anderem Event-Verlust, erhöhte 
 Die hohen Anforderungen an die Entwickler verlangen viel Vertrauen in jene, einer der zentralen Punkte des agilen Manifests \cite{agileManifesto}.
 Insgesamt weist die Event-Driven Architecture also eine sehr hohe Agilität auf und ist damit besonders für moderne Software und ihre stetig wechselnden Anforderungen geeignet.
 
+\subsection{Cloud-Native Architecture}
+
+\begin{itemize}
+  \item Explizit für die Cloud-entwickelte Applikation, also von Beginn der Entwicklung an
+  \item Gebaut auf Annahme: Infrastruktur ist in ständigem Wandel
+  \item Globale Nutzung: Geo-Redundanz \cite{cloudNative}, stark verteilt, hohe Verfügbarkeit
+  \item Hochgradig skalierbar - Autoscaling - Pay as you go \cite{cloudNativePerf}
+  \item Zero Downtime
+  \item Technologische Kernpunkte
+  \begin{itemize}
+    \item Containerisierung: Jeder Part einer Applikation ist ein Container
+    \item Dynamische Orchestrierung: Aktives Container-Management zur Ressourcenoptimierung
+    \item Microservice-Architektur ist Fundament - ergänzt durch verwaltete Cloud-Dienste (Serverless, \ldots)
+    \item Fully Managed Cloud-Service: Nur noch Implementierung, Rest Cloud-Service - also Infrastruktur, scaling, \ldots
+  \end{itemize}
+  \item Sehr hohe Agilität
+  \begin{itemize}
+    \item Alles was bei Microservices + EDD bisher kam
+    \item Mehr Entwicklung, weniger Infrastruktur, einfaches Deployment => Kurze Zyklen, schnell auf dem Markt, sehr schnelle Reaktionen
+    \item Extrem hohe Flexibilität für Nutzeraufkommen: Auto-Scaling
+    \item Finanzielle Agilität: Pay-as-you-go
+  \end{itemize}
+  \item: Aber Kostenrisiken: Pay-as-you-go + Auto-Scaling sind Kostenfalle, Vendor-Lock-In - teure Migration
+\end{itemize}
+
 \section{Fallstudien und Praxisbeispiele}
 Blah \ldots
 
