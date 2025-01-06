@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net" modified="2025-01-02T20:22:34.810Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" etag="2WnVbQFph7mdM1Myb9eg" version="21.3.5" type="device">
+  <diagram name="Seite-1" id="cbPfwbqvquwZzSiwE8HK">
+    <mxGraphModel dx="1185" dy="627" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="583" pageHeight="413" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rg9dhtcox7_2ARACRwlb-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.081;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="rg9dhtcox7_2ARACRwlb-3" target="rg9dhtcox7_2ARACRwlb-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-3" value="Plug-In&lt;br&gt;Komponente" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="167" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.081;entryY=0.851;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="rg9dhtcox7_2ARACRwlb-4" target="rg9dhtcox7_2ARACRwlb-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-4" value="Plug-In&lt;br&gt;Komponente" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="290" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.081;entryY=0.166;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="rg9dhtcox7_2ARACRwlb-30" target="rg9dhtcox7_2ARACRwlb-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="90" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-30" value="Plug-In&lt;br&gt;Komponente" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="50" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.892;entryY=0.489;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="rg9dhtcox7_2ARACRwlb-31" target="rg9dhtcox7_2ARACRwlb-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-31" value="Plug-In&lt;br&gt;Komponente" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="163" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.892;entryY=0.84;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="rg9dhtcox7_2ARACRwlb-32" target="rg9dhtcox7_2ARACRwlb-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-32" value="Plug-In&lt;br&gt;Komponente" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="286" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.892;entryY=0.154;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="rg9dhtcox7_2ARACRwlb-33" target="rg9dhtcox7_2ARACRwlb-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-33" value="Plug-In&lt;br&gt;Komponente" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="46" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rg9dhtcox7_2ARACRwlb-1" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Kern-System&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="218" y="32" width="148" height="350" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
