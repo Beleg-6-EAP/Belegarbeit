@@ -88,6 +88,10 @@ Blah \ldots
 
 \section{Moderne Enterprise-Architekturen}
 
+\label{subsec:microservice}
+\subsection{Microservice-Architecture}
+
+\label{subsec:eda}
 \subsection{Event-Driven Architecture}
 Die Event-Driven Architecture wählt als Basis einen anderen Ausgangspunkt als die bisherigen Architekturmuster.
 Während bei letzteren Komponenten Dienste bereitstellen, welche von anderen Komponenten explizit genutzt werden,
@@ -158,20 +162,28 @@ Die hohen Anforderungen an die Entwickler verlangen viel Vertrauen in jene, eine
 Insgesamt weist die Event-Driven Architecture also eine sehr hohe Agilität auf und ist damit besonders für moderne Software und ihre stetig wechselnden Anforderungen geeignet.
 
 \subsection{Cloud-Native Architecture}
+Die Cloud-Native Architecture beruht auf der Annahme, dass Infrastruktur in ständigem Wandel ist und die Auslagerung jener in die Cloud mehr Agilität schafft \cite{cloudNative}.
+Als Cloud wird in diesem Fall die Infrastruktur eines oder mehrerer Cloud-Vendors bezeichnet.
+Ein Cloud-Vendor bietet seine Infrastruktur und deren Verwaltung dabei für eine Gebühr an.
+Unter anderem offeriert er:
+\begin{itemize}
+  \item Die globale Nutzung von Ressourcen durch Geo-Redundanz und somit starke Verteilung sowie hohe Verfügbarkeit von Software,
+  \item dynamische Skalierung bereitgestellter Ressourcen basierend auf der Nachfrage von Software (Auto-Scaling),
+  \item nutzungsbedingte Gebühren, sodass nur tatsächlich verwendete Ressourcen bezahlt werden (Pay-as-you-go),
+  \item unterbrechungsfreie Updates von Software (Zero Downtime).
+\end{itemize}
+
+Als cloud-nativ wird hierbei all jene Software bezeichnet, welche explizit für die Cloud entwickelt wurde.
+Grundsätzlich baut die cloud-native Architektur auf die in diesem Artikel bereits in Abschnitt \ref{subsec:microservice} erklärte Microservice-Architektur und die
+in Abschnitt \ref{subsec:eda} erklärte Event-Driven Architecture auf.
+Zusätzlich kommen sogenannte \textit{Fully Managed Cloud-Services} hinzu, was cloud-spezifische und vom Cloud-Vendor vollständig verwaltete Dienste sind.
+Jene umfassen alles von Datenbanken über Message-Queues bis hin zu Serverless-Functions und viele mehr.
+Charakterisiert werden diese durch die Eigenschaft, dass sich der Entwickler gänzlich auf die Business-Logik fokussieren kann, da der Cloud-Provider
+die vollständige Verwaltung der Infrastruktur übernimmt.
+Zentral dabei ist der Aspekt der Containerisierung, bei welchem jede Komponente eines Systems in einen Container gepackt wird.
+Der Cloud-Vendor kann die Gesamtheit der Container dann dynamisch orchestrieren und somit gezielt den Ressourcenverbrauch optimieren.
 
 \begin{itemize}
-  \item Explizit für die Cloud-entwickelte Applikation, also von Beginn der Entwicklung an
-  \item Gebaut auf Annahme: Infrastruktur ist in ständigem Wandel
-  \item Globale Nutzung: Geo-Redundanz \cite{cloudNative}, stark verteilt, hohe Verfügbarkeit
-  \item Hochgradig skalierbar - Autoscaling - Pay as you go \cite{cloudNativePerf}
-  \item Zero Downtime
-  \item Technologische Kernpunkte
-  \begin{itemize}
-    \item Containerisierung: Jeder Part einer Applikation ist ein Container
-    \item Dynamische Orchestrierung: Aktives Container-Management zur Ressourcenoptimierung
-    \item Microservice-Architektur ist Fundament - ergänzt durch verwaltete Cloud-Dienste (Serverless, \ldots)
-    \item Fully Managed Cloud-Service: Nur noch Implementierung, Rest Cloud-Service - also Infrastruktur, scaling, \ldots
-  \end{itemize}
   \item Sehr hohe Agilität
   \begin{itemize}
     \item Alles was bei Microservices + EDD bisher kam
