@@ -115,6 +115,10 @@ Innerhalb der Komponenten entstehen Abhängigkeiten, die das isolierte Entwickel
 Auf der anderen Seite führt eine zu kleine Granularität dazu, dass die Anzahl der Services zu groß wird und das Orchestrieren dieser einen zu großen Overhead verursacht.
 Komplexität und Wartungsaufwand steigen stark an und die Schwächen einer klassischen SOA-Architektur treten wieder auf~\cite[32]{architecturePatterns}.
 
+Sollte Kommunikation zwischen den Services notwendig sein, so kann diese über eine geteilte Datenbank stattfinden.
+Dadurch werden ungewollte Abhängigkeiten zwischen Services vermieden und die Kopplung der Komponenten verringert.
+Dabei ist jedoch darauf zu achten, dass die Datenbank nicht zu einer zentralen Abhängigkeit wird, die die Vorteile der Microservices Architecture wieder zunichte macht~\cite[33]{architecturePatterns}.
+
 %% Hier Beispiel E-Commerce Anwendung
 
 Die Microservices Architektur löst viele der Probleme, die in klassischen monolithischen oder SOA-Architekturen auftreten.
@@ -136,7 +140,7 @@ Time-to-market bei Microservice Architekturen ist in der Regel kürzer, da deplo
 Es gibt keine zentrale Abhängigkeit, die sich schwerwiegend auf die Entwicklung einzelner Komponenten auswirken kann.
 
 Der größte Nachteil der sich hier ergibt, ist die vergleichsweise niedrige Performance aufgrund der verteilten Natur des Systems.
-Kommunikation zwischen Services findet meist über das Netzwerk statt, was zu erhöhten Latenzzeiten führen kann\cite[34]{architecturePatterns}.
+Die Kommunikation zwischen Services findet meist über das Netzwerk statt, was zu erhöhten Latenzen führen kann\cite[34]{architecturePatterns}.
 
 
 \subsection{Microkernel Architecture}\label{subsec:microkernel-architecture}
