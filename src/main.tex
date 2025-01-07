@@ -198,13 +198,13 @@ Abbildung \ref{fig:eda} stellt diesen Vertrag dar.
 \end{figure}
 
 Durch den Vertrag weisen die Events am Event-Bus starke Kohäsion und somit lose Kopplung auf.
-Diese lose Kopplung minimiert nicht nur kaskadierende Fehler, sondern ermöglicht agilen Entwickler-Teams durch klar abgegrenzte Features einfach definierbare Iterationen
-- eine Menge von Events, deren Erzeugung und Konsumierung.
+Diese lose Kopplung minimiert nicht nur kaskadierende Fehler, sondern ermöglicht kleinen und autonomen Entwickler-Teams
+die klare Abgrenzung von Features und folglich einfach definierbare Iterationen - eine Menge von Events, deren Erzeugung und Konsumierung.
 
 Weiter sind Events oft nah an dem, was Ereignisse in realen Prozessen sind, also domain-driven.
 Gebündelt ermöglichen obige Punkte die kontinuierliche Auslieferung von Software in kurzen Intervallen.
 
-Außerdem garantiert die asynchrone Behandlung von Ereignissen zusammen mit der loosen Kopplung maximale Skalierung.
+Außerdem garantiert die asynchrone Behandlung von Ereignissen zusammen mit der loosen Kopplung hohe Skalierung und die Möglichkeit für Echtzeit-Software.
 Daher sind Event-Driven Architekturen besonders für datenintensive Echtzeit-Anwendungen wie IoT (Internet of Things) und Analytics geeignet \cite{iotEda}.
 
 Betrachten wir erneut das E-Commerce-Beispiel aus der Einleitung.
@@ -215,7 +215,7 @@ Dafür definieren wir drei Arten von Events:
   \item \texttt{ShipmentInitiated}: Ein Event, das genau dann erzeugt wird, wenn die Bestellung versandt wird
 \end{itemize}
 
-Weiter teilen wir die Funktionalität ähnlich wie bei der Microservice-Architektur in die drei verschiedenen Dienste \texttt{OrderService}, \texttt{PaymentService} und \texttt{ShipmentService} auf.
+Analog zur Microservice-Architektur teilen wir die Funktionalitäten in drei verschiedene Dienste auf: \texttt{OrderService}, \texttt{PaymentService} und \texttt{ShipmentService}.
 
 \begin{figure}[!h]
   \centering
