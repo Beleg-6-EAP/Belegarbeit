@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.kafka.receiver.KafkaReceiver;
-import reactor.kafka.receiver.ReceiverOptions;
+import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
@@ -22,20 +20,15 @@ public class PaymentService {
     private final ReactiveKafkaProducerTemplate<String, PaymentProcessedEvent> producer;
 
     @KafkaListener(topics = OrderCreatedEvent.TOPIC, groupId = "payment-service")
-    public Flux<Void> processPayment(ReceiverOptions<String, OrderCreatedEvent> receiverOptions) {
-        return KafkaReceiver.create(receiverOptions)
-                .receive()
-                .flatMap(record -> {
-                    final OrderCreatedEvent event = record.value();
-                    final Payment payment = new Payment(UUID.randomUUID().toString(), event.getOrderId(), true);
-                    return paymentRepository.save(payment).flatMap(savedPayment -> {
-                        final PaymentProcessedEvent paymentEvent =
-                            new PaymentProcessedEvent(
-                                    savedPayment.getOrderId(),
-                                    savedPayment.getId(),
-                                    savedPayment.isSuccess());
-                        return producer.send(PaymentProcessedEvent.TOPIC, paymentEvent).then();
-                    });
-                });
+    public Mono<Void> processPayment(OrderCreatedEvent event) {
+        final Payment payment = new Payment(UUID.randomUUID().toString(), event.getOrderId(), true);
+        return paymentRepository.save(payment).flatMap(savedPayment -> {
+            final PaymentProcessedEvent paymentEvent =
+                    new PaymentProcessedEvent(
+                            savedPayment.getOrderId(),
+                            savedPayment.getId(),
+                            savedPayment.isSuccess());
+            return producer.send(PaymentProcessedEvent.TOPIC, paymentEvent).then();
+        }).then();
     }
 }
