@@ -77,97 +77,127 @@ Blah \ldots
 Blah \ldots
 
 \section{Klassische Enterprise-Architekturen}
-Im folgenden Abschnitt werden klassische Architektur-Patterns vorgestellt. Dabei liegt der Fokus auf der monolithischen 
-Architektur und der Layered Architektur.
-
 \subsection{Monolith}
-Die monolithische Architektur ist ein Softwarearchitektur-Pattern, bei dem die gesamte Funktionen in 
-einer einzigen Anwendung zusammengefasst wird. 
+Der Begriff \textit{Monolith} stammt aus dem Altgriechischen und bedeutet \textit{einheitlicher Stein}.
+Die monolithische Architektur beschreibt ein Softwarearchitektur-Pattern, die die gesamte Funktionalität
+in einer einzigen Anwendung bündelt, wobei ein einzigen Prozess für die Ausführung der Anwendung zuständig ist \cite[1]{mono}.
 
-In der Vergangenheit wurde diese Architektur von großen Internetdiensten wie Netflix, 
-Amazon und eBay genutzt.\cite{mono}[S. 466]
+Anwendungen dieser Architektur bestehen aus eng gekoppelte Komponenten, die von
+einander abhängig sind, sodass sie weder eigenständig laufen noch in manchen Fällen
+nicht isoliert kompiliert werden können. \cite{mono3}
 
-Anwendungen dieser Achitektur bestehen aus eng gekoppelte Komponenten, die von 
-einander abhängig sind. (Siehe Abb. ~\ref{fig:mono}), sodass sie weder eigenständig 
-laufen noch in manchen Fällen überhaupt nicht isoliert kompiliert werden können. \cite{mono3}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.2\textwidth]{images/mono.pdf}
+    \includegraphics[width=0.4\textwidth]{images/mono/mono.pdf}
     \caption{Monolith Architektur}
     \label{fig:mono}
 \end{figure}
 
-Einfachere Anwendungen, die diese Architektur nutzen, profitieren von einigen Vorteile. 
-Sie ermöglicht eine unkomplizierte Integration von querschnittlichen Belangen 
-wie Logging oder Sicherheit, da alle Komponenten in derselben Anwendung laufen. 
-Ein weiterer Vorteil ist die Reduzierung des Betriebsaufwands, da nur eine 
-zentrale Anwendung deployed und betrieben werden muss. \cite{mono2}[S. 1]
+Diese Architektur weist für kleinere Anwendungen gewisse Vorteile auf,
+wie eine einfache testbarkeit, Logging, Deployment, sowie Debugging.
+Zudem eine Datenbanksynchronisation ist nicht notwendig, da die
+gesamte Daten in einer Datenbank persistiert werden. \cite[2]{mono4}
 
-Nachteile entstehen jedoch, wenn die Anwendung tatsächlich sehr groß und komplex 
-wird. In diesem Fall kann die Komplexität und Unübersichtlichkeit des Code-Bases 
-die Weiterentwicklung erschweren und Bugfixes behindern. \cite{mono}[S. 466]
+Betrachten wir das E-Commerce-Beispiel.
+Dafür definieren wir drei Klassen:
+\begin{itemize}
+    \item \texttt{OrderService}: Klasse, die die Bestellungen verwaltet
+    \item \texttt{PaymentService}: Klasse, die die Zahlungen abwickelt
+    \item \texttt{ShipmentService}: Klasse, die die Lieferungen initiiert
+\end{itemize}
 
-Große Unternehmen wie Amazon und Netflix versuchen, von Microservices 
-zu profitieren. Allerdings ist die Migration zu Microservices nicht immer 
-die beste Wahl. So war es beispielsweise bei Amazon Prime Video, wo die Migration
-rückgängig gemacht wurde und man zum Monolithen zurückkehrte. \cite{modular-mono2}[S. 10]
-In Rahmen von solchen Migrationen die modulare Monolith-Architektur wurde immer populärer.
-Diese kombiniert die Einfachheit der Monolithen Architektur mit den 
-Vorteile der Microservice-Architektur, was einen Mittelweg zwischen 
-den beiden Architekturen darstellt. \cite{modular-mono2}[S. 10 - S. 11]
-Diese Architektur wird durch die Anwendung von Domain-Driven Design auf 
-eine traditionelle monolithische Architektur realisiert.
-Dadurch wird eine große Domäne in mehrere isolierte Module unterteilt, was das Aufteilen 
- eines großen Teams in mehrere kleinere Teams ermöglicht. \cite{modular-mono1}[S. 49]
- Außerdem besteht die Möglichkeit, die Architektur zu einem 
-späteren Zeitpunkt in eine Microservices-Architektur zu 
-überführen, was eine flexiblere und effizientere Alternative darstellt
-als eine direkte Migration \cite{modular-mono1}[S. 11].
+Die Kommunikation zwischen den Klassen erfolgt durch Methodenaufrufe.
+Dabei ist die Klasse \texttt{OrderService} die Hauptklasse, die die anderen Klassen
+verwendet, um den Bestellungsvorgang durchzuführen.
+Vorteilhaft hier ist, dass hier die Kommunikation zwischen den komponenten einfach ist.
+Durch die Verwendung von Methodenaufrufen wird die Komplexität reduziert, die mit
+Intersystemkommunikationen verbunden ist.
 
-Die Module eines modularen Monolith besitzten ihre eignen Schichten
- mit klaren Grenzen und die Komunikation zwischen der Modulen 
- erfolgt über APIs. Module sind lose gekoppelt und weisen eine 
- höher Kohäsion. \cite{modular-mono2}
+Jedoch, wenn die Code-Basis wächst und komplex wird, treten einige Nachteile auf.
+Durch Änderungen in einer Komponente können unerwartete kaskadierende Fehler
+auslösen, was die Weiterentwicklung in kleinen autonomen
+Teams erschwert und verlangsamt.
 
+Außerdem durch die Verwendung von direkte Methodenaufrufe, entsteht eine enge Kopplung
+zwischen den Komponenten.
+Änderungen in der Implementierung oder Signatur einer Methode
+können zu kaskadierenden Fehlern führen.
+
+Weiterhin ist die Wiederverwendung von Funktionalitäten nicht möglich, da die
+Komponenten eng gekoppelt sind.
+Das führt zu Duplikation von Code, was
+die Änderungen teurer macht, da die Änderungen in mehreren Stellen durchgeführt werden müssen.
+
+Die dadurch erhöhte Komplexität und die schwierige Wartung führen zu längere Iterationen.
+Da das Deployment erfolgt nur als Ganzes und die Iterationen länger dauern,
+kommt es zu seltenen Auslieferungen von neuen Features.
+Ferner ist Horizontale Skalierung auch nicht möglich, da die Anwendung nur als Ganzes
+skaliert werden kann.
+Insgesamt ist eine gute Einstiegslösung, allerdings nicht für größere Anwendungen geeignet, da
+ die Agilität davon stark betroffen wird.
+
+\subsection{Modular Monolith}
+Das Hauptproblem der vorherigen Architektur ist die eng gekoppelte Natur der Architektur,
+die eine gewisse Komplexität und Unflexibilität mit sich bringt.
+Modulare Monolithen sind eine Evolution der Monolithic  Architektur, die die Vorteile
+der Monolithic Architecture erben und gleichzeitig die Nachteile der enge Kopplung verringern.
+
+In diese Architektur wird die Code-Basis in mehrere Module geteilt, die jeweils
+eine Teil-Funktionalität der Anwendung implementieren.
+Die Kommunikation zwischen den Module erfolgt durch klar definierte Interfaces,
+wobei die Wiederverwendbarkeit und Austauschbarkeit der Module ermöglicht wird.\cite[11]{modular-mono2}
+
+Die Trennung in Modulen reduziert zudem die Komplexität und fördert eine bessere
+ Organization der Code-Basis, was zu einer bessere Wartbarkeit führt.\cite[2]{modular-mono4}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.4\textwidth]{images/mono-modular.pdf}
+    \includegraphics[width=0.4\textwidth]{images/mono/mono-example.pdf}
     \caption{Modular Monolith Architektur}
     \label{fig:modular-mono}
 \end{figure}
 
-Monolithen haben den Nachteil dass die Komponenten voneinander abhängig sind
- diesen Aspekt stellt ein Hinderniss für die agile Entwicklung, da 
- iterative Software-Auslieferung nicht optimal geplant werden kann.
+Betrachten wir erneut das E-Commerce-Beispiel.
+Diesmal wird die Anwendung in drei Hauptmodule aufgeteilt:
+\begin{itemize}
+    \item \texttt{OrderModule}: Verantwortlich für die Verwaltung der Bestellungen
+    \item \texttt{PaymentModule}: Verantwortlich für die Abwicklung der Zahlungen
+    \item \texttt{ShipmentModule}: Verantwortlich für die Initiierung der Lieferungen
+\end{itemize}
+
+Abhängigkeiten zwischen den Modulen werden durch die Verwendungen von Interfaces
+reduziert, indem die Module nur die Schnittstellen kennen und nicht die Implementierung.
+Zum Beispiel Änderungen an der Implementierung einer Komponente von \texttt{PaymentModule} müssen nur
+in der Implementierung des Interfaces durchgeführt werden, ohne dass die anderen
+abhängigen Module davon betroffen werden.
+Die Modularisierung ermöglicht zusätzlich eine verbesserte Entwicklung in semi-autonomen Teams im
+Vergleich zu den traditionellen Monolithen.
+Problematisch ist jedoch, dass die Anwendung nur als Ganzes deployt werden kann, was
+die Iterationen verlangsamt.
+Außerdem ist weiterhin keine horizontale Skalierung möglich und die Funktionalitäten
+können nicht wiederverwendet werden, da diese immer noch Teil einer einzigen Anwendung
+und eng miteinander gekoppelt sind.
 
 \subsection{Layered}
-Das Layered Architektur-Pattern, auch bekannt als n-Tier-Archite
-ktur-Pattern, gehörte zu den am häufigsten verwendeten Architekturen. Laut \cite{layered}[S. 1] 
-spiegelte diese Achitektur sowohl die Struktur der IT-Kommunikation als auch die organisatorische Struktur vieler Unternehmen wider,
-was es zur bevorzugten Wahl für die meisten geschäftlichen Anwendungsarchitekturen machte. 
+Das Layered Architektur-Pattern, auch bekannt als n-Tier-Architektur-Pattern, beschreibt eine
+Architektur, die die Anwendung in Schichten aufteilt.
 
-In dieser Architektur gibt es eine beliebige Anzahl von Schichten, die in zunehmenden Ebenen 
-der Abstraktion und vertikal angeordnet sind (Siehe Abb. ~\ref{fig:layered}). 
-Jede Schicht darf die Dienste der unmittelbar darunterliegenden Schicht nutzen.\cite{layered3}[S. 3]
+Ein wichtige Eigenschaft der Layered Architecture ist der die Trennung der Zuständigkeiten
+(Englisch \textit{Separation of concerns}). Komponenten mit unterschiedlichen Aufgaben sollten
+auf verschiedene Schichten verteilt werden, sodass die Komponenten einer Schicht jeweils für
+eine klar definierte, gemeinsame Aufgabe zuständig sind. \cite[S. 34]{layered2}
 
-Ein wichtige Eigenschaft der Layered Architecture ist der die Trennung der Zuständigkeiten 
-(Englisch \textit{Separation of concerns}). Komponenten mit unterschiedlichen Aufgaben sollten 
-auf verschiedene Schichten verteilt werden, sodass die Komponenten einer Schicht jeweils für 
-eine klar definierte, gemeinsame Aufgabe zuständig sind. \cite {layered2}[S. 34]
-
-Obwohl diese Architektur keine feste Anzahl an Schichten vorschreibt, 
-bestehen die Layered Architectures meistens aus 3 Schichten \cite {layered2}:
+Obwohl diese Architektur keine feste Anzahl an Schichten vorschreibt,
+bestehen die Layered Architectures meistens aus 3 Schichten~\cite []{layered2}:
 \begin{itemize}
-\item Presentations-Layer: Verantwortlich für die Interaktion mit dem Benutzer über die Benutzeroberfläche (UI). 
-  Sie verarbeitet Benutzeranfragen und leitet diese an die Business-Layer weiter.
-\item Busness-Layer: Zuständig für die Verarbeidung von Geschäftslogik und Regeln, die Weiteleitung von daten zwischen 
+\item Presentations-Layer: Verantwortlich für die Interaktion mit dem Benutzer und
+die Weiterleitung von Benutzeranfragen an die Business-Layer.
+\item Business-Layer: Zuständig für die Verarbeitung von Geschäftslogik und Regeln, die Weiterleitung von daten zwischen
   die Presentation-Layer und die Data-Layer.
-\item Data-Layer: Verantwortlich für die Interaktion mit Datenspeichern, wie beispielsweise Datenbanken,
-  und die Kommunikation mit der Business-Layer, um Daten bereitzustellen oder die Ergebnisse entweder an die Presentation-Layer
-  oder zurück an den Datenspeicher zu übermitteln. Darüber hinaus ermöglicht diese Schicht verschiedene Operationen auf den Daten,
-  einschließlich deren Validierung sowie der Umsetzung von Sicherheitsmaßnahmen.
+\item Data-Layer: Verantwortlich für die Interaktion mit der Datenbank und die Kommunikation mit der Business-Layer,
+um Daten bereitzustellen oder die Ergebnisse entweder an die Presentation-Layer
+  oder zurück an den Datenspeicher zu übermitteln.
 \end{itemize}
 
 \begin{figure}[h!]
@@ -177,13 +207,29 @@ bestehen die Layered Architectures meistens aus 3 Schichten \cite {layered2}:
     \label{fig:layered}
 \end{figure}
 
-Ein weiteren relevanten Konzept sind die \texttt{Open/Closed} Layers. Dieses beschreibt wie die 
-Komunikation zwischen den Schichten erfolgt. \cite{layered4}[S. 10]
-Standardmäßig sind die Schichten auf Closed gesetzt. Das bedeutet, dass eine Anfrage, 
-zwingend die direkt darunterliegende Schicht durchlaufen muss, um zur übernächsten Schicht zu gelangen \cite{layered}[S. 3].(Siehe Abb. ~\ref{fig:layered-request-flow})
-In manchen Situationen finden Architekten nützlich die Verwendung von Open Layers. Diese ermöglichen 
-es, dass Kommunikation zwischen Schichten direkt zwischen benachbarten Schichten erfolgt, ohne die 
-Open Layer durchlaufen zu müssen  (Siehe Abb. ~\ref{fig:layered-request-flow}). \cite{layered4}[S. 10]
+Ein wichtiger Prinzip der Layered Architecture ist der Isolation von Schichten besagt, dass die Kommunikation
+zwischen Schichten mittels Schnittstellen erfolgen sollte.
+Somit Änderungen in einer Schicht nur die Schicht selbst und maximal eine andere Schicht betrifft. \cite[10]{layered}
+
+Ein weiteren relevanten Konzept ist der offene/geschlosene Schichten.
+Dieses beschreibt wie die Kommunikation zwischen den Schichten erfolgt.
+Standardmäßig sind die Schichten auf Closed gesetzt.
+Das bedeutet, das Module eine Schicht nur die Dienste der direkt darunterliegenden Schicht nutzen kann.
+\cite{layered}[S. 3].(Siehe Abb. ~\ref{fig:layered-request-flow})
+Das fördert die Isolation von Schichten und reduziert somit die Abhängigkeiten zwischen den Schichten.
+Wenn die Schichten offen sind, ist die Kommunikation zwischen den Schichten nicht mehr auf die direkt darunterliegende
+Schicht beschränkt, sondern ist die Kommunikation mit den weiter unten liegenden Schichten möglich.
+(Siehe Abb. ~\ref{fig:layered-request-flow}). \cite[4]{layered}
+
+Das kann ziemlich nützlich sein, wenn z.B. Anfragen kein Mehrwert durch das
+Durchlaufen eine bestimmte Schicht bwz. Schichten erhalten und nur weitergeleitet werden.
+Dieses Phänomen wird auch als \texttt{sinkhole anti-pattern} bezeichnet und das kann durch die
+Verwendung von offene Schichten vermieden werden.
+
+Einerseits reduziert die Nutzung von Open Layers die unnötigen Aufwand für die Logik der Weiterleitung von Anfragen,
+ andererseits verletzt das das Prinzip der Isolation von Schichten.
+Folglich Änderungen in einer Schicht können sich auf mehrere Schichten auswirken, was die Flexibilität und Wartbarkeit
+des Systems beeinträchtigt.[7 - 8]\cite{layered}
 
 \begin{figure}[h!]
     \centering
@@ -192,20 +238,18 @@ Open Layer durchlaufen zu müssen  (Siehe Abb. ~\ref{fig:layered-request-flow}).
     \label{fig:layered-request-flow}
 \end{figure}
 
-
-Die Implementierung dieser Architektur bietet eine Reihe von Vorteilen. Durch 
-die Aufteilung des Systems in verschiedene Schichten wird eine unabhängige 
-Entwicklung und Wartung der einzelnen Schichten ermöglicht \cite{layered2}[S. 35]. 
-Ein weiterer Vorteil besteht darin, dass der Zugriff auf die Dienste zwischen den 
-Schichten über Schnittstellen (Interfaces) erfolgt. Dadurch sind Entwickler nicht 
-gezwungen, die interne Implementierung einer Schicht zu kennen, um die bereitgestellten 
+Die Implementierung dieser Architektur bietet eine Reihe von Vorteilen.
+Durch die Aufteilung des Systems in verschiedene Schichten wird eine unabhängige
+Entwicklung und Wartung der einzelnen Schichten ermöglicht ~\cite{layered2}[S. 35].
+Ein weiterer Vorteil besteht darin, dass der Zugriff auf die Dienste zwischen den
+Schichten über Schnittstellen (Interfaces) erfolgt.
+Dadurch sind Entwickler nicht gezwungen, die interne Implementierung einer Schicht zu kennen, um die bereitgestellten
 Dienste nutzen zu können. \cite{layered4}[S. 11]
 Aufgrund der losen Kopplung der Schichten ist es zudem möglich, neue Funktionalitäten
-hinzuzufügen oder Änderungen durch die Einführung neuer Schichten bzw. die Modifikation 
-bestehender Schichten vorzunehmen, ohne dabei umfangreiche Anpassungen am gesamten 
+hinzuzufügen durch die Einführung neuer Schichten ohne dabei umfangreiche Anpassungen am gesamten
 System vornehmen zu müssen \cite{layered2}[S. 35].
-Allerdings führt die Nutzung dieser Architektur zu einer geringeren Performance, da für 
-den Zugriff auf Dienste in unteren Schichten eine Kette von Anfrageweiterleitungen erforderlich ist \cite{layered4}[S. 11].
+Allerdings führt die Nutzung dieser Architektur zu einer geringeren Performance, da für
+den Zugriff auf Dienste in unteren Schichten eine Kette von Anfrageweiterleitungen erforderlich ist ~\cite{layered4}[S. 11].
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
