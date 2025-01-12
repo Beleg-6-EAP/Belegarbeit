@@ -207,31 +207,32 @@ um Daten bereitzustellen oder die Ergebnisse entweder an die Presentation-Layer
     \label{fig:layered}
 \end{figure}
 
-Ein zentrales Prinzip der Layered Architecture ist der Isolation von Schichten besagt, dass die Kommunikation
-zwischen Schichten ausschließlich über definierte Schnittstellen erfolgen sollte.
-Dadurch wirken sich Änderungen in einer Schicht nur auf die Schicht selbst sowie höchstens auf eine andere Schicht aus. \cite[10]{layered}
+Ein zentrales Prinzip der Layered Architecture ist der Isolation von Schichten (Englisch \textit{layers of isolation}).
+Demnach erfolg die Kommunikation zwischen Schichten ausschließlich über definierte Schnittstellen.
+\cite[10]{layered}
 
-Ein weiteren relevantes Konzept ist die Unterscheidung zwischen offenen und geschlossenen Schichten.
-Dieses Konzept beschreibt, wie die Kommunikation zwischen den Schichten organisiert ist.
+Ein weiteres relevantes Konzept ist die Unterscheidung zwischen offenen und geschlossenen Schichten.
+Dieses Konzept beschreibt die Organisation der Kommunikation zwischen den Schichten.
 Standardmäßig sind die Schichten auf Closed gesetzt.
-Das bedeutet, dass Module eine Schicht nur die Dienste der direkt darunterliegenden Schicht nutzen können.
+Dies impliziert, dass Anfragen einer Schicht lediglich an die direkt darunterliegende Schicht weitergeleitet werden,
+bevor sie die übernächste Schicht erreicht.
 \cite{layered}[S. 3].(Siehe Abb. ~\ref{fig:layered-request-flow})
 
-Diese Struktur fördert die Isolation von Schichten und reduziert somit die Abhängigkeiten zwischen den Schichten, da
- Schichten nur Abhängigkeiten zu den direkt darunterliegenden Schichten haben und nicht zu Schichten, die oberhalb liegen.
-Dadurch werden zyklischen Abhängigkeiten zwischen Schichten vermieden, was Änderungen in einer Schicht erleichtert.
+Diese Struktur begünstigt die Isolation von Schichten und reduziert somit die Abhängigkeiten zwischen den Schichten, da
+ Schichten weisen somit nur Abhängigkeiten zu den direkt darunterliegenden Schichten auf, nicht jedoch zu den darüberliegenden.
+Dadurch werden zusätzlich zyklischen Abhängigkeiten zwischen Schichten vermieden, was Änderungen in einer Schicht erleichtern.
 
-Im Gegensatz dazu erlauben offene Schichten den Zugriff auf die Funktionalitäten von Schichten, die beliebig
-weit entfernt sind und nicht nur auf die Funktionalitäten der unmittelbaren darunterliegenden Schicht.
+Im Gegensatz dazu ermöglichen offene Schichten den höheren Schichten den Zugriff auf Funktionalitäten
+beliebiger darunterliegender Schichten, ohne dass die Anfragen die dazwischenliegenden Schichten durchlaufen müssen.
 (Siehe Abb. ~\ref{fig:layered-request-flow}). \cite[4]{layered}
 
-Das kann besonders nützlich sein, wenn z.B. Anfragen kein Mehrwert durch das
-Durchlaufen eine bestimmte Schicht bwz. Schichten erhalten und nur weitergeleitet werden.
+Das kann besonders vorteilhaft sein, wenn Anfragen mehrere Schichten durchlaufen,
+wo kaum Logik ausgeführt wird und die Anfragen lediglich in diesen Schichten nur weitergeleitet wird.
 Dieses Phänomen wird auch als \texttt{sinkhole anti-pattern} bezeichnet und das kann durch die
 Verwendung von offene Schichten vermieden werden.
 
-Einerseits reduziert die Nutzung von offenen Schichten die unnötigen Aufwand für die Logik der Weiterleitung von Anfragen,
- andererseits verletzt das das Prinzip der Isolation von Schichten.
+Die Nutzung von offenen Schichten hat einerseits den Vorteil, dass der unnötigen Aufwand für die Logik der Weiterleitung von Anfragen reduziert wird.
+Andererseits wird jedoch das das Prinzip der Isolation von Schichten verletzt.
 Folglich Änderungen in einer Schicht können sich auf mehrere Schichten auswirken, was die Flexibilität und Wartbarkeit
 des Systems beeinträchtigt.[7 - 8]\cite{layered}
 
@@ -252,8 +253,6 @@ Dienste nutzen zu können. \cite{layered4}[S. 11]
 Aufgrund der losen Kopplung der Schichten ist es zudem möglich, neue Funktionalitäten
 hinzuzufügen durch die Einführung neuer Schichten ohne dabei umfangreiche Anpassungen am gesamten
 System vornehmen zu müssen \cite{layered2}[S. 35].
-Allerdings führt die Nutzung dieser Architektur zu einer geringeren Performance, da für
-den Zugriff auf Dienste in unteren Schichten eine Kette von Anfrageweiterleitungen erforderlich ist ~\cite{layered4}[S. 11].
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
