@@ -193,7 +193,7 @@ bestehen die Layered Architectures meistens aus 3 Schichten~\cite []{layered2}:
 \begin{itemize}
 \item Presentations-Layer: Verantwortlich für die Interaktion mit dem Benutzer und
 die Weiterleitung von Benutzeranfragen an die Business-Layer.
-\item Business-Layer: Zuständig für die Verarbeitung von Geschäftslogik und Regeln, die Weiterleitung von daten zwischen
+\item Business-Layer: Zuständig für die Verarbeitung von Geschäftslogik und Regeln, die Weiterleitung von Daten zwischen
   die Presentation-Layer und die Data-Layer.
 \item Data-Layer: Verantwortlich für die Interaktion mit der Datenbank und die Kommunikation mit der Business-Layer,
 um Daten bereitzustellen oder die Ergebnisse entweder an die Presentation-Layer
@@ -207,26 +207,30 @@ um Daten bereitzustellen oder die Ergebnisse entweder an die Presentation-Layer
     \label{fig:layered}
 \end{figure}
 
-Ein wichtiger Prinzip der Layered Architecture ist der Isolation von Schichten besagt, dass die Kommunikation
-zwischen Schichten mittels Schnittstellen erfolgen sollte.
-Somit Änderungen in einer Schicht nur die Schicht selbst und maximal eine andere Schicht betrifft. \cite[10]{layered}
+Ein zentrales Prinzip der Layered Architecture ist der Isolation von Schichten besagt, dass die Kommunikation
+zwischen Schichten ausschließlich über definierte Schnittstellen erfolgen sollte.
+Dadurch wirken sich Änderungen in einer Schicht nur auf die Schicht selbst sowie höchstens auf eine andere Schicht aus. \cite[10]{layered}
 
-Ein weiteren relevanten Konzept ist der offene/geschlosene Schichten.
-Dieses beschreibt wie die Kommunikation zwischen den Schichten erfolgt.
+Ein weiteren relevantes Konzept ist die Unterscheidung zwischen offenen und geschlossenen Schichten.
+Dieses Konzept beschreibt, wie die Kommunikation zwischen den Schichten organisiert ist.
 Standardmäßig sind die Schichten auf Closed gesetzt.
-Das bedeutet, das Module eine Schicht nur die Dienste der direkt darunterliegenden Schicht nutzen kann.
+Das bedeutet, dass Module eine Schicht nur die Dienste der direkt darunterliegenden Schicht nutzen können.
 \cite{layered}[S. 3].(Siehe Abb. ~\ref{fig:layered-request-flow})
-Das fördert die Isolation von Schichten und reduziert somit die Abhängigkeiten zwischen den Schichten.
-Wenn die Schichten offen sind, ist die Kommunikation zwischen den Schichten nicht mehr auf die direkt darunterliegende
-Schicht beschränkt, sondern ist die Kommunikation mit den weiter unten liegenden Schichten möglich.
+
+Diese Struktur fördert die Isolation von Schichten und reduziert somit die Abhängigkeiten zwischen den Schichten, da
+ Schichten nur Abhängigkeiten zu den direkt darunterliegenden Schichten haben und nicht zu Schichten, die oberhalb liegen.
+Dadurch werden zyklischen Abhängigkeiten zwischen Schichten vermieden, was Änderungen in einer Schicht erleichtert.
+
+Im Gegensatz dazu erlauben offene Schichten den Zugriff auf die Funktionalitäten von Schichten, die beliebig
+weit entfernt sind und nicht nur auf die Funktionalitäten der unmittelbaren darunterliegenden Schicht.
 (Siehe Abb. ~\ref{fig:layered-request-flow}). \cite[4]{layered}
 
-Das kann ziemlich nützlich sein, wenn z.B. Anfragen kein Mehrwert durch das
+Das kann besonders nützlich sein, wenn z.B. Anfragen kein Mehrwert durch das
 Durchlaufen eine bestimmte Schicht bwz. Schichten erhalten und nur weitergeleitet werden.
 Dieses Phänomen wird auch als \texttt{sinkhole anti-pattern} bezeichnet und das kann durch die
 Verwendung von offene Schichten vermieden werden.
 
-Einerseits reduziert die Nutzung von Open Layers die unnötigen Aufwand für die Logik der Weiterleitung von Anfragen,
+Einerseits reduziert die Nutzung von offenen Schichten die unnötigen Aufwand für die Logik der Weiterleitung von Anfragen,
  andererseits verletzt das das Prinzip der Isolation von Schichten.
 Folglich Änderungen in einer Schicht können sich auf mehrere Schichten auswirken, was die Flexibilität und Wartbarkeit
 des Systems beeinträchtigt.[7 - 8]\cite{layered}
