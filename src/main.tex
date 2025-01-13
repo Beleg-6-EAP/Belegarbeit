@@ -90,15 +90,16 @@ Die bisherigen Architekturmuster, wie die Monolithic Architecture waren
 durch ihren engen gekoppelten Funktionalitäten charakterisiert.
 Jetzt betrachten wir die Service-oriented Architecture (SOA), die als zentrales
 Konzept von Dienste (englisch \textit{Services}) betont.
-Ein Dienst kapselt eine Funktionalität und stellst diese über eine
- fest definierte Schnittstelle bereit \cite{soa2}[S. 3].
+
+Der Begriff Service-oriented Architecture wurde am 1996 von Roy Schulte und Yefim Natis geprägt, um
+ eine Architektur zu beschreiben, die die Logik und Daten in mehrere Anwendungen wiederverwendet.\cite[104]{soa3}
 
 Eine universelle Definition von SOA ist nicht vorhanden, jedoch ist das Konzept
 von Dienst ein zentrales Element der Architektur.
-Ein Dienst besitzt folgenden Eigenschaften \cite[16]{soa2}:
+Ein Dienst in SOA ist oft grob granuliert und besitzt folgenden Eigenschaften \cite[16]{soa2}\cite[19]{soa4}:
 \begin{itemize}
   \item Der Dienst ist eine unabhängige Einheit
-  \item Der Dienst ist über einen Namen oder eine Adresse erreichbar über das Netzwerk
+  \item Der Dienst ist über einen Namen oder eine Adresse Webbasierte-Technologien erreichbar
   \item Der Dienst verfügt über eine publizierte Schnittstelle
   \item Der Dienst ist durch eine Registry auffindbar
   \item Der Dienst kann zur Laufzeit dynamisch lokalisiert und genutzt werden
@@ -119,35 +120,26 @@ Ein Dienst besitzt folgenden Eigenschaften \cite[16]{soa2}:
   \label{fig:soa}
 \end{figure}
 
-Ein Service Provider registriert die Meta-Daten seines Diensts in den Service Registry.
-Dieses ermöglicht die dynamische Entdeckung der Dienste zur Laufzeit.
-Die gespeicherte Meta-Daten bestehen aus der Interface-Vertrag und der Endpoint des Providers.
-Der Endpoint stellt die Schnittstelle zum Dienst dar, währen der Interface-Vertrag des 
-Service Provider festlegt, wie der Consumer den Dienst nutzen kann. \cite{soa4}
-
-Der Service Consumer kann dann über den Service Bus den benötigten Dienst im
-Registry entdecken und gemäß dem klar definierten Vertrag nutzen.
+Die Registry ist eine Sammlung von verfügbaren Diensten und deren Spezifikationen, wo
+Provider ihre Dienste registrieren und Consumer Dienste dynamisch zu Laufzeit entdecken können.
+Die Provider legen klare, definierte Endpoints und Verträge fest, an denen sich die Consumer
+halten müssen, um die Dienste nutzen zu können \cite[23 - 24]{soa4}.
+Registry können zusätzlich für Load-Balancing benutzt werden, um die Last auf die Dienste zu verteilen \cite[23]{soa2}.
 
 Ein Service Bus, insbesondere ein Enterprise Service Bus (ESB), übernimmt die zentrale
 Aufgabe der Orchestrierung der Kommunikation zwischen Provider und Consumer.
 Zu den typischen Funktionen eines ESB gehören u.a. das Routing, sowie die
-Konvertierung der Nachrichten, wenn Dienste unterschiedliche Protokolle für die Kommunikation verwenden.
+Konvertierung der Nachrichten, falls Dienste unterschiedliche Protokolle für die Kommunikation verwenden \cite[37]{soa4}.
 
-Für kleine Unternehmen, die nur über eine begrenzte Anzahl an Anwendungen und Services
+Für kleine Unternehmen, die nur über eine begrenzte Anzahl an Anwendungen und Diensten verfügen,
 kann der Einsatz von ESB jedoch zu aufwendig sein.
 In solche Fällen kann eine leichtgewichtige Point-to-Point-Kommunikation sinnvoll sein. \cite[21]{soa4}
+
 Dabei wird die direkte Verbindung zwischen Consumer und Provider
 individuell entworfen, implementiert und gewartet. \cite[19]{soa4}
 
-Da jeder Service einen spezifischen Dienst anbieten und diese durch eine
- klar definite Schnittstellen, können Dienste unabhängig voneinander
- weiterentwickelt werden, was zu einer höheren agilität führt.
-
-Dienste können in anderen Anwendungen erneut eingesetzt oder
-mit anderen Diensten kombiniert werden, um die Bedürfnisse eines Unternehmens
-zu erfüllen.
-Dies führt zu weniger Duplikaten von Ressourcen, einer höheren
-Wiederverwendbarkeit von Code und reduzierten Kosten \cite{soa4}.
+Allerdings kann bei diese Integration die Komplexität drastisch steigen, sobald die Anzahl der Dienste im System wächst \cite[37]{soa4}.
+In solchen Fällen ermöglicht der Einsatz von ESB eine bessere Skalierbarkeit, Orchestrierung und Flexibilität \cite[21]{soa2}.
 
 Betrachten wir erneut das E-Commerce-Beispiel aus der Einleitung.
 Dafür definieren wir drei Arten von Services:
@@ -168,20 +160,29 @@ Wie Abbildung \ref{fig:soaecommerce} zeigt, die Dienste\texttt{ShipmentService},
 \texttt{PaymentService} und \texttt{OrderService} registrieren ihre Dienste
 bei dem \texttt{ServiceRegistry}.
 Die Einträge im \texttt{ServiceRegistry} bestehen aus ein Identifikator,
-eine Beschreibung der Input und Output der Anfrage an dem Dienst, sowie
-den Endpoint für den Zugriff der Dienste.
+eine Beschreibung der Input und Output der Anfrage, sowie
+den Endpoint für den Zugriff auf die Dienste.
 
 In diesem Beispiel \texttt{OrderService} konsumiert die beiden anderen Dienste.
- Dieses erfolgt durch Anfragen über den Broker, der die \texttt{ServiceRegistry} anspricht.
-Nach Erhalt der Meta-Daten, der \texttt{OrderService} Kann die benötigten Dienste
+ Dieses erfolgt durch Anfragen über den Broker, der die \texttt{Registry} anspricht.
+Nach Erhalt der Meta-Daten, der \texttt{OrderService} kann die benötigten Dienste
  gemäß den Interface-Verträge nutzen.
 
 Sollte sich die Implementierung oder die Schnittstellen der Provider ändern, ist
 der Consumer nicht davon betroffen, da die Dienste in der \texttt{ServiceRegistry}
- dynamisch zu Laufzeit lokalisier und genutzt werden.
+ dynamisch zu Laufzeit lokalisiert und genutzt werden.
+
+Da jeder Service einen spezifischen Dienst anbieten und diese durch eine
+ klar definite Schnittstellen, können Dienste unabhängig voneinander
+ weiterentwickelt werden, was die kleine autonome Teams ermöglicht.
+
+Dienste können in anderen Anwendungen erneut eingesetzt oder
+ mit anderen Diensten kombiniert werden, um die Bedürfnisse eines Unternehmens
+ zu erfüllen \cite[29]{soa4}.
+Dies führt zu weniger Duplikaten von Ressourcen, einer höheren
 
  Außerdem jeder Komponente dieser Architektur ist lose gekoppelt, was die
- Austauschbarkeit der einzelnen Komponenten erleichert.
+ Austauschbarkeit der einzelnen Komponenten erleichtert.
 
 Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} zu finden.
 \section{Moderne Enterprise-Architekturen}
