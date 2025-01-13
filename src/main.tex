@@ -84,7 +84,7 @@ in einer einzigen Anwendung bündelt, wobei ein einzigen Prozess für die Ausfü
 
 Anwendungen dieser Architektur bestehen aus eng gekoppelte Komponenten, die von
 einander abhängig sind, sodass sie weder eigenständig laufen noch in manchen Fällen
-nicht isoliert kompiliert werden können. \cite{mono3}
+nicht isoliert kompiliert werden können. \cite[485]{mono3}
 
 
 \begin{figure}[h!]
@@ -95,9 +95,9 @@ nicht isoliert kompiliert werden können. \cite{mono3}
 \end{figure}
 
 Diese Architektur weist für kleinere Anwendungen gewisse Vorteile auf,
-wie eine einfache testbarkeit, Logging, Deployment, sowie Debugging.
+wie eine einfache Testbarkeit, Logging, Deployment, sowie Debugging.
 Zudem eine Datenbanksynchronisation ist nicht notwendig, da die
-gesamte Daten in einer Datenbank persistiert werden. \cite[2]{mono4}
+gesamte Daten in einer einzigen Datenbank persistieren. \cite[2]{mono4}
 
 Betrachten wir das E-Commerce-Beispiel.
 Dafür definieren wir drei Klassen:
@@ -108,21 +108,21 @@ Dafür definieren wir drei Klassen:
 \end{itemize}
 
 Die Kommunikation zwischen den Klassen erfolgt durch Methodenaufrufe.
-Dabei ist die Klasse \texttt{OrderService} die Hauptklasse, die die anderen Klassen
-verwendet, um den Bestellungsvorgang durchzuführen.
+Dabei ist die Klasse \texttt{OrderService} die Hauptklasse, die die
+Methoden der anderen Klassen verwendet, um den Bestellungsvorgang durchzuführen.
 Vorteilhaft hier ist, dass hier die Kommunikation zwischen den komponenten einfach ist.
 Durch die Verwendung von Methodenaufrufen wird die Komplexität reduziert, die mit
 Intersystemkommunikationen verbunden ist.
 
 Jedoch, wenn die Code-Basis wächst und komplex wird, treten einige Nachteile auf.
 Durch Änderungen in einer Komponente können unerwartete kaskadierende Fehler
-auslösen, was die Weiterentwicklung in kleinen autonomen
+ausgelöst werden, was die Weiterentwicklung in kleinen autonomen
 Teams erschwert und verlangsamt.
 
 Außerdem durch die Verwendung von direkte Methodenaufrufe, entsteht eine enge Kopplung
 zwischen den Komponenten.
-Änderungen in der Implementierung oder Signatur einer Methode
-können zu kaskadierenden Fehlern führen.
+Änderungen in der Implementierung oder Signatur einer Methode können die gesamte
+ Anwendung beeinflussen.
 
 Weiterhin ist die Wiederverwendung von Funktionalitäten nicht möglich, da die
 Komponenten eng gekoppelt sind.
@@ -130,18 +130,19 @@ Das führt zu Duplikation von Code, was
 die Änderungen teurer macht, da die Änderungen in mehreren Stellen durchgeführt werden müssen.
 
 Die dadurch erhöhte Komplexität und die schwierige Wartung führen zu längere Iterationen.
-Da das Deployment erfolgt nur als Ganzes und die Iterationen länger dauern,
+Da das Deployment nur als Ganzes erfolgt und die Iterationen länger dauern,
 kommt es zu seltenen Auslieferungen von neuen Features.
+
 Ferner ist Horizontale Skalierung auch nicht möglich, da die Anwendung nur als Ganzes
 skaliert werden kann.
-Insgesamt ist eine gute Einstiegslösung, allerdings nicht für größere Anwendungen geeignet, da
- die Agilität davon stark betroffen wird.
+Insgesamt ist die Monolithic Architecture eine gute Einstiegslösung, allerdings nicht für größere Anwendungen geeignet, da
+ die Agilität davon stark betroffen werden kann.
 
 \subsection{Modular Monolith}
-Das Hauptproblem der vorherigen Architektur ist die eng gekoppelte Natur der Architektur,
+Das Hauptproblem der vorherigen Architektur war die eng gekoppelte Natur der Architektur,
 die eine gewisse Komplexität und Unflexibilität mit sich bringt.
-Modulare Monolithen sind eine Evolution der Monolithic  Architektur, die die Vorteile
-der Monolithic Architecture erben und gleichzeitig die Nachteile der enge Kopplung verringern.
+Die Modular Monolithic Architecture ist eine Evolution der Monolithic Architecture, die die Vorteile
+der Monolithic Architecture erbt und gleichzeitig die Nachteile der enge Kopplung reduziert.
 
 In diese Architektur wird die Code-Basis in mehrere Module geteilt, die jeweils
 eine Teil-Funktionalität der Anwendung implementieren.
@@ -149,7 +150,7 @@ Die Kommunikation zwischen den Module erfolgt durch klar definierte Interfaces,
 wobei die Wiederverwendbarkeit und Austauschbarkeit der Module ermöglicht wird.\cite[11]{modular-mono2}
 
 Die Trennung in Modulen reduziert zudem die Komplexität und fördert eine bessere
- Organization der Code-Basis, was zu einer bessere Wartbarkeit führt.\cite[2]{modular-mono4}
+ Organization der Code-Basis, was zu einer bessere Wartbarkeit führt.\cite[23 - 24]{modular-mono4}
 
 \begin{figure}[h!]
     \centering
@@ -159,7 +160,7 @@ Die Trennung in Modulen reduziert zudem die Komplexität und fördert eine besse
 \end{figure}
 
 Betrachten wir erneut das E-Commerce-Beispiel.
-Diesmal wird die Anwendung in drei Hauptmodule aufgeteilt:
+Diesmal wird die Anwendung in drei Hauptmodule aufgeteilt (Siehe Abb. ~\ref{fig:modular-mono}):
 \begin{itemize}
     \item \texttt{OrderModule}: Verantwortlich für die Verwaltung der Bestellungen
     \item \texttt{PaymentModule}: Verantwortlich für die Abwicklung der Zahlungen
