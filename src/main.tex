@@ -1,13 +1,13 @@
 %% The first command in your LaTeX source must be the \documentclass command.
 \documentclass[acmtog]{acmart}
 \usepackage[english,ngerman]{babel}
-\usepackage[utf8]{inputenc} 
+\usepackage[utf8]{inputenc}
 
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
   \providecommand\BibTeX{{%
     \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
-    
+
 \copyrightyear{2024}
 \acmYear{2024}
 \citestyle{acmauthoryear}
@@ -96,7 +96,10 @@ Die Services greifen, im Unterschied zur SOA, nicht mehr auf eine zentrale Persi
 Jeder Service hat seine eigene private, für andere nicht einsehbare Persistenz\cite[2]{microservicesArchitecture}.
 
 Wie in Abbildung~\ref{fig:microservices} dargestellt, werden alle von Clients ausgehenden API-Anfragen zunächst von einem API-Gateway entgegengenommen.
-Dieser kommuniziert dann wiederrum mit den relevanten Service-Komponenten, die dann die Anfrage verarbeiten und ein Resultat an das Gateway zurückgeben~\cite[30]{architecturePatterns}.
+Da Anfragen von Clients oft mehrere Services betreffen, wird das Gateway genutzt, um die Anfragen an die entsprechenden Services zu Orchestrieren.
+Dabei profitiert das Gateway von geringen Latenzen aufgrund von physikalischer Nähe zu den Service Komponenten und einer besseren Netzwerkanbindung im Vergleich zum Client.
+Bei Anfragen an mehrere Services akkumulieren sich diese Ersparnisse und Antwortzeit verkürzt sich insgesamt~\cite[30]{architecturePatterns}.
+Da Gateways keine Daten halten, sondern nur Anfragen weiterleiten, sind sie leicht horizontal skalierbar und können bei Bedarf um weitere Instanzen erweitert werden.
 
 \begin{figure}[!h]
   \centering
@@ -114,11 +117,12 @@ Dies wird dadurch erreicht, dass alle Services nur über ihre definierten Schnit
 Die hohe Entkopplung der Komponenten ermöglicht es, Services unabhängig voneinander zu entwickeln, zu testen und zu deployen.
 Pipeline- und Deploymentprozesse finden also isoliert voneinander statt, was die Auslieferung der Software beschleunigt~\cite[27]{architecturePatterns}.
 
-Der korrekte Entwurf der Architektur und die darin korrekt gewählte Granularität der Services ist entscheidend, um die Vorteile der Microservices Architecture voll auszuschöpfen und stellt hier die größte Herausforderung dar.
+Der korrekte Entwurf der Architektur und die darin passend gewählte Granularität der Services ist entscheidend, um die Vorteile der Microservices Architecture voll auszuschöpfen und stellt hier die größte Herausforderung dar.
 Werden die Komponenten zu groß gewählt, so kann es passieren, dass die Vorteile der Microservices Architecture nicht mehr greifen.
 Innerhalb der Komponenten entstehen Abhängigkeiten, die das isolierte Entwickeln oder Testen von Features verhindern.
-Auf der anderen Seite führt eine zu geringe Granularität dazu, dass die Anzahl der Services zu groß wird und das Orchestrieren dieser einen zu großen Overhead verursacht.
-Komplexität und Wartungsaufwand steigen an und die Schwächen einer klassischen Service-oriented Architecture treten wieder auf~\cite[32]{architecturePatterns}.
+Auf der anderen Seite führt eine zu geringe Granularität dazu, dass die Anzahl der Services zu groß wird die Kommunikation einen zu großen Overhead verursacht.
+Jede Nachricht, die unter den Services ausgetauscht wird, verursacht Latenz, die sich akkumuliert und die Performance des Systems beeinträchtigt.
+Weiterhin werden Integrationstests durch die hohe Anzahl an Services aufwändiger und der Orchestrierungsaufwand des Gateways steigt an~\cite[32]{architecturePatterns}.
 
 Sollten eine serviceübergreifende Persistenz-Zugriffe notwendig sein, so kann diese über eine geteilte Datenbank stattfinden.
 Dadurch werden ungewollte Abhängigkeiten zwischen Services vermieden und die Kopplung der Komponenten verringert.
@@ -140,10 +144,9 @@ Microservices sind außerdem sehr gut testbar.
 Tests können durch die strikte Trennung der Funktionalitäten isoliert auf einzelne Services angewendet werden, ohne dass andere Services betrachtet werden müssen.
 Auch Regressionstests nehmen dadurch weniger Zeit in Anspruch.
 Kleine Änderungen haben nicht zur Folge, dass die gesamte Anwendung neu getestet werden muss.
-%% Aber: Integrationstests anspruchsvoller, da viele Komoponenten zusammen deployt werden müssen
 
-Time-to-market bei Microservice Architekturen ist in der Regel kürzer, da deployments schnell sind und parallel an verschiedenen Services gearbeitet werden kann.
-Es gibt keine zentrale Abhängigkeit, die sich schwerwiegend auf die Entwicklung einzelner Komponenten auswirken kann.
+Obwohl deployments schnell sind und parallel an verschiedenen Services gearbeitet werden kann, ist die initiale Entwicklungszeit einer Anwendung in Microservices Architecture oft länger.
+Im Vergleich zu monolithischen Anwendungen ist vor allem mit höherem Zeitaufwand durch Entwurf der Schnittstellen, Absprache unter den Entwicklungsteams und Planung der Architektur zu rechnen~\cite[6-7]{evolutionOfDistributedSystems}.
 
 Der größte Nachteil der sich hier ergibt, ist die vergleichsweise niedrige Performance aufgrund der verteilten Natur des Systems.
 Die Kommunikation zwischen Services findet meist über das Netzwerk statt, was zu erhöhten Latenzen führen kann\cite[34]{architecturePatterns}.
