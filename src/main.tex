@@ -86,62 +86,76 @@ Komponenten \ldots
 \section{Klassische Enterprise-Architekturen}
 
 \subsection{Service-oriented}
-Die Service-orientierte Achitektur (SOA) basiert auf die Verwendung von Diensten
-- sogenannten Services. 
+Die bisherigen Architekturmuster, wie die Monolithic Architecture waren
+durch ihren engen gekoppelten Funktionalitäten charakterisiert.
+Jetzt betrachten wir die Service-oriented Architecture (SOA), die als zentrales
+Konzept von Dienste (englisch \textit{Services}) betont.
 Ein Dienst kapselt eine Funktionalität und stellst diese über eine
- fest definirte Schnittstelle bereit \cite{soa2}[S. 3].
-Dieses kann aus verschienen Diesten bestehen.
- Betrachten wir im Folgenden die Hauptbestandteile der SOA \cite{soa4}:
+ fest definierte Schnittstelle bereit \cite{soa2}[S. 3].
+
+Eine universelle Definition von SOA ist nicht vorhanden, jedoch ist das Konzept
+von Dienst ein zentrales Element der Architektur.
+Ein Dienst besitzt folgenden Eigenschaften \cite[16]{soa2}:
 \begin{itemize}
-  \item Service Provider: Bietet einen spezifischen Dienst an
-  \item Service Bus: Dienst, das die Orchestierung zwischen Service Requester und Service Provider gewährleistet.
-  \item Service Consumer: Nutzt einen bereitgestelten Dienst, dieses kann einen End-User oder ein anderer Dienst sein.
-  \item Service Registry: Dient als zentrales Verzeichnis, die Informationen über die verfügbare Services speichert.
+  \item Der Dienst ist eine unabhängige Einheit
+  \item Der Dienst ist über einen Namen oder eine Adresse erreichbar über das Netzwerk
+  \item Der Dienst verfügt über eine publizierte Schnittstelle
+  \item Der Dienst ist durch eine Registry auffindbar
+  \item Der Dienst kann zur Laufzeit dynamisch lokalisiert und genutzt werden
 \end{itemize}
 
-Ein Service Provider registriert die Informationen seines Diensts in den Service Registry.
- Die speicherte Informationen sind der Interface-Vertrag und der Endpoint des Services. 
-Der Endpoint stellt die Schnittstelle zum Dienst dar, währen der Interface-Vertrag des 
-Service Provider festlegt, wie der Service Consumer den Dienst nutzen kann.
+ Betrachten wir im Folgenden die Hauptbestandteile der SOA, wie die Abb. ~\ref{fig:soa} \cite{soa4} darstellt:
+\begin{itemize}
+  \item Service Provider: Bietet einen spezifischen Dienst an
+  \item Service Bus: Dienst, das die Orchestrierung der Kommunikation zwischen Consumer und Provider gewährleistet
+  \item Service Consumer: Nutzt einen bereitgestellten Dienst, dieses kann einen End-User oder ein anderer Dienst sein
+  \item Service Registry: Dient als zentrale Sammlung von Meta-Daten über die verfügbare Dienste
+\end{itemize}
 
-Der Service Consumer kann dann über den Broker den benötigten Service im Service 
-Registry finden und den Service Provider gemäß dem klar definierten Vertrag nutzen.
-
-Ein Service Broker ist für die Komunikation zwischen ein Service Consumer und ein 
-Service Provider zuständig, während ein Service Bus, insbesondere ein Enterprise 
-Service Bus, kann als ein erweiteres Service Broker angesehen werden. Dieses ist nicht nur dafür verantowortlich, für die
- Nachrichtvermitlung zwischen Diensten , sondern auch für die Steuerung und die 
- Übersetzung aller Nachrichten, unabhängig davon welches Nachrichtenprotokoll verwendet wird \cite{soa4}.
-
-Die Abbildung ~\ref{fig:soa} fasst diese Beziehung zusammen.
-\begin{figure}[h]
+\begin{figure}[!h]
   \centering
-  \includegraphics[width=0.85\linewidth]{images/soa/soa.pdf}
-  \caption{Aufbau Service-oriented Architecture}
+  \includegraphics[width=0.8\linewidth]{images/soa/soa.pdf}
+  \caption{Aufbau der Service-oriented Architecture}
   \label{fig:soa}
 \end{figure}
 
+Ein Service Provider registriert die Meta-Daten seines Diensts in den Service Registry.
+Dieses ermöglicht die dynamische Entdeckung der Dienste zur Laufzeit.
+Die gespeicherte Meta-Daten bestehen aus der Interface-Vertrag und der Endpoint des Providers.
+Der Endpoint stellt die Schnittstelle zum Dienst dar, währen der Interface-Vertrag des 
+Service Provider festlegt, wie der Consumer den Dienst nutzen kann. \cite{soa4}
+
+Der Service Consumer kann dann über den Service Bus den benötigten Dienst im
+Registry entdecken und gemäß dem klar definierten Vertrag nutzen.
+
+Ein Service Bus, insbesondere ein Enterprise Service Bus (ESB), übernimmt die zentrale
+Aufgabe der Orchestrierung der Kommunikation zwischen Provider und Consumer.
+Zu den typischen Funktionen eines ESB gehören u.a. das Routing, sowie die
+Konvertierung der Nachrichten, wenn Dienste unterschiedliche Protokolle für die Kommunikation verwenden.
+
+Für kleine Unternehmen, die nur über eine begrenzte Anzahl an Anwendungen und Services
+kann der Einsatz von ESB jedoch zu aufwendig sein.
+In solche Fällen kann eine leichtgewichtige Point-to-Point-Kommunikation sinnvoll sein. \cite[21]{soa4}
+Dabei wird die direkte Verbindung zwischen Consumer und Provider
+individuell entworfen, implementiert und gewartet. \cite[19]{soa4}
+
 Da jeder Service einen spezifischen Dienst anbieten und diese durch eine
- klar definirte Schnitstellen, können Dienste unabhängig von einandere 
+ klar definite Schnittstellen, können Dienste unabhängig voneinander
  weiterentwickelt werden, was zu einer höheren agilität führt.
-Außerdem neue Dienste erfüllen einen klar abgegrenzten  und diese kann 
-in rahmen in 
 
-Dienste können an anderen Stellen in der Software erneut eingesetzt oder 
+Dienste können in anderen Anwendungen erneut eingesetzt oder
 mit anderen Diensten kombiniert werden, um die Bedürfnisse eines Unternehmens
-zu erfüllen. Dies führt zu weniger Duplikaten von Ressourcen, einer höheren 
+zu erfüllen.
+Dies führt zu weniger Duplikaten von Ressourcen, einer höheren
 Wiederverwendbarkeit von Code und reduzierten Kosten \cite{soa4}.
-
-Insgesamt weist die Service-oriented Architecture also eine sehr hohe Agilität auf.
 
 Betrachten wir erneut das E-Commerce-Beispiel aus der Einleitung.
 Dafür definieren wir drei Arten von Services:
 \begin{itemize}
-  \item \texttt{OrderService}: Ein Dienst, das den gesamenten Bestellvorgang initiiert
-  \item \texttt{PaymentService}: Ein Dienst, das der Bezahlvorgang startet
-  \item \texttt{ShipmentService}: Ein Dienst, das der Versandvorgang startet
+  \item \texttt{OrderService}: Ein Dienst, das den gesamtenten Bestellvorgang initiiert
+  \item \texttt{PaymentService}: Ein Dienst, das der Bezahlvorgang darstellt
+  \item \texttt{ShipmentService}: Ein Dienst, das der Versandvorgang darstellt
 \end{itemize}
-
 
 \begin{figure}[!h]
   \centering
@@ -150,25 +164,26 @@ Dafür definieren wir drei Arten von Services:
   \label{fig:soaecommerce}
 \end{figure}
 
-Wie Abbildung \ref{fig:soaecommerce} zeigt, die Dienste\texttt{ShipmentService} 
-und \texttt{PaymentService} werden als externe Dienste betrachtet, die ihre Informationen 
-(Name, Bescheibung des Dienstes und Endpoint) bei dem Broker veröffentlichen.
-Der \texttt{OrderService} ist ein interner Dienst, der die beiden externen Dienste
- verwendet. Dies erfolgt durch Anfragen an den Broker, der die entsprechenden Endpoints
- der Dienste ermittelt, sodass der \texttt{OrderService} über HTTP-Requests auf die benötigten 
- Dienste zugreifen kann.
+Wie Abbildung \ref{fig:soaecommerce} zeigt, die Dienste\texttt{ShipmentService},
+\texttt{PaymentService} und \texttt{OrderService} registrieren ihre Dienste
+bei dem \texttt{ServiceRegistry}.
+Die Einträge im \texttt{ServiceRegistry} bestehen aus ein Identifikator,
+eine Beschreibung der Input und Output der Anfrage an dem Dienst, sowie
+den Endpoint für den Zugriff der Dienste.
 
-Das Beispiel zeigt, wie die Service-oriented Architecture die Agilität fördern kann.
-Externe Dienste können ohne große Anpassungen integriert werden und in internen 
-Dienste kombiniert und verwendet werden. Neue Entwickler können an einzelnen Diensten arbeiten, 
-ohne das gesamte System verstehen zu müssen, da die Dienste über definierte 
-Schnittstellen miteinander kommunizieren.
+In diesem Beispiel \texttt{OrderService} konsumiert die beiden anderen Dienste.
+ Dieses erfolgt durch Anfragen über den Broker, der die \texttt{ServiceRegistry} anspricht.
+Nach Erhalt der Meta-Daten, der \texttt{OrderService} Kann die benötigten Dienste
+ gemäß den Interface-Verträge nutzen.
 
+Sollte sich die Implementierung oder die Schnittstellen der Provider ändern, ist
+der Consumer nicht davon betroffen, da die Dienste in der \texttt{ServiceRegistry}
+ dynamisch zu Laufzeit lokalisier und genutzt werden.
+
+ Außerdem jeder Komponente dieser Architektur ist lose gekoppelt, was die
+ Austauschbarkeit der einzelnen Komponenten erleichert.
 
 Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} zu finden.
-
-
-
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
