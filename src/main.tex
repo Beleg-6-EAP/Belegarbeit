@@ -128,7 +128,18 @@ Sollten eine serviceübergreifende Persistenz-Zugriffe notwendig sein, so kann d
 Dadurch werden ungewollte Abhängigkeiten zwischen Services vermieden und die Kopplung der Komponenten verringert.
 Dabei ist jedoch darauf zu achten, dass die Datenbank nicht zu einer zentralen Abhängigkeit wird, die die Vorteile der Microservices Architecture wieder zunichte macht~\cite[33]{architecturePatterns}.
 
-%% Hier Beispiel E-Commerce Anwendung
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/microservices/ecommerce-microservices}
+  \caption{Aufbau der E-Commerce Anwendung mit Microservices Architecture}
+  \label{fig:ecommerce-microservices}
+\end{figure}
+
+Der Aufbau der E-Commerce Anwendung ist in Abbildung~\ref{fig:ecommerce-microservices} dargestellt.
+Die Anwendung ist in drei Services aufgeteilt, die jeweils für die Verarbeitung von Bestellungen, Zahlungen und Versand verantwortlich sind.
+Jeder Service hat seine eigene Datenbank und REST-Schnittstelle, über die er mit anderen Services und dem Gateway kommuniziert.
+Änderungen am Bezahl- oder Versandprozess können so unabhängig vom eigentlichen Bestellprozess entwickelt und deployed werden.
+Auch besteht die Möglichkeit bei besonders hohen Lasten oder Engpässen, die Services unabhängig voneinander horizontal zu skalieren.
 
 Die Microservices Architecture löst viele der Probleme, die in klassischen monolithischen oder Service-oriented Architecture auftreten.
 Durch die Aufteilung der Anwendung in kleinere, separat deployte Services, entstehen inhärent robustere und besser skalierbare Systeme.
