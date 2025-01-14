@@ -181,82 +181,63 @@ können nicht wiederverwendet werden, da diese immer noch Teil einer einzigen An
 und eng miteinander gekoppelt sind.
 
 \subsection{Layered}
-Das Layered Architektur-Pattern, auch bekannt als n-Tier-Architektur-Pattern, beschreibt eine
-Architektur, die die Anwendung in Schichten aufteilt.
+Die Layerd Architektur wählt als Basis Schichten (englisch \textit{layers}), die eine
+komplexe Anwendung in verschiedenen Schichten aufteilt.
+Die Anzahl oder Aufgabe der Schichten werden von der Architekturmuster nicht vorgegeben. ~\cite [34]{layered2}
+
+Demnach kann ein Unternehmen die Anzahl und die Aufgaben der Schichten nach den eigenen
+Bedürfnisse definieren.
+
+Allerdings sind einigen Prinzipien von der Architekturmuster zu beachten, um von Vorteile
+wie die Wartbarkeit, Skalierbarkeit und die Wiederverwendbarkeit zu profitieren.~\cite [34]{layered2}
 
 Ein wichtiges Prinzip der Layered Architecture ist der die Trennung der Zuständigkeiten
 (Englisch \textit{Separation of concerns}). Komponenten mit unterschiedlichen Aufgaben sollten
 auf verschiedene Schichten verteilt werden, sodass die Komponenten einer Schicht jeweils für
 eine klar definierte und gemeinsame Aufgabe zuständig sind. \cite[34]{layered2}
 
-Obwohl diese Architektur keine feste Anzahl an Schichten vorschreibt,
-bestehen die Layered Architectures meistens aus 3 Schichten (Siehe Abb. ~\ref{fig:layered})~\cite [3]{layered2}:
-\begin{itemize}
-\item Presentations Layer: Verantwortlich für die Interaktion mit dem Benutzer
-\item Business Layer: Zuständig für die Verarbeitung von Geschäftslogik
-\item Data Layer: Verantwortlich für die Interaktion mit der Datenbank
-\end{itemize}
+Ein weiteres Prinzip der Layered Architecture ist der Isolation von Schichten (Englisch \textit{layers of isolation}).
+Dies besagt, dass die Kommunikation zwischen Schichten ausschließlich über definierte Verträge erfolgt.
+\cite[3 - 4]{layered}
+
+In Kontext eines Unternehmens kann die Layered Architecture genutzt werden, um häufige
+ Funktionalitäten in Schichten zu kapseln und diese in anderen Teilen des Unternehmens wiederzuverwenden.
+
+Jede Schicht müsste dabei eine klare Aufgabe haben, um die Trennung der Zuständigkeiten zu gewährleisten.
+Außerdem sollte die Schicht über eine klare Schnittstelle verfügen, die die Kommunikation ermöglicht und
+die Implementierung der Schicht versteckt.
+
+Dadurch wird die Isolation der Schicht gemäß der Prinzip der Isolation von Schichten garantiert, sodass Änderungen
+in einer Schicht das System nicht beeinflussen.
+
+Betrachten wir erneut das E-Commerce-Beispiel.
+In der vorherigen Implementierung würde die Anwendung in drei Services implementiert,
+die jeweils für die Verwaltung der Bestellungen, Zahlungen und Lieferungen zuständig sind.
+Innerhalb der einzelnen Services ist einen Modul für die Authentifizierung
+implementiert.
+Problematisch ist jedoch, dass diese Module in jedem Service dupliziert sind,
+was die Wartbarkeit erschwert und die Änderungen teurer macht.
+Änderungen in einem Modul müssen in allen Services durchgeführt werden, was die
+Entwicklung verlangsamt.
+Lösung hierfür ist die Implementierung der Authentifizierung in einer
+eigenen Schicht auszulagern.
+Die Kommunikation ist folglich über eine REST-Schnittstelle über den API-Gateway möglich.(Siehe Abb. ~\ref{fig:layered})
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.3\textwidth]{images/layered/Layer}
-    \caption{Layered Architektur}
+    \includegraphics[width=0.5\textwidth]{images/layered/ecommerce-example}
+    \caption{Layered Architektur }
     \label{fig:layered}
 \end{figure}
 
-Ein weiteres Prinzip der Layered Architecture ist der Isolation von Schichten (Englisch \textit{layers of isolation}).
-Dies besagt, dass die Kommunikation zwischen Schichten ausschließlich über definierte Verträge erfolgt.
-Dadurch sind Änderungen in einer Schicht isoliert auf die Schicht selbst und höchstens auf eine andere abhängige Schicht beschränkt.
-\cite[3 - 4]{layered}
+Mit Einführung der Authentifizierungsschicht kann bei Bedarf die Authentifizierung
+in einer einzigen Stelle geändert werden, ohne dass die Änderungen in anderen Services
+vorgenommen werden müssen.
 
-Ein weiteres relevantes Konzept ist die Unterscheidung zwischen offenen und geschlossenen Schichten.
-Dieses Konzept beschreibt die Organisation der Kommunikation zwischen den Schichten.
-Standardmäßig sind die Schichten auf Closed gesetzt.
-Dies impliziert, dass Anfragen einer Schicht lediglich an die direkt darunterliegende Schicht weitergeleitet werden,
-bevor sie die übernächste Schicht erreichen.
-\cite{layered}[S. 3].(Siehe Abb. ~\ref{fig:layered-request-flow})
-
-Die Umsetzung von geschlossenen Schichten begünstigen die Isolation von Schichten und reduziert somit die Abhängigkeiten zwischen den Schichten, da
- Schichten weisen somit nur Abhängigkeiten zu den direkt darunterliegenden Schichten auf.
-
-Im Gegensatz dazu ermöglichen offene Schichten den höheren Schichten den Zugriff auf Funktionalitäten
-beliebiger darunterliegender Schichten, ohne dass die Anfragen die dazwischenliegenden offenen Schichten durchlaufen müssen.
-(Siehe Abb. ~\ref{fig:layered-request-flow}). \cite[4]{layered}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.3\textwidth]{images/layered/Layer2}
-    \caption{Open/Close Layering}
-    \label{fig:layered-request-flow}
-\end{figure}
-
-Die Nutzung von offenen Schichten hat einerseits den Vorteil, dass den Aufwand für die Logik der Weiterleitung von Anfragen reduziert wird.
-Andererseits wird jedoch das das Prinzip der Isolation von Schichten verletzt.
-Folglich Änderungen in einer Schicht können sich auf mehrere Schichten auswirken \cite[7 - 8]{layered}
-
-Werden die Trennung der Zuständigkeiten, die Isolation von Schichten und geschlossenen Schichten umgesetzt, so
-können die Vorteile der Layered Architecture vollständig ausgeschöpft werden.
-Darüber hinaus Änderungen wirken sich minimal auf anderen Schichten aus und die Wiederverwendung von Schichten
-in anderen Projekten wird erleichtert.
-
-Durch die klare Trennung der Schichten wird die Entwicklung in kleine autonome Teams ermöglicht,
- da Entwickler nur die Verträge zwischen den Schichten kennen müssen und nicht die interne Implementierung.
-Außerdem sind Änderungen möglich, weil die Schichten isoliert sind und die Änderungen in einer Schicht
- sich nicht auf andere Schichten auswirken, was die Auslieferung in kleinen Iteration ermöglicht.
-
-Aufgrund der losen Kopplung der Schichten ist es zudem möglich, neue Funktionalitäten
-hinzuzufügen durch die Einführung neuer Schichten ohne dabei umfangreiche Anpassungen am gesamten
-System vornehmen zu müssen \cite[35]{layered2}.
-
-Die Schichten können zudem sowohl ausgetauscht als auch wiederverwendet werden, sodass
- die Auslieferung in kurze Iterationen ermöglicht wird.
-
-Werden aber die Prinzipien nicht eingehalten, es kann zu Abhängigkeiten zwischen den Schichten
-führen, was die Komplexität erhöht und somit eine Monolithic Architecture entsteht.
-Die oben genannten Vorteile sind folglich nicht mehr gegeben und treten somit die Nachteile einer
-klassischen Monolithic Architecture auf. \cite[5]{layered4}
-
-% Beispiel hier
+In einem Unternehmen der zahlreiche Services betriebt, kann das zu einer erheblichen
+Kosten- und Zeiteinsparung führen.
+Somit sind Änderungen leichter und schneller, was
+die Agilität des Unternehmens erhöht.
 
 \section{Moderne Enterprise-Architekturen}
 
