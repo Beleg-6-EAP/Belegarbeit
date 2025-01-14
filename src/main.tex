@@ -124,24 +124,16 @@ Die Registry ist eine Sammlung von verfügbaren Diensten und deren Spezifikation
 Provider ihre Dienste registrieren und Consumer Dienste dynamisch zu Laufzeit entdecken können.
 Die Provider legen klare, definierte Endpoints und Verträge fest, an denen sich die Consumer
 halten müssen, um die Dienste nutzen zu können \cite[23 - 24]{soa4}.
-Registry können zusätzlich für Load-Balancing benutzt werden, um die Last auf die Dienste zu verteilen \cite[23]{soa2}.
 
 Ein Service Bus, insbesondere ein Enterprise Service Bus (ESB), übernimmt die zentrale
 Aufgabe der Orchestrierung der Kommunikation zwischen Provider und Consumer.
 Zu den typischen Funktionen eines ESB gehören u.a. das Routing, sowie die
 Konvertierung der Nachrichten, falls Dienste unterschiedliche Protokolle für die Kommunikation verwenden \cite[37]{soa4}.
 
-Für kleine Unternehmen, die nur über eine begrenzte Anzahl an Anwendungen und Diensten verfügen,
-kann der Einsatz von ESB jedoch zu aufwendig sein.
-In solche Fällen kann eine leichtgewichtige Point-to-Point-Kommunikation sinnvoll sein. \cite[21]{soa4}
+In SOA ist es zusätzlich möglich, ein Broker zu nutzen, um die Kommunikation zwischen
+Consumer und Provider zu ermöglichen.\cite[2]{soa5}
 
-Dabei wird die direkte Verbindung zwischen Consumer und Provider
-individuell entworfen, implementiert und gewartet. \cite[19]{soa4}
-
-Allerdings kann bei diese Integration die Komplexität drastisch steigen, sobald die Anzahl der Dienste im System wächst \cite[37]{soa4}.
-In solchen Fällen ermöglicht der Einsatz von ESB eine bessere Skalierbarkeit, Orchestrierung und Flexibilität \cite[21]{soa2}.
-
-Betrachten wir erneut das E-Commerce-Beispiel aus der Einleitung.
+Betrachten wir im Folgenden eine mögliche Implementierung der SOA mit einem Broker anhand des E-Commerce-Beispiels.
 Dafür definieren wir drei Arten von Services:
 \begin{itemize}
   \item \texttt{OrderService}: Ein Dienst, das den gesamtenten Bestellvorgang initiiert
@@ -158,33 +150,30 @@ Dafür definieren wir drei Arten von Services:
 
 Wie Abbildung \ref{fig:soaecommerce} zeigt, die Dienste\texttt{ShipmentService},
 \texttt{PaymentService} und \texttt{OrderService} registrieren ihre Dienste
-bei dem \texttt{ServiceRegistry}.
-Die Einträge im \texttt{ServiceRegistry} bestehen aus ein Identifikator,
-eine Beschreibung der Input und Output der Anfrage, sowie
-den Endpoint für den Zugriff auf die Dienste.
+bei dem \texttt{Registry}.
 
 In diesem Beispiel \texttt{OrderService} konsumiert die beiden anderen Dienste.
  Dieses erfolgt durch Anfragen über den Broker, der die \texttt{Registry} anspricht.
 Nach Erhalt der Meta-Daten, der \texttt{OrderService} kann die benötigten Dienste
  gemäß den Interface-Verträge nutzen.
 
+Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} zu finden.
+
 Sollte sich die Implementierung oder die Schnittstellen der Provider ändern, ist
-der Consumer nicht davon betroffen, da die Dienste in der \texttt{ServiceRegistry}
+der Consumer nicht davon betroffen, da die Dienste in der \texttt{Registry}
  dynamisch zu Laufzeit lokalisiert und genutzt werden.
 
 Da jeder Service einen spezifischen Dienst anbieten und diese durch eine
  klar definite Schnittstellen, können Dienste unabhängig voneinander
  weiterentwickelt werden, was die kleine autonome Teams ermöglicht.
 
-Dienste können in anderen Anwendungen erneut eingesetzt oder
- mit anderen Diensten kombiniert werden, um die Bedürfnisse eines Unternehmens
- zu erfüllen \cite[29]{soa4}.
-Dies führt zu weniger Duplikaten von Ressourcen, einer höheren
+Außerdem Dienste sind einständig und können getrennt deployt werden,
+ was die häufige Auslieferung von Software in kürzere Iterationen ermöglicht.
 
- Außerdem jeder Komponente dieser Architektur ist lose gekoppelt, was die
- Austauschbarkeit der einzelnen Komponenten erleichtert.
+Skalierung ist hie bei auch möglich, da die Dienste unabhängig voneinander sind.
 
-Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} zu finden.
+Ein Nachteil der SOA ist jedoch, dass langfristig Abhängigkeit zwischen den Diensten
+entstehen können, besonders wenn die Dienste grob granuliert sind.
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
