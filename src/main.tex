@@ -86,7 +86,6 @@ Anwendungen dieser Architektur bestehen aus eng gekoppelte Komponenten, die von
 einander abhängig sind, sodass sie weder eigenständig laufen noch in manchen Fällen
 nicht isoliert kompiliert werden können. \cite[485]{mono3}
 
-
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.4\textwidth]{images/mono/mono.pdf}
@@ -182,7 +181,7 @@ und eng miteinander gekoppelt sind.
 
 \subsection{Layered}
 Die Layerd Architektur wählt als Basis Schichten (englisch \textit{layers}), die eine
-komplexe Anwendung in verschiedenen Schichten aufteilt.
+Anwendung in verschiedenen Schichten aufteilt.
 Die Anzahl oder Aufgabe der Schichten werden von der Architekturmuster nicht vorgegeben. ~\cite [34]{layered2}
 
 Demnach kann ein Unternehmen die Anzahl und die Aufgaben der Schichten nach den eigenen
@@ -210,6 +209,9 @@ die Implementierung der Schicht versteckt.
 Dadurch wird die Isolation der Schicht gemäß der Prinzip der Isolation von Schichten garantiert, sodass Änderungen
 in einer Schicht das System nicht beeinflussen.
 
+Außerdem kann die Layered Architecture mit agilen Architekturmuster wie Microservices
+kombiniert werden, um die Agilität des Unternehmens zu weiter zu erhöhen.
+
 Betrachten wir erneut das E-Commerce-Beispiel.
 In der vorherigen Implementierung würde die Anwendung in drei Services implementiert,
 die jeweils für die Verwaltung der Bestellungen, Zahlungen und Lieferungen zuständig sind.
@@ -236,8 +238,24 @@ vorgenommen werden müssen.
 
 In einem Unternehmen der zahlreiche Services betriebt, kann das zu einer erheblichen
 Kosten- und Zeiteinsparung führen.
-Somit sind Änderungen leichter und schneller, was
-die Agilität des Unternehmens erhöht.
+
+Ein weiterer Vorteil besteht darin, dass die Authentifizierung für sämtliche Dienste lediglich
+einmalig durchgeführt werden muss, da diese einmalig durch das API-Gateway erfolgt.
+ Dies eliminiert die Notwendigkeit, dass jeder einzelner Dienst die Authentifizierung erneut durchführen muss.
+
+Zudem durch den Einsatz von der Layered Architecture Services müssen sich nur
+ um ihre eigene Funktionalitäten kümmern und nicht um die Authentifizierung.
+
+Dadurch wird eine bessere Trennung der Concerns erreicht, was die Zusammenarbeit
+ in kleine autonome Teams noch weiter fördert.
+
+Die lose Kopplung der einzelnen Schichten zueinander, die durch die Schnittstellen entsteht,
+ermöglicht deren Austauschbarkeit und Änderungen.
+Dies resultiert in einer hohen Flexibilität.
+
+Das Beispiel hat außerdem gezeigt, dass die Layered Architecture, mit anderen agilen
+Architekturen wie Microservices, eine exzellente kombinierbare Architektur ist und
+folglich die Agilität des Unternehmens signifikant erhöht.
 
 \section{Moderne Enterprise-Architekturen}
 
