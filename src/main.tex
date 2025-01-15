@@ -105,7 +105,7 @@ Ein Dienst in SOA ist oft grob granuliert und besitzt folgenden Eigenschaften \c
 Betrachten wir im Folgenden die Hauptbestandteile der SOA, wie die Abb. ~\ref{fig:soa} \cite{soa4} darstellt:
 \begin{itemize}
   \item Service Provider: Bietet einen spezifischen Dienst an
-  \item Enterprise Service Bus: Dienst, das die Orchestrierung der Kommunikation zwischen Consumer und Provider gewährleistet
+  \item Service Bus: Dienst, das die Orchestrierung der Kommunikation zwischen Consumer und Provider gewährleistet
   \item Service Consumer: Nutzt einen bereitgestellten Dienst, dieses kann einen End-User oder ein anderer Dienst sein
   \item Service Registry: Dient als zentrale Sammlung von Meta-Daten über die verfügbare Dienste
 \end{itemize}
@@ -118,13 +118,15 @@ Betrachten wir im Folgenden die Hauptbestandteile der SOA, wie die Abb. ~\ref{fi
 \end{figure}
 
 Die Registry stellt eine Sammlung von verfügbaren Diensten und deren Spezifikationen dar.
-Provider registrieren ihre Dienste in der Registry und Consumer können Dienste dynamisch zu Laufzeit entdecken.
-Provider legen klare, definierte Endpoints und Verträge fest, an denen sich Consumer halten müssen,
-um die Dienste nutzen zu können. \cite[23 - 24]{soa4}.
+Provider registrieren ihre Dienste in der Registry und Consumer können Dienste dynamisch zu Laufzeit entdecken. \cite[23 - 24]{soa4}.
+In der Spezifikation der Dienste beschreibt wie ein Consumer mit dem Provider interagieren kann.
+Hierbei werden Nachrichtenformate der Anfrage sowie der Antwort definiert.
+Zusätzliche Informationen können ebenfalls in der Spezifikation enthalten sein, wie etwa die Bedingungen für die Nutzung des Dienstes. \cite[26]{soa4}
 
-Der Enterprise Service Bus stellt eine als Best Practice Vorgehensweise zur Implementierung
-von SOA dar. Hierbei handelt es sich um einen Messaging-Bus, dessen
-Funktion in der Orchestrierung sämtlicher Aspekte der Kommunikation zwischen Consumer und Provider besteht.
+Der Service Bus, insbesondere ein Enterprise Service Bus (ESB), stellt eine als Best Practice
+Vorgehensweise zur Implementierung von SOA dar.
+Hierbei handelt es sich um einen Messaging-Bus, dessen Funktion in der Orchestrierung
+sämtlicher Aspekte der Kommunikation zwischen Consumer und Provider besteht.
 Zu den typischen Aufgaben des Service Bus zählen unter anderem die Transformation von Nachrichtenformaten
 sowie die Weiterleitung von Nachrichten an den entsprechenden Dienst.
 \cite[37]{soa4}.
