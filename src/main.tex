@@ -86,29 +86,26 @@ Komponenten \ldots
 \section{Klassische Enterprise-Architekturen}
 
 \subsection{Service-oriented}
-Die bisherigen Architekturmuster, wie die Monolithic Architecture waren
-durch ihren engen gekoppelten Funktionalitäten charakterisiert.
-Jetzt betrachten wir die Service-oriented Architecture (SOA), die als zentrales
-Konzept von Dienste (englisch \textit{Services}) betont.
+Frühere Architekturmuster, wie etwa die monolithische Architektur, zeichneten sich durch eng miteinander gekoppelte
+Funktionalitäten aus. Im Gegensatz dazu betont die Service-orientierte Architektur (SOA) die Wiederverwendung
+von Funktionalitäten durch die Verwendung von Diensten (engl. \textit{services}).
 
-Der Begriff Service-oriented Architecture wurde am 1996 von Roy Schulte und Yefim Natis geprägt, um
- eine Architektur zu beschreiben, die die Logik und Daten in mehrere Anwendungen wiederverwendet.\cite[104]{soa3}
+Eine Analyse der wissenschaftlichen Literatur ergibt eine Vielzahl unterschiedlicher Definitionen von SOA.
+Das Konzept der Dienste ist jedoch ein zentraler Aspekt dieser Architektur.
 
-Eine universelle Definition von SOA ist nicht vorhanden, jedoch ist das Konzept
-von Dienst ein zentrales Element der Architektur.
 Ein Dienst in SOA ist oft grob granuliert und besitzt folgenden Eigenschaften \cite[16]{soa2}\cite[19]{soa4}:
 \begin{itemize}
   \item Der Dienst ist eine unabhängige Einheit
-  \item Der Dienst ist über einen Namen oder eine Adresse Webbasierte-Technologien erreichbar
+  \item Der Dienst kann über einen Namen oder einen Endpoint mittels webbasierter Technologien erreicht werden
   \item Der Dienst verfügt über eine publizierte Schnittstelle
   \item Der Dienst ist durch eine Registry auffindbar
   \item Der Dienst kann zur Laufzeit dynamisch lokalisiert und genutzt werden
 \end{itemize}
 
- Betrachten wir im Folgenden die Hauptbestandteile der SOA, wie die Abb. ~\ref{fig:soa} \cite{soa4} darstellt:
+Betrachten wir im Folgenden die Hauptbestandteile der SOA, wie die Abb. ~\ref{fig:soa} \cite{soa4} darstellt:
 \begin{itemize}
   \item Service Provider: Bietet einen spezifischen Dienst an
-  \item Service Bus: Dienst, das die Orchestrierung der Kommunikation zwischen Consumer und Provider gewährleistet
+  \item Enterprise Service Bus: Dienst, das die Orchestrierung der Kommunikation zwischen Consumer und Provider gewährleistet
   \item Service Consumer: Nutzt einen bereitgestellten Dienst, dieses kann einen End-User oder ein anderer Dienst sein
   \item Service Registry: Dient als zentrale Sammlung von Meta-Daten über die verfügbare Dienste
 \end{itemize}
@@ -120,17 +117,19 @@ Ein Dienst in SOA ist oft grob granuliert und besitzt folgenden Eigenschaften \c
   \label{fig:soa}
 \end{figure}
 
-Die Registry ist eine Sammlung von verfügbaren Diensten und deren Spezifikationen, wo
-Provider ihre Dienste registrieren und Consumer Dienste dynamisch zu Laufzeit entdecken können.
-Die Provider legen klare, definierte Endpoints und Verträge fest, an denen sich die Consumer
-halten müssen, um die Dienste nutzen zu können \cite[23 - 24]{soa4}.
+Die Registry stellt eine Sammlung von verfügbaren Diensten und deren Spezifikationen dar.
+Provider registrieren ihre Dienste in der Registry und Consumer können Dienste dynamisch zu Laufzeit entdecken.
+Provider legen klare, definierte Endpoints und Verträge fest, an denen sich Consumer halten müssen,
+um die Dienste nutzen zu können. \cite[23 - 24]{soa4}.
 
-Ein Service Bus, insbesondere ein Enterprise Service Bus (ESB), übernimmt die zentrale
-Aufgabe der Orchestrierung der Kommunikation zwischen Provider und Consumer.
-Zu den typischen Funktionen eines ESB gehören u.a. das Routing, sowie die
-Konvertierung der Nachrichten, falls Dienste unterschiedliche Protokolle für die Kommunikation verwenden \cite[37]{soa4}.
+Der Enterprise Service Bus stellt eine als Best Practice Vorgehensweise zur Implementierung
+von SOA dar. Hierbei handelt es sich um einen Messaging-Bus, dessen
+Funktion in der Orchestrierung sämtlicher Aspekte der Kommunikation zwischen Consumer und Provider besteht.
+Zu den typischen Aufgaben des Service Bus zählen unter anderem die Transformation von Nachrichtenformaten
+sowie die Weiterleitung von Nachrichten an den entsprechenden Dienst.
+\cite[37]{soa4}.
 
-In SOA ist es zusätzlich möglich, ein Broker zu nutzen, um die Kommunikation zwischen
+In SOA ist es zusätzlich möglich, ein Broker zu verwenden, um die Kommunikation zwischen
 Consumer und Provider zu ermöglichen.\cite[2]{soa5}
 
 Betrachten wir im Folgenden eine mögliche Implementierung der SOA mit einem Broker anhand des E-Commerce-Beispiels.
