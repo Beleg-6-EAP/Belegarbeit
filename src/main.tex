@@ -81,7 +81,53 @@ Besonders die cloud-native Architektur wird diesen Anforderungen gerecht.
 
 \section{Einleitung}
 % (Beschreibung von Kontext, Problemen, Anforderungen und Zielen)
-Mit E-Commerce-Beispiel motivieren
+Moderne Software-Systeme bestehen aus verschiedenen Komponenten \cite{evolutionOfDistributedSystems}.
+Dabei nimmt der Nutzer des Systems jenes zwar als eine Software wahr, jedoch verbirgt sich in Realität meist eine Struktur aus
+Software-Komponenten und deren Beziehungen hinter dieser Wahrnehmung - ein verteiltes Softwaresystem.
+Die Art und Weise dieser Struktur und Beziehungen wird als Architektur bezeichnet.
+Wie wird eine solche Architektur mit all ihren Anforderungen der modernen und schnelllebigen Businesswelt konstruiert?
+
+Betrachten wir folgend ein Anwendungsbeispiel zur Motivation.
+In einem Tech-Startup soll ein Backend für ein internationales E-Commerce-System entwickelt werden.
+Dabei werden folgende Anforderungen gestellt:
+\begin{itemize}
+  \item Zukünftig viele Nutzer und hoher Traffic erwartet
+  \item Geringes Kapital für Infrastruktur
+  \item Rechtliche Regularien sind teilweise unklar
+  \item Hohe Sicherheitsanforderungen aufgrund des Cash-Flows
+  \item Agiles Team von acht fähigen Entwicklern
+  \item Geldgeber wollen erste Auslieferung in zwei Wochen
+\end{itemize}
+
+Das Team arbeitet agil nach Scrum und einigt sich in einer der ersten Planungsphasen auf ein \textit{Minimum Viable Product} (kurz MVP) mit Bestellung, Bezahlung und Versand.
+Abbildung \ref{fig:ecommerce-bpm} zeigt die Modellierung des Geschäftsprozesses für diesen MVP\@.
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/einleitung/ecommerce-order}
+  \caption{Geschäftsprozessmodell des E-Commerce-Beispiel-MVPs}
+  \label{fig:ecommerce-bpm}
+\end{figure}
+Die Anforderungen sind somit zwar grob strukturiert aber trotzdem ungewiss.
+Die rechtlichen Regularien sind unklar, was zu späten technischen Änderungen führen kann.
+Anfangs ist der erwartete Traffic vermutlich niedrig, später sollte dieser aus geschäftlicher Sicht bestenfalls ansteigen.
+Wie wird der erwartet hohe Traffic aus infrastruktureller Sicht vorgesehen und finanziert?
+Sind acht Entwickler ausreichend?
+Kann nach zwei Wochen schon geliefert werden?
+
+All diese Fragen betreffen nicht nur die Software, sondern offensichtlich auch das Geschäft.
+Die Antworten dafür liefern Enterprise-Architekturen.
+Deren Ziel ist die Ausrichtung von Geschäft und IT, also die Unterstützung des Geschäfts durch die IT und umgekehrt \cite{eaprinciples}.
+Ein Enterprise Architektur-Muster ist dabei eine spezifische Strategie zur Umsetzung dieser Ausrichtung.
+Erwähnenswert ist hier die Nähe zur Bedeutung des lateinischen Wortes \textit{architectura}.
+Wörtlich übersetzt ist es die \textit{Wissenschaft der Baukunst} - meint aber sowohl das Produkt des Bauens als auch den Prozess des Bauens \footnote{https://www.duden.de/rechtschreibung/Architektur, abgerufen am 17.01.2025}.
+In Bezug dazu kann die Enterprise-Architektur also als Vision einer grundlegenden Struktur und Beziehungen von Komponenten eines Systems betrachtet werden.
+Wichtig ist hierbei die Abgrenzung zur Software-Architektur, der grundlegenden Struktur und Beziehungen von Teilen einer Software.
+
+Im Verlauf der Arbeit werden verschiedene Enterprise Architektur-Muster und deren Rolle in modernen Geschäftsprozessen untersucht
+und anschließend unter Einbeziehung technischer und struktureller Eigenschaften anhand ihrer Agilität bewertet.
+Dabei wird auch immer auf das eingangs erwähnte und in Abbildung \ref{fig:ecommerce-bpm} dargestellte E-Commerce-Beispiel zurückgegriffen.
+Die Arbeit ist wie folgt strukturiert:
+% TODO: Struktur
 
 \section{Grundlagen von Enterprise-Architekturen}
 Verteilte Systeme \ldots
