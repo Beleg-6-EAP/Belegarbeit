@@ -137,8 +137,127 @@ Als letztes Architektur-Muster wird in Abschnitt TODO die Microkernel-Architektu
 Abschließend werden die Architekturen in Abschnitt TODO nach technischen und agilen Kriterien verglichen und folglich die Ergebnisse dieser Arbeit zusammengefasst.
 
 \section{Klassische Enterprise-Architekturen}
-Blah \ldots
+\subsection{Monolithic Architecture}
+Der Begriff \textit{Monolith}, abgeleitet aus dem Altgriechischen und mit der Bedeutung
+\textit{einheitlicher Stein}, wird in der Softwarearchitektur verwendet, um ein Designmuster
+zu beschreiben, bei dem die gesamte Funktionalität einer Anwendung in einem einzigen,
+zusammenhängenden System integriert ist.
+In dieser Architektur übernimmt ein einzelner Prozess die Ausführung der gesamten Anwendung \cite[1]{mono}.
 
+Anwendungen, die diesem Architekturansatz folgen, bestehen aus eng miteinander verknüpften
+Komponenten, die wechselseitig voneinander abhängen.
+Diese Komponenten können weder unabhängig betrieben noch, in bestimmten Fällen,
+isoliert kompiliert werden \cite[485]{mono3}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{images/mono/mono.pdf}
+  \caption{Monolith Architektur}
+  \label{fig:mono}
+\end{figure}
+
+Diese Architektur bietet insbesondere für kleinere Anwendungen mehrere Vorteile,
+wie etwa eine vereinfachte Testbarkeit, Logging, Deployment und Debugging. Ein
+weiterer Vorteil besteht darin, dass keine separate Datenbanksynchronisation
+erforderlich ist, da sämtliche Daten in einer einzigen Datenbank gespeichert
+werden \cite[2]{mono4}.
+
+Betrachten wir das E-Commerce-Beispiel.
+Dafür definieren wir drei Klassen:
+\begin{itemize}
+  \item \texttt{OrderService}: Klasse, die die Bestellungen verwaltet
+  \item \texttt{PaymentService}: Klasse, die die Zahlungen abwickelt
+  \item \texttt{ShipmentService}: Klasse, die die Lieferungen initiiert
+\end{itemize}
+
+Die Kommunikation zwischen den Klassen erfolgt über Methodenaufrufe. In diesem
+Zusammenhang stellt die Klasse \texttt{OrderService} die zentrale Komponente dar,
+die die Methoden anderer Klassen nutzt, um den Bestellprozess zu steuern. Ein
+wesentlicher Vorteil dieses Ansatzes liegt in der einfachen Kommunikation
+zwischen den Komponenten.
+Durch den direkten Einsatz von Methodenaufrufen
+wird die Komplexität verringert, die typischerweise mit der Interaktion zwischen
+verschiedenen verteilte Systemen verbunden ist.
+
+Eine beispielhafte Implementierung des Payment-Service in einer monolithischen
+Architektur ist im Anhang dargestellt.
+Der vollständige Quellcode kann zudem bei GitHub
+\footnote{https://github.com/Beleg-6-EAP/demo-monolith-ecommerce} eingesehen werden.
+
+Mit dem Wachstum und der zunehmenden Komplexität der Code-Basis treten jedoch
+einige Nachteile auf.
+Änderungen an einer Komponente können unerwartete kaskadierende
+Fehler auslösen, was die Weiterentwicklung in kleinen, autonomen Teams erschwert
+und verlangsamt.
+
+Ein weiterer Nachteil ergibt sich aus der engen Kopplung zwischen den Komponenten,
+die durch direkte Methodenaufrufe entsteht.
+Änderungen an der Implementierung oder
+der Signatur einer Methode können in der Folge die gesamte Anwendung beeinflussen.
+
+Zudem wird die Wiederverwendung von Funktionalitäten erschwert, da die Komponenten
+stark miteinander verknüpft sind.
+Dies führt zu einer Duplizierung von Code, was die Kosten für Änderungen erhöht,
+da diese an mehreren Stellen vorgenommen werden müssen.
+
+Die daraus resultierende Komplexität und die erschwerte Wartung führen zu längeren
+Iterationen.
+Da das Deployment nur als Ganzes erfolgen kann, und die Iterationen
+sich verlängern, kommt es zu seltenen Auslieferungen neuer Features.
+
+Ein weiteres Problem liegt in der erschwerten horizontalen Skalierung, da die Anwendung
+nur als Ganzes skaliert werden kann.
+Dies stellt eine Herausforderung dar, da bei wachsenden
+Anforderungen die gesamte Anwendung skaliert werden muss, anstatt einzelne Komponenten unabhängig
+voneinander zu skalieren.
+
+Insgesamt ist die monolithische Architektur eine geeignete Lösung für
+kleinere Anwendungen, jedoch weniger geeignet für größere Systeme, da sie die Agilität und
+Flexibilität erheblich einschränken kann.
+
+\subsection{Modular Monolith}
+Das Hauptproblem der zuvor beschriebenen Architektur liegt in der engen Kopplung der Komponenten,
+was zu einer erhöhten Komplexität und begrenzten Flexibilität führt.
+Die Modular Monolithic Architecture stellt eine Weiterentwicklung der Monolithic Architecture dar,
+indem sie die Vorteile des monolithischen Ansatzes bewahrt und gleichzeitig die Nachteile
+der engen Kopplung verringert.
+
+In diesem Architekturmodell wird die Code-Basis in mehrere Module unterteilt, die jeweils
+eine spezifische Teilfunktionalität der Anwendung implementieren.\cite[11]{modular-mono2}.
+
+Die Modularisierung trägt zudem zur Reduzierung der Komplexität bei und ermöglicht eine bessere
+Organisation der Code-Basis, was sich positiv auf die Wartbarkeit der Anwendung auswirkt \cite[23 - 24]{modular-mono4}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{images/mono/mono-example.pdf}
+  \caption{Modular Monolith Architektur}
+  \label{fig:modular-mono}
+\end{figure}
+
+Betrachten wir erneut das E-Commerce-Beispiel.
+Diesmal wird die Anwendung in drei Hauptmodule aufgeteilt (Siehe Abb. ~\ref{fig:modular-mono}):
+\begin{itemize}
+  \item \texttt{order}: Modul, das für die Verwaltung der Bestellungen verantwortlich ist
+  \item \texttt{payment}: Modul, das für die Abwicklung der Zahlungen verantwortlich ist
+  \item \texttt{shipment}: Modul, das für die Initiierung der Lieferungen verantwortlich ist
+\end{itemize}
+
+Wie die Abbildung \ref{fig:modular-mono} zeigt, jedes Service ist in einem eigenen Modul gekapselt.
+Eine beispielhafte Implementierung der Payment-Service innerhalb des Moduls \texttt{payment}
+ist im Anhang zu finden.
+Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub
+\footnote{https://github.com/Beleg-6-EAP/demo-modulith-ecommerce} zu finden.
+
+Durch die Modularisierung sind die Komponenten weniger eng miteinander gekoppelt, was eine
+verbesserte Zusammenarbeit in kleinen, autonomen Teams fördert, im Vergleich zu traditionellen
+monolithischen Ansätzen.
+
+Ein Nachteil bleibt jedoch bestehen: Die Anwendung muss weiterhin als Ganzes deployed werden,
+was die Iterationen verlangsamt.
+Zudem bleibt die horizontale Skalierung weiterhin erschwert,
+und die Funktionalitäten können nicht wiederverwendet werden, da sie immer noch Teil einer
+einzigen Anwendung sind und eng miteinander gekoppelt bleiben.
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Microkernel Architecture}\label{subsec:microkernel-architecture}
