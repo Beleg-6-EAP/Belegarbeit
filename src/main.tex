@@ -118,7 +118,11 @@ zwischen den Komponenten.
 Durch den direkten Einsatz von Methodenaufrufen
 wird die Komplexität verringert, die typischerweise mit der Interaktion zwischen
 verschiedenen verteilte Systemen verbunden ist.
-Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-monolith-ecommerce} zu finden.
+
+Eine beispielhafte Implementierung des Payment-Service in einer monolithischen
+Architektur ist im Anhang \ref{app:code:monolith:paymentservice} dargestellt.
+Der vollständige Quellcode kann zudem bei GitHub
+\footnote{https://github.com/Beleg-6-EAP/demo-monolith-ecommerce} eingesehen werden.
 
 Mit dem Wachstum und der zunehmenden Komplexität der Code-Basis treten jedoch
 einige Nachteile auf.
@@ -153,8 +157,8 @@ Flexibilität erheblich einschränken kann.
 
 \subsection{Modular Monolith}
 Das Hauptproblem der zuvor beschriebenen Architektur liegt in der engen Kopplung der Komponenten,
-was zu einer erhöhten Komplexität und begrenzten Flexibilität führt. Die Modular
-Monolithic Architecture stellt eine Weiterentwicklung der Monolithic Architecture dar,
+was zu einer erhöhten Komplexität und begrenzten Flexibilität führt.
+Die Modular Monolithic Architecture stellt eine Weiterentwicklung der Monolithic Architecture dar,
 indem sie die Vorteile des monolithischen Ansatzes bewahrt und gleichzeitig die Nachteile
 der engen Kopplung verringert.
 
@@ -181,7 +185,8 @@ Diesmal wird die Anwendung in drei Hauptmodule aufgeteilt (Siehe Abb. ~\ref{fig:
 
 Wie die Abbildung \ref{fig:modular-mono} zeigt, jedes Service ist in einem eigenen Modul gekapselt.
  Eine beispielhafte Implementierung der Payment-Service innerhalb des Moduls \texttt{payment}
-ist im Anhang \ref{app:code:modulith:paymentservice} zu finden. Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub
+ist im Anhang \ref{app:code:modulith:paymentservice} zu finden.
+Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub
 \footnote{https://github.com/Beleg-6-EAP/demo-modulith-ecommerce} zu finden.
 
 Durch die Modularisierung sind die Komponenten weniger eng miteinander gekoppelt, was eine
@@ -189,7 +194,8 @@ verbesserte Zusammenarbeit in kleinen, autonomen Teams fördert, im Vergleich zu
 monolithischen Ansätzen.
 
 Ein Nachteil bleibt jedoch bestehen: Die Anwendung muss weiterhin als Ganzes deployed werden,
-was die Iterationen verlangsamt. Zudem bleibt die horizontale Skalierung weiterhin erschwert,
+was die Iterationen verlangsamt.
+Zudem bleibt die horizontale Skalierung weiterhin erschwert,
 und die Funktionalitäten können nicht wiederverwendet werden, da sie immer noch Teil einer
 einzigen Anwendung sind und eng miteinander gekoppelt bleiben.
 \subsection{Layered}
@@ -331,6 +337,24 @@ Blah \ldots
 \bibliography{main}
 
 \appendix
+
+\section{Code-Beispiele}
+
+\subsection{Monolithic Architecture}
+\label{app:code:monolith:paymentservice}
+\begin{listing}[H]
+    \tiny
+    \inputminted[linenos=true]{java}{code/monolith/PaymentService.java}
+    \caption{Service-Implementierung des \texttt{PaymentService} in Java Spring Boot 3.4.1}
+\end{listing}
+
+\subsection{Modular Monolithic Architecture}
+\label{app:code:modulith:paymentservice}
+\begin{listing}[H]
+    \tiny
+    \inputminted[linenos=true]{java}{code/modulith/PaymentService.java}
+    \caption{Service-Implementierung des \texttt{PaymentService} in Java Spring Boot 3.4.1}
+\end{listing}
 
 \section{Anhang 1}
 
