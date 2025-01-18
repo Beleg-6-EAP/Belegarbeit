@@ -180,7 +180,7 @@ wird die Komplexität verringert, die typischerweise mit der Interaktion zwische
 verschiedenen verteilte Systemen verbunden ist.
 
 Eine beispielhafte Implementierung des Payment-Service in einer monolithischen
-Architektur ist im Anhang dargestellt.
+Architektur ist im Anhang \ref{app:code:monolithic:paymentservice} dargestellt.
 Der vollständige Quellcode kann zudem bei GitHub
 \footnote{https://github.com/Beleg-6-EAP/demo-monolith-ecommerce} eingesehen werden.
 
@@ -245,7 +245,7 @@ Diesmal wird die Anwendung in drei Hauptmodule aufgeteilt (Siehe Abb. ~\ref{fig:
 
 Wie die Abbildung \ref{fig:modular-mono} zeigt, jedes Service ist in einem eigenen Modul gekapselt.
 Eine beispielhafte Implementierung der Payment-Service innerhalb des Moduls \texttt{payment}
-ist im Anhang zu finden.
+ist im Anhang \ref{app:code:modular:paymentservice} zu finden.
 Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub
 \footnote{https://github.com/Beleg-6-EAP/demo-modulith-ecommerce} zu finden.
 
@@ -481,6 +481,22 @@ Blah \ldots
 \appendix
 
 \section{Code-Beispiele}
+
+\subsection{Monolithic Architecture}
+\label{app:code:monolithic:paymentservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{java}{code/modulithic/PaymentService.java}
+  \caption{Service-Implementierung des \texttt{PaymentService} in Java Spring Boot 3.4.1}
+\end{listing}
+
+\subsection{Modular Monolithic Architecture}
+\label{app:code:modular:paymentservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{java}{code/monolithic/PaymentService.java}
+  \caption{Service-Implementierung des \texttt{PaymentService} in Java Spring Boot 3.4.1}
+\end{listing}
 
 \subsection{Event-Driven Architecture}
 \label{app:code:eda:paymentservice}
