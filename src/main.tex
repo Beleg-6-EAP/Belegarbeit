@@ -77,14 +77,17 @@ Blah \ldots
 Blah \ldots
 
 \section{Klassische Enterprise-Architekturen}
-\subsection{Monolith}
-Der Begriff \textit{Monolith} stammt aus dem Altgriechischen und bedeutet \textit{einheitlicher Stein}.
-Die monolithische Architektur beschreibt ein Softwarearchitektur-Pattern, die die gesamte Funktionalität
-in einer einzigen Anwendung bündelt, wobei ein einzigen Prozess für die Ausführung der Anwendung zuständig ist \cite[1]{mono}.
+\subsection{Monolithic Architecture}
+Der Begriff \textit{Monolith}, abgeleitet aus dem Altgriechischen und mit der Bedeutung
+\textit{einheitlicher Stein}, wird in der Softwarearchitektur verwendet, um ein Designmuster
+zu beschreiben, bei dem die gesamte Funktionalität einer Anwendung in einem einzigen,
+zusammenhängenden System integriert ist.
+In dieser Architektur übernimmt ein einzelner Prozess die Ausführung der gesamten Anwendung \cite[1]{mono}.
 
-Anwendungen dieser Architektur bestehen aus eng gekoppelte Komponenten, die von
-einander abhängig sind, sodass sie weder eigenständig laufen noch in manchen Fällen
-nicht isoliert kompiliert werden können. \cite[485]{mono3}
+Anwendungen, die diesem Architekturansatz folgen, bestehen aus eng miteinander verknüpften
+Komponenten, die wechselseitig voneinander abhängen.
+Diese Komponenten können weder unabhängig betrieben noch, in bestimmten Fällen,
+isoliert kompiliert werden \cite[485]{mono3}.
 
 \begin{figure}[h!]
     \centering
@@ -93,10 +96,11 @@ nicht isoliert kompiliert werden können. \cite[485]{mono3}
     \label{fig:mono}
 \end{figure}
 
-Diese Architektur weist für kleinere Anwendungen gewisse Vorteile auf,
-wie eine einfache Testbarkeit, Logging, Deployment, sowie Debugging.
-Zudem eine Datenbanksynchronisation ist nicht notwendig, da die
-gesamte Daten in einer einzigen Datenbank persistieren. \cite[2]{mono4}
+Diese Architektur bietet insbesondere für kleinere Anwendungen mehrere Vorteile,
+wie etwa eine vereinfachte Testbarkeit, Logging, Deployment und Debugging. Ein
+weiterer Vorteil besteht darin, dass keine separate Datenbanksynchronisation
+erforderlich ist, da sämtliche Daten in einer einzigen Datenbank gespeichert
+werden \cite[2]{mono4}.
 
 Betrachten wir das E-Commerce-Beispiel.
 Dafür definieren wir drei Klassen:
@@ -106,50 +110,59 @@ Dafür definieren wir drei Klassen:
     \item \texttt{ShipmentService}: Klasse, die die Lieferungen initiiert
 \end{itemize}
 
-Die Kommunikation zwischen den Klassen erfolgt durch Methodenaufrufe.
-Dabei ist die Klasse \texttt{OrderService} die Hauptklasse, die die
-Methoden der anderen Klassen verwendet, um den Bestellungsvorgang durchzuführen.
-Vorteilhaft hier ist, dass hier die Kommunikation zwischen den komponenten einfach ist.
-Durch die Verwendung von Methodenaufrufen wird die Komplexität reduziert, die mit
-Intersystemkommunikationen verbunden ist.
-
-Jedoch, wenn die Code-Basis wächst und komplex wird, treten einige Nachteile auf.
-Durch Änderungen in einer Komponente können unerwartete kaskadierende Fehler
-ausgelöst werden, was die Weiterentwicklung in kleinen autonomen
-Teams erschwert und verlangsamt.
-
-Außerdem durch die Verwendung von direkte Methodenaufrufe, entsteht eine enge Kopplung
+Die Kommunikation zwischen den Klassen erfolgt über Methodenaufrufe. In diesem
+Zusammenhang stellt die Klasse \texttt{OrderService} die zentrale Komponente dar,
+die die Methoden anderer Klassen nutzt, um den Bestellprozess zu steuern. Ein
+wesentlicher Vorteil dieses Ansatzes liegt in der einfachen Kommunikation
 zwischen den Komponenten.
-Änderungen in der Implementierung oder Signatur einer Methode können die gesamte
- Anwendung beeinflussen.
+Durch den direkten Einsatz von Methodenaufrufen
+wird die Komplexität verringert, die typischerweise mit der Interaktion zwischen
+verschiedenen verteilte Systemen verbunden ist.
+Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-monolith-ecommerce} zu finden.
 
-Weiterhin ist die Wiederverwendung von Funktionalitäten nicht möglich, da die
-Komponenten eng gekoppelt sind.
-Das führt zu Duplikation von Code, was
-die Änderungen teurer macht, da die Änderungen in mehreren Stellen durchgeführt werden müssen.
+Mit dem Wachstum und der zunehmenden Komplexität der Code-Basis treten jedoch
+einige Nachteile auf.
+Änderungen an einer Komponente können unerwartete kaskadierende
+Fehler auslösen, was die Weiterentwicklung in kleinen, autonomen Teams erschwert
+und verlangsamt.
 
-Die dadurch erhöhte Komplexität und die schwierige Wartung führen zu längere Iterationen.
-Da das Deployment nur als Ganzes erfolgt und die Iterationen länger dauern,
-kommt es zu seltenen Auslieferungen von neuen Features.
+Ein weiterer Nachteil ergibt sich aus der engen Kopplung zwischen den Komponenten,
+die durch direkte Methodenaufrufe entsteht.
+Änderungen an der Implementierung oder
+der Signatur einer Methode können in der Folge die gesamte Anwendung beeinflussen.
 
-Ferner ist Horizontale Skalierung auch nicht möglich, da die Anwendung nur als Ganzes
-skaliert werden kann.
-Insgesamt ist die Monolithic Architecture eine gute Einstiegslösung, allerdings nicht für größere Anwendungen geeignet, da
- die Agilität davon stark betroffen werden kann.
+Zudem wird die Wiederverwendung von Funktionalitäten erschwert, da die Komponenten
+stark miteinander verknüpft sind.
+Dies führt zu einer Duplizierung von Code, was die Kosten für Änderungen erhöht,
+da diese an mehreren Stellen vorgenommen werden müssen.
+
+Die daraus resultierende Komplexität und die erschwerte Wartung führen zu längeren
+Iterationen.
+Da das Deployment nur als Ganzes erfolgen kann, und die Iterationen
+sich verlängern, kommt es zu seltenen Auslieferungen neuer Features.
+
+Ein weiteres Problem liegt in der erschwerten horizontalen Skalierung, da die Anwendung
+nur als Ganzes skaliert werden kann.
+Dies stellt eine Herausforderung dar, da bei wachsenden
+Anforderungen die gesamte Anwendung skaliert werden muss, anstatt einzelne Komponenten unabhängig
+voneinander zu skalieren.
+
+Insgesamt ist die monolithische Architektur eine geeignete Lösung für
+kleinere Anwendungen, jedoch weniger geeignet für größere Systeme, da sie die Agilität und
+Flexibilität erheblich einschränken kann.
 
 \subsection{Modular Monolith}
-Das Hauptproblem der vorherigen Architektur war die eng gekoppelte Natur der Architektur,
-die eine gewisse Komplexität und Unflexibilität mit sich bringt.
-Die Modular Monolithic Architecture ist eine Evolution der Monolithic Architecture, die die Vorteile
-der Monolithic Architecture erbt und gleichzeitig die Nachteile der enge Kopplung reduziert.
+Das Hauptproblem der zuvor beschriebenen Architektur liegt in der engen Kopplung der Komponenten,
+was zu einer erhöhten Komplexität und begrenzten Flexibilität führt. Die Modular
+Monolithic Architecture stellt eine Weiterentwicklung der Monolithic Architecture dar,
+indem sie die Vorteile des monolithischen Ansatzes bewahrt und gleichzeitig die Nachteile
+der engen Kopplung verringert.
 
-In diese Architektur wird die Code-Basis in mehrere Module geteilt, die jeweils
-eine Teil-Funktionalität der Anwendung implementieren.
-Die Kommunikation zwischen den Module erfolgt durch klar definierte Interfaces,
-wobei die Wiederverwendbarkeit und Austauschbarkeit der Module ermöglicht wird.\cite[11]{modular-mono2}
+In diesem Architekturmodell wird die Code-Basis in mehrere Module unterteilt, die jeweils
+eine spezifische Teilfunktionalität der Anwendung implementieren.\cite[11]{modular-mono2}.
 
-Die Trennung in Modulen reduziert zudem die Komplexität und fördert eine bessere
- Organization der Code-Basis, was zu einer bessere Wartbarkeit führt.\cite[23 - 24]{modular-mono4}
+Die Modularisierung trägt zudem zur Reduzierung der Komplexität bei und ermöglicht eine bessere
+Organisation der Code-Basis, was sich positiv auf die Wartbarkeit der Anwendung auswirkt \cite[23 - 24]{modular-mono4}.
 
 \begin{figure}[h!]
     \centering
@@ -161,102 +174,95 @@ Die Trennung in Modulen reduziert zudem die Komplexität und fördert eine besse
 Betrachten wir erneut das E-Commerce-Beispiel.
 Diesmal wird die Anwendung in drei Hauptmodule aufgeteilt (Siehe Abb. ~\ref{fig:modular-mono}):
 \begin{itemize}
-    \item \texttt{OrderModule}: Verantwortlich für die Verwaltung der Bestellungen
-    \item \texttt{PaymentModule}: Verantwortlich für die Abwicklung der Zahlungen
-    \item \texttt{ShipmentModule}: Verantwortlich für die Initiierung der Lieferungen
+    \item \texttt{order}: Modul, das für die Verwaltung der Bestellungen verantwortlich ist
+    \item \texttt{payment}: Modul, das für die Abwicklung der Zahlungen verantwortlich ist
+    \item \texttt{shipment}: Modul, das für die Initiierung der Lieferungen verantwortlich ist
 \end{itemize}
 
-Abhängigkeiten zwischen den Modulen werden durch die Verwendungen von Interfaces
-reduziert, indem die Module nur die Schnittstellen kennen und nicht die Implementierung.
-Zum Beispiel Änderungen an der Implementierung einer Komponente von \texttt{PaymentModule} müssen nur
-in der Implementierung des Interfaces durchgeführt werden, ohne dass die anderen
-abhängigen Module davon betroffen werden.
-Die Modularisierung ermöglicht zusätzlich eine verbesserte Entwicklung in semi-autonomen Teams im
-Vergleich zu den traditionellen Monolithen.
-Problematisch ist jedoch, dass die Anwendung nur als Ganzes deployt werden kann, was
-die Iterationen verlangsamt.
-Außerdem ist weiterhin keine horizontale Skalierung möglich und die Funktionalitäten
-können nicht wiederverwendet werden, da diese immer noch Teil einer einzigen Anwendung
-und eng miteinander gekoppelt sind.
+Wie die Abbildung \ref{fig:modular-mono} zeigt, jedes Service ist in einem eigenen Modul gekapselt.
+ Eine beispielhafte Implementierung der Payment-Service innerhalb des Moduls \texttt{payment}
+ist im Anhang \ref{app:code:modulith:paymentservice} zu finden. Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub
+\footnote{https://github.com/Beleg-6-EAP/demo-modulith-ecommerce} zu finden.
 
+Durch die Modularisierung sind die Komponenten weniger eng miteinander gekoppelt, was eine
+verbesserte Zusammenarbeit in kleinen, autonomen Teams fördert, im Vergleich zu traditionellen
+monolithischen Ansätzen.
+
+Ein Nachteil bleibt jedoch bestehen: Die Anwendung muss weiterhin als Ganzes deployed werden,
+was die Iterationen verlangsamt. Zudem bleibt die horizontale Skalierung weiterhin erschwert,
+und die Funktionalitäten können nicht wiederverwendet werden, da sie immer noch Teil einer
+einzigen Anwendung sind und eng miteinander gekoppelt bleiben.
 \subsection{Layered}
-Die Layerd Architektur wählt als Basis Schichten (englisch \textit{layers}), die eine
-Anwendung in verschiedenen Schichten aufteilt.
-Die Anzahl oder Aufgabe der Schichten werden von der Architekturmuster nicht vorgegeben. ~\cite [34]{layered2}
+Das Problem der redundanten Schnittstellenlogik in Microservices lässt sich durch die
+Anwendung der Layered Architecture effektiv lösen. Dieses Architekturmuster basiert auf
+der Grundidee, eine Anwendung in verschiedene Schichten (englisch \textit{layers})
+zu gliedern. Dabei bleibt sowohl die Anzahl der Schichten als auch deren spezifische
+Aufgaben flexibel und wird nicht durch das Muster vorgeschrieben \cite[34]{layered2}.
 
-Demnach kann ein Unternehmen die Anzahl und die Aufgaben der Schichten nach den eigenen
-Bedürfnisse definieren.
+Diese Flexibilität erlaubt es Unternehmen, die Schichtstruktur individuell an ihre
+spezifischen Anforderungen anzupassen. Um jedoch Vorteile wie eine verbesserte Wartbarkeit,
+Skalierbarkeit und Wiederverwendbarkeit zu realisieren, ist die Einhaltung zentraler
+Prinzipien der Layered Architecture essenziell \cite[34]{layered2}.
 
-Allerdings sind einigen Prinzipien von der Architekturmuster zu beachten, um von Vorteile
-wie die Wartbarkeit, Skalierbarkeit und die Wiederverwendbarkeit zu profitieren.~\cite [34]{layered2}
+Ein grundlegendes Prinzip ist die Trennung der Zuständigkeiten (englisch \textit{Separation
+of Concerns}). Hierbei werden Komponenten mit unterschiedlichen Aufgaben in separate Schichten
+aufgeteilt, sodass jede Schicht ausschließlich für eine klar definierte und abgeschlossene
+Funktionalität verantwortlich ist \cite[34]{layered2}.
 
-Ein wichtiges Prinzip der Layered Architecture ist der die Trennung der Zuständigkeiten
-(Englisch \textit{Separation of concerns}). Komponenten mit unterschiedlichen Aufgaben sollten
-auf verschiedene Schichten verteilt werden, sodass die Komponenten einer Schicht jeweils für
-eine klar definierte und gemeinsame Aufgabe zuständig sind. \cite[34]{layered2}
+Ein weiteres wesentliches Prinzip ist die Isolation der Schichten (englisch \textit{Layers
+of Isolation}), welches gewährleistet, dass Änderungen innerhalb einer Schicht lediglich
+deren eigene Komponenten betreffen und keine Auswirkungen auf andere Schichten haben \cite[3–4]{layered}.
 
-Ein weiteres Prinzip der Layered Architecture ist der Isolation von Schichten (Englisch \textit{layers of isolation}).
-Dies besagt, dass die Kommunikation zwischen Schichten ausschließlich über definierte Verträge erfolgt.
-\cite[3 - 4]{layered}
+Die Layered Architecture bietet insbesondere für Unternehmen die Möglichkeit, häufig genutzte
+Funktionalitäten, wie etwa Authentifizierung oder Logging, in dedizierten Schichten zu kapseln
+und diese flexibel in verschiedenen Diensten wiederzuverwenden. Dabei sorgt eine klar definierte
+Schnittstelle jeder Schicht sowohl für eine reibungslose Kommunikation als auch für die
+Abstraktion der internen Implementierung.
 
-In Kontext eines Unternehmens kann die Layered Architecture genutzt werden, um häufige
- Funktionalitäten in Schichten zu kapseln und diese in anderen Teilen des Unternehmens wiederzuverwenden.
+Zusätzlich lässt sich die Layered Architecture nahtlos mit modernen agilen Architekturmustern
+wie Microservices kombinieren, wodurch die Agilität eines Unternehmens weiter gesteigert werden
+kann.
 
-Jede Schicht müsste dabei eine klare Aufgabe haben, um die Trennung der Zuständigkeiten zu gewährleisten.
-Außerdem sollte die Schicht über eine klare Schnittstelle verfügen, die die Kommunikation ermöglicht und
-die Implementierung der Schicht versteckt.
+Ein praxisnahes Beispiel hierfür ist das E-Commerce-Beispiel mit Microservices.
+In der ursprünglichen Implementierung enthielt jeder Service ein eigenes Modul für die Authentifizierung. Diese
+redundante Struktur führte jedoch zu erheblichen Herausforderungen hinsichtlich Wartbarkeit
+und Kosten: Änderungen an der Authentifizierungslogik mussten in jedem einzelnen Service separat
+durchgeführt werden, was den Entwicklungsprozess verlangsamte und unnötig komplizierte.
 
-Dadurch wird die Isolation der Schicht gemäß der Prinzip der Isolation von Schichten garantiert, sodass Änderungen
-in einer Schicht das System nicht beeinflussen.
-
-Außerdem kann die Layered Architecture mit agilen Architekturmuster wie Microservices
-kombiniert werden, um die Agilität des Unternehmens zu weiter zu erhöhen.
-
-Betrachten wir erneut das E-Commerce-Beispiel.
-In der vorherigen Implementierung würde die Anwendung in drei Services implementiert,
-die jeweils für die Verwaltung der Bestellungen, Zahlungen und Lieferungen zuständig sind.
-Innerhalb der einzelnen Services ist einen Modul für die Authentifizierung
-implementiert.
-Problematisch ist jedoch, dass diese Module in jedem Service dupliziert sind,
-was die Wartbarkeit erschwert und die Änderungen teurer macht.
-Änderungen in einem Modul müssen in allen Services durchgeführt werden, was die
-Entwicklung verlangsamt.
-Lösung hierfür ist die Implementierung der Authentifizierung in einer
-eigenen Schicht auszulagern.
-Die Kommunikation ist folglich über eine REST-Schnittstelle über den API-Gateway möglich.(Siehe Abb. ~\ref{fig:layered})
+Eine Lösung für dieses Problem besteht darin, die Authentifizierungslogik in eine zentrale
+Schicht auszulagern.
+Diese Schicht kann direkt mit dem ein API-Gateway kommunizieren
+und somit eine einheitliche Authentifizierung gewährleisten (siehe Abb. ~\ref{fig:layered}).
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{images/layered/ecommerce-example}
-    \caption{Layered Architektur }
+    \caption{Layered Microservice Architecture: Beispiel E-Commerce}
     \label{fig:layered}
 \end{figure}
 
-Mit Einführung der Authentifizierungsschicht kann bei Bedarf die Authentifizierung
-in einer einzigen Stelle geändert werden, ohne dass die Änderungen in anderen Services
-vorgenommen werden müssen.
+Mit der Einführung einer zentralen Authentifizierungsschicht kann die Authentifizierungslogik
+an einer einzigen Stelle gebündelt und bei Bedarf angepasst werden, ohne Änderungen in den
+einzelnen Services vornehmen zu müssen.
+Dies bietet insbesondere in Unternehmen mit einer Vielzahl von Services signifikante Zeit- und Kosteneinsparungen.
 
-In einem Unternehmen der zahlreiche Services betriebt, kann das zu einer erheblichen
-Kosten- und Zeiteinsparung führen.
+Ein weiterer Vorteil besteht darin, dass die Authentifizierung für sämtliche Dienste
+zentral über ein API-Gateway durchgeführt wird, wodurch eine wiederholte Authentifizierung
+auf Service-Ebene entfällt.
+Diese Entlastung erlaubt es den einzelnen Services, sich ausschließlich auf ihre
+Kernfunktionalität zu konzentrieren, während die Authentifizierung ausgelagert ist.
 
-Ein weiterer Vorteil besteht darin, dass die Authentifizierung für sämtliche Dienste lediglich
-einmalig durchgeführt werden muss, da diese einmalig durch das API-Gateway erfolgt.
- Dies eliminiert die Notwendigkeit, dass jeder einzelner Dienst die Authentifizierung erneut durchführen muss.
+Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-microservice-ecommerce} zu finden.
 
-Zudem durch den Einsatz von der Layered Architecture Services müssen sich nur
- um ihre eigene Funktionalitäten kümmern und nicht um die Authentifizierung.
+Die klare Trennung der Verantwortlichkeiten fördert die Zusammenarbeit in kleinen, autonomen
+Teams, da jedes Team unabhängig an einer Schicht arbeiten kann.
+Zudem ermöglicht das Prinzip der Isolation der Schichten eine höhere Flexibilität gegenüber wechselnden Anforderungen.
+Durch die Wiederverwendbarkeit in der Layered Architecture wird Mehraufwand vermieden und duplizierter
+Code reduziert, was zu kürzeren Iterationen und häufigeren Auslieferungen führt.
 
-Dadurch wird eine bessere Trennung der Concerns erreicht, was die Zusammenarbeit
- in kleine autonome Teams noch weiter fördert.
-
-Die lose Kopplung der einzelnen Schichten zueinander, die durch die Schnittstellen entsteht,
-ermöglicht deren Austauschbarkeit und Änderungen.
-Dies resultiert in einer hohen Flexibilität.
-
-Das Beispiel hat außerdem gezeigt, dass die Layered Architecture, mit anderen agilen
-Architekturen wie Microservices, eine exzellente kombinierbare Architektur ist und
-folglich die Agilität des Unternehmens signifikant erhöht.
-
+Das Beispiel verdeutlicht zudem, dass die Layered Architecture sich hervorragend mit agilen
+Architekturen wie Microservices kombinieren lässt.
+Diese Synergie trägt entscheidend dazu bei, die Agilität des Systems nachhaltig zu steigern.
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Event-Driven Architecture}
