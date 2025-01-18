@@ -104,7 +104,7 @@ Abbildung \ref{fig:ecommerce-bpm} zeigt die Modellierung des Geschäftsprozesses
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\linewidth]{images/einleitung/ecommerce-order}
-  \caption{Geschäftsprozessmodell des E-Commerce-Beispiel-MVPs}
+  \caption{Geschäftsprozessmodell des MVPs des E-Commerce-Beispiels}
   \label{fig:ecommerce-bpm}
 \end{figure}
 Die Anforderungen sind somit zwar grob strukturiert aber trotzdem ungewiss.
@@ -319,6 +319,7 @@ Dabei ersetzen wir den dort verwendeten Broker durch eine \textit{Event-Bridge} 
 Weiter werden die drei Services für Aufgeben einer Bestellung, Bearbeitung der Bezahlung und Initiierung des Versands als \textit{Lambda} \footnote{https://aws.amazon.com/de/lambda/, abgerufen am 06.01.2025},
 also Serverless-Function implementiert.
 Abbildung \ref{fig:cloudnativeecommerce} stellt diese cloud-native Architektur dar.
+Eine beispielhafte Implementierung des \texttt{ProcessPaymentLambda}s ist im Anhang \ref{app:code:cloudnative:paymentservice} und auf GitHub\footnote{https://github.com/Beleg-6-EAP/demo-cloud-native-ecommerce} zu finden.
 \begin{figure}[!h]
   \centering
   \includegraphics[width=\linewidth]{images/cloud-native/cloud-native-ecommerce.drawio}
@@ -362,13 +363,20 @@ Blah \ldots
 
 \section{Code-Beispiele}
 
-\subsection{Event-Driven-Architecture}
+\subsection{Event-Driven Architecture}
 \label{app:code:eda:paymentservice}
 \begin{listing}[H]
   \tiny
   \inputminted[linenos=true]{java}{code/eda/PaymentService.java}
   \caption{Service-Implementierung des \texttt{PaymentService} in Java Spring Boot 3.4.1 mit Apache Kafka als Event-Broker}
-  \label{listing:semigroup}
+\end{listing}
+
+\subsection{Cloud-native Architecture}
+\label{app:code:cloudnative:paymentservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{haskell}{code/cloud/PaymentService.hs}
+  \caption{Implementierung des \texttt{ProcessPaymentLambda}s in Haskell}
 \end{listing}
 
 \section{Übungsaufgaben}
