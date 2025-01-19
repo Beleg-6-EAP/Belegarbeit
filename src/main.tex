@@ -224,8 +224,8 @@ Diese Vorteile können die Architektur in ausgewählten Anwendungsfällen sehr g
 Das Problem der redundanten Schnittstellenlogik in Microservices lässt sich durch die
 Anwendung der Layered Architecture effektiv lösen. Dieses Architekturmuster basiert auf
 der Grundidee, eine Anwendung in verschiedene Schichten (englisch \textit{layers})
-zu gliedern. Dabei bleibt sowohl die Anzahl der Schichten als auch deren spezifische
-Aufgaben flexibel und wird nicht durch das Muster vorgeschrieben \cite[34]{layered2}.
+zu gliedern. Dabei bleiben sowohl die Anzahl der Schichten als auch deren spezifischen
+Aufgaben flexibel und werden nicht durch das Muster vorgeschrieben \cite[34]{layered2}.
 
 Diese Flexibilität erlaubt es Unternehmen, die Schichtstruktur individuell an ihre
 spezifischen Anforderungen anzupassen. Um jedoch Vorteile wie eine verbesserte Wartbarkeit,
@@ -259,7 +259,7 @@ durchgeführt werden, was den Entwicklungsprozess verlangsamte und unnötig komp
 
 Eine Lösung für dieses Problem besteht darin, die Authentifizierungslogik in eine zentrale
 Schicht auszulagern.
-Diese Schicht kann direkt mit dem ein API-Gateway kommunizieren
+Diese Schicht kann direkt mit dem API-Gateway kommunizieren
 und somit eine einheitliche Authentifizierung gewährleisten (siehe Abb. ~\ref{fig:layered}).
 
 \begin{figure}[h!]
@@ -280,7 +280,8 @@ auf Service-Ebene entfällt.
 Diese Entlastung erlaubt es den einzelnen Services, sich ausschließlich auf ihre
 Kernfunktionalität zu konzentrieren, während die Authentifizierung ausgelagert ist.
 
-Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-microservice-ecommerce} zu finden.
+Die vollständige Implementierung des E-Commerce-Beispiels mit geschichteter Microservice-Architektur
+ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-microservice-ecommerce} zu finden.
 
 Die klare Trennung der Verantwortlichkeiten fördert die Zusammenarbeit in kleinen, autonomen
 Teams, da jedes Team unabhängig an einer Schicht arbeiten kann.
