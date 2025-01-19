@@ -219,6 +219,81 @@ Diese Vorteile können die Architektur in ausgewählten Anwendungsfällen sehr g
 \subsection{Microservice-Architecture}
 \label{subsec:microservice}
 
+\subsection{Layered-Architecture}
+\label{subsec:layered}
+Das Problem der redundanten Schnittstellenlogik in Microservices lässt sich durch die
+Anwendung der Layered Architecture effektiv lösen. Dieses Architekturmuster basiert auf
+der Grundidee, eine Anwendung in verschiedene Schichten (englisch \textit{layers})
+zu gliedern. Dabei bleiben sowohl die Anzahl der Schichten als auch deren spezifischen
+Aufgaben flexibel und werden nicht durch das Muster vorgeschrieben \cite[34]{layered2}.
+
+Diese Flexibilität erlaubt es Unternehmen, die Schichtstruktur individuell an ihre
+spezifischen Anforderungen anzupassen. Um jedoch Vorteile wie eine verbesserte Wartbarkeit,
+Skalierbarkeit und Wiederverwendbarkeit zu realisieren, ist die Einhaltung zentraler
+Prinzipien der Layered Architecture essenziell \cite[34]{layered2}.
+
+Ein grundlegendes Prinzip ist die Trennung der Zuständigkeiten (englisch \textit{Separation
+of Concerns}). Hierbei werden Komponenten mit unterschiedlichen Aufgaben in separate Schichten
+aufgeteilt, sodass jede Schicht ausschließlich für eine klar definierte und abgeschlossene
+Funktionalität verantwortlich ist \cite[34]{layered2}.
+
+Ein weiteres wesentliches Prinzip ist die Isolation der Schichten (englisch \textit{Layers
+of Isolation}), welches gewährleistet, dass Änderungen innerhalb einer Schicht lediglich
+deren eigene Komponenten betreffen und keine Auswirkungen auf andere Schichten haben \cite[3–4]{layered}.
+
+Die Layered Architecture bietet insbesondere für Unternehmen die Möglichkeit, häufig genutzte
+Funktionalitäten, wie etwa Authentifizierung oder Logging, in dedizierten Schichten zu kapseln
+und diese flexibel in verschiedenen Diensten wiederzuverwenden. Dabei sorgt eine klar definierte
+Schnittstelle jeder Schicht sowohl für eine reibungslose Kommunikation als auch für die
+Abstraktion der internen Implementierung.
+
+Zusätzlich lässt sich die Layered Architecture nahtlos mit modernen agilen Architekturmustern
+wie Microservices kombinieren, wodurch die Agilität eines Unternehmens weiter gesteigert werden
+kann.
+
+Ein praxisnahes Beispiel hierfür ist das E-Commerce-Beispiel mit Microservices.
+In der ursprünglichen Implementierung enthielt jeder Service ein eigenes Modul für die Authentifizierung. Diese
+redundante Struktur führte jedoch zu erheblichen Herausforderungen hinsichtlich Wartbarkeit
+und Kosten: Änderungen an der Authentifizierungslogik mussten in jedem einzelnen Service separat
+durchgeführt werden, was den Entwicklungsprozess verlangsamte und unnötig komplizierte.
+
+Eine Lösung für dieses Problem besteht darin, die Authentifizierungslogik in eine zentrale
+Schicht auszulagern.
+Diese Schicht kann direkt mit dem API-Gateway kommunizieren
+und somit eine einheitliche Authentifizierung gewährleisten (siehe Abb. ~\ref{fig:layered}).
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/layered/ecommerce-example}
+  \caption{Layered Microservice Architecture: Beispiel E-Commerce}
+  \label{fig:layered}
+\end{figure}
+
+Mit der Einführung einer zentralen Authentifizierungsschicht kann die Authentifizierungslogik
+an einer einzigen Stelle gebündelt und bei Bedarf angepasst werden, ohne Änderungen in den
+einzelnen Services vornehmen zu müssen.
+Dies bietet insbesondere in Unternehmen mit einer Vielzahl von Services signifikante Zeit- und Kosteneinsparungen.
+
+Ein weiterer Vorteil besteht darin, dass die Authentifizierung für sämtliche Dienste
+zentral über ein API-Gateway durchgeführt wird, wodurch eine wiederholte Authentifizierung
+auf Service-Ebene entfällt.
+Diese Entlastung erlaubt es den einzelnen Services, sich ausschließlich auf ihre
+Kernfunktionalität zu konzentrieren, während die Authentifizierung ausgelagert ist.
+
+Die vollständige Implementierung des E-Commerce-Beispiels mit geschichteter Microservice-Architektur
+ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-microservice-ecommerce} zu finden.
+
+Die klare Trennung der Verantwortlichkeiten fördert die Zusammenarbeit in kleinen, autonomen
+Teams, da jedes Team unabhängig an einer Schicht arbeiten kann.
+Zudem ermöglicht das Prinzip der Isolation der Schichten eine höhere Flexibilität gegenüber wechselnden Anforderungen.
+Durch die Wiederverwendbarkeit in der Layered Architecture wird Mehraufwand vermieden und duplizierter
+Code reduziert, was zu kürzeren Iterationen und häufigeren Auslieferungen führt.
+
+Das Beispiel verdeutlicht zudem, dass die Layered Architecture sich hervorragend mit agilen
+Architekturen wie Microservices kombinieren lässt.
+Diese Synergie trägt entscheidend dazu bei, die Agilität des Systems nachhaltig zu steigern.
+
+
 \subsection{Event-Driven Architecture}
 \label{subsec:eda}
 Die Event-Driven Architecture wählt als Basis einen anderen Ausgangspunkt als die bisherigen Architekturmuster.
