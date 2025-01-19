@@ -139,21 +139,22 @@ Abschließend werden die Architekturen in Abschnitt TODO nach technischen und ag
 \section{Klassische Enterprise-Architekturen}
 
 \subsection{Service-oriented}
-Frühere Architekturmuster, wie etwa die monolithische Architektur, zeichneten sich durch eng miteinander gekoppelte
-Funktionalitäten aus. Im Gegensatz dazu betont die Service-orientierte Architektur (SOA) die Wiederverwendung
-von Funktionalitäten durch die Verwendung von Diensten (engl. \textit{services}).
+Frühere Architekturmuster, wie die monolithische Architektur, zeichneten sich durch eine
+enge Kopplung der Funktionalitäten aus. Im Gegensatz dazu legt die Service-orientierte
+Architektur (SOA) einen starken Fokus auf die Wiederverwendbarkeit von Funktionalitäten,
+indem sie auf die Nutzung von Diensten (engl. \textit{services}) setzt.
 
-Eine Analyse der wissenschaftlichen Literatur ergibt eine Vielzahl unterschiedlicher Definitionen von SOA.
-Das Konzept der Dienste ist jedoch ein zentraler Aspekt dieser Architektur.
+Eine Untersuchung der wissenschaftlichen Literatur zeigt, dass SOA in unterschiedlichen
+Kontexten verschieden definiert wird. Dennoch bleibt das Konzept der Dienste ein zentraler
+Bestandteil dieser Architektur.
 
-Ein Dienst in SOA ist oft grob granuliert und besitzt folgenden Eigenschaften \cite[16]{soa2}\cite[19]{soa4}:
-\begin{itemize}
-  \item Der Dienst ist eine unabhängige Einheit
-  \item Der Dienst kann über einen Namen oder einen Endpoint mittels webbasierter Technologien erreicht werden
-  \item Der Dienst verfügt über eine publizierte Schnittstelle
-  \item Der Dienst ist durch eine Registry auffindbar
-  \item Der Dienst kann zur Laufzeit dynamisch lokalisiert und genutzt werden
-\end{itemize}
+Ein Service in einer SOA ist lose gekoppelt, typischerweise grob granuliert und zeichnet
+sich durch mehrere zentrale Eigenschaften aus. Seine Auffindbarkeit wird durch eine
+Registry sichergestellt, während der Zugriff über einen Namen oder einen Endpoint
+mittels webbasierter Technologien erfolgt. Die Verfügbarkeit einer publizierten
+Spezifikation definiert wie die Interaktion mit dem Dienst erfolgt. Zudem kann der
+Dienst zur Laufzeit dynamisch lokalisiert sowie genutzt werden.
+\cite[16]{soa2}\cite[19]{soa4}
 
 Betrachten wir im Folgenden die Hauptbestandteile der SOA, wie die Abb. ~\ref{fig:soa} \cite{soa4} darstellt:
 \begin{itemize}
@@ -170,11 +171,13 @@ Betrachten wir im Folgenden die Hauptbestandteile der SOA, wie die Abb. ~\ref{fi
   \label{fig:soa}
 \end{figure}
 
-Die Registry stellt eine Sammlung von verfügbaren Diensten und deren Spezifikationen dar.
-Provider registrieren ihre Dienste in der Registry und Consumer können Dienste dynamisch zu Laufzeit entdecken. \cite[23 - 24]{soa4}.
-In der Spezifikation der Dienste beschreibt wie ein Consumer mit dem Provider interagieren kann.
-Hierbei werden Nachrichtenformate der Anfrage sowie der Antwort definiert.
-Zusätzliche Informationen können ebenfalls in der Spezifikation enthalten sein, wie etwa die Bedingungen für die Nutzung des Dienstes. \cite[26]{soa4}
+Die Registry dient als Sammlung verfügbarer Dienste und deren Spezifikationen.
+Provider registrieren ihre Dienste in der Registry, während Consumer die
+Möglichkeit haben, diese Dienste dynamisch zur Laufzeit zu entdecken \cite[23-24]{soa4}.
+In der Dienstspezifikation wird beschrieben, wie ein Consumer mit dem Provider interagieren
+kann. Dies umfasst unter anderem die Definition der Anfrage und der Antwort.
+Zudem können weitere Informationen, wie etwa die Bedingungen für die Nutzung des Dienstes,
+in der Spezifikation enthalten sein \cite[26]{soa4}.
 
 Der Service Bus, insbesondere ein Enterprise Service Bus (ESB), stellt eine als Best Practice
 Vorgehensweise zur Implementierung von SOA dar.
@@ -206,12 +209,14 @@ Wie Abbildung \ref{fig:soaecommerce} zeigt, die Dienste\texttt{ShipmentService},
 \texttt{PaymentService} und \texttt{OrderService} registrieren ihre Dienste
 bei dem \texttt{Registry}.
 
+Im Anhang \ref{app:code:soa:registry} ist eine beispielhafte Implementierung der \texttt{ServiceRegistry} zu finden
+und die vollständige Implementierung des E-Commerce-Beispiels kann bei
+GitHub\footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} ebenfalls eingesehen werden.
+
 In diesem Beispiel \texttt{OrderService} konsumiert die beiden anderen Dienste.
  Dieses erfolgt durch Anfragen über den Broker, der die \texttt{Registry} anspricht.
 Nach Erhalt der Meta-Daten, der \texttt{OrderService} kann die benötigten Dienste
  gemäß den Interface-Verträge nutzen.
-
-Die vollständige Implementierung des E-Commerce-Beispiels ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} zu finden.
 
 Sollte sich die Implementierung oder die Schnittstellen der Provider ändern, ist
 der Consumer nicht davon betroffen, da die Dienste in der \texttt{Registry}
@@ -466,6 +471,14 @@ Blah \ldots
   \tiny
   \inputminted[linenos=true]{haskell}{code/cloud/PaymentService.hs}
   \caption{Implementierung des \texttt{ProcessPaymentLambda}s in Haskell}
+\end{listing}
+
+\subsection{Service-oriented Architecture}
+\label{app:code:soa:registry}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{ruby}{code/soa/service_registry.rb}
+  \caption{Implementierung der \texttt{ServiceRegistry} in Ruby on Rails}
 \end{listing}
 
 \section{Übungsaufgaben}
