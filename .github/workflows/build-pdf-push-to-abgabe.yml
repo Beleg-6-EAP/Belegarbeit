@@ -1,0 +1,29 @@
+name: Push PDF to Abgabe
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  push_pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      # Push the PDF to the organization repository Abgabe
+      - name: Push PDF to Organization Repository
+        run: |
+          git clone https://x-access-token:${{ secrets.SECRET_TOKEN }}@github.com/Beleg-6-EAP/Abgabe.git target-repo
+          cp main.pdf target-repo/"Beleg 6 - Enterprise Architektur-Muster.pdf"
+          cd target-repo
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add "Beleg 6 - Enterprise Architektur-Muster.pdf"
+          git commit -m "CI: add compiled PDF" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.SECRET_TOKEN }}@github.com/Beleg-6-EAP/Abgabe.git
+        env:
+          SECRET_TOKEN: ${{ secrets.SECRET_TOKEN }}

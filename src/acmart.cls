@@ -2780,7 +2780,7 @@
   %\addresses
   %\egroup
   Diese Arbeit wurde im Rahmen des Mastermoduls \glqq Software Engineering\grqq\ (Dozent: Prof. Dr. Andreas Both) an der HTWK Leipzig im Wintersemester 2024/2025 erstellt.
-  Diese Arbeit ist unter der Lizenz ??? freigegeben.}
+  Diese Arbeit ist unter der Lizenz \href{https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1}{Creative Commons Attribution 4.0 International} freigegeben.}
 \AtEndDocument{\if@ACM@nonacm\else\if@ACM@journal
   \ifx\@authorsaddresses\@empty
   \ClassWarningNoLine{\@classname}{Authors'
@@ -3003,7 +3003,7 @@
         %\@journalNameShort, Vol. \@acmVolume, No.
         %\@acmNumber, Article \@acmArticle.  Publication date: %\@acmPubDate.
         % 2nd and FOLLOWING PAGES
-        Modul \glqq Software Engineering\grqq, Prof.~Dr.~Andreas~Both, Wintersemester 2023/2024
+        Modul \glqq Software Engineering\grqq, Prof.~Dr.~Andreas~Both, Wintersemester 2024/2025
         }%
       \fi
     \else % Proceedings
