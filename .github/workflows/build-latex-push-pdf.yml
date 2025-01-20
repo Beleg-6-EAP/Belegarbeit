@@ -3,7 +3,10 @@ name: Build LaTeX document & push PDF
 permissions:
   contents: write
 
-on: [push]
+on:
+  push:
+    branches-ignore:
+      - master
 
 jobs:
   build_latex:

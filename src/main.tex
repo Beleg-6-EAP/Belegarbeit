@@ -64,28 +64,203 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-Blah abstrakt\ldots
+In diesem Papier werden verschiedene Enterprise Architektur-Muster und deren Rolle in modernen Geschäftsprozessen untersucht
+und anschließend unter Einbeziehung technischer und struktureller Eigenschaften anhand ihrer Agilität bewertet.
+Dabei orientiert sich die Reihenfolge der Betrachtung jener Architektur-Muster am historischen Verlauf derer Entwicklung und der Notwendigkeit dieser.
+Genauer werden die monolithische Architektur, modulare monolithische Architektur, service-orientierte Architektur, Microservice-Architektur, Layered-Architecture,
+Event-Driven Architecture, cloud-native Architektur und die Microkernel-Architektur betrachtet.
+
+Insgesamt zeigt sich, dass klassische Enterprise Architektur-Muster zwar mit geringer initialer Komplexität punkten,
+mit weiterführender Entwicklung allerdings Flexibilitätsprobleme bedingen.
+Dem entgegen zeichnen sich die modernen Architektur-Muster durch hohe Agilität und damit hoher Flexibilität gegenüber den in der modernen Geschäftswelt ständig
+wechselnden Anforderungen aus.
+Besonders die cloud-native Architektur wird diesen Anforderungen gerecht.
 \end{abstract}
 
 \maketitle
 
 \section{Einleitung}
 % (Beschreibung von Kontext, Problemen, Anforderungen und Zielen)
-Mit E-Commerce-Beispiel motivieren
+Moderne Software-Systeme bestehen aus verschiedenen Komponenten \cite{evolutionOfDistributedSystems}.
+Dabei nimmt der Nutzer des Systems jenes zwar als eine Software wahr, jedoch verbirgt sich in Realität meist eine Struktur aus
+Software-Komponenten und deren Beziehungen hinter dieser Wahrnehmung - ein verteiltes Softwaresystem.
+Die Art und Weise dieser Struktur und Beziehungen wird als Architektur bezeichnet.
+Wie wird eine solche Architektur mit all ihren Anforderungen der modernen und schnelllebigen Geschäftswelt konstruiert?
 
-\section{Grundlagen von Enterprise-Architekturen}
-Verteilte Systeme \ldots
+Betrachten wir folgend ein Anwendungsbeispiel zur Motivation.
+In einem Tech-Startup soll ein Backend für ein internationales E-Commerce-System entwickelt werden.
+Dabei werden folgende Anforderungen gestellt:
+\begin{itemize}
+  \item Zukünftig viele Nutzer und hoher Traffic erwartet
+  \item Geringes Kapital für Infrastruktur
+  \item Rechtliche Regularien sind teilweise unklar
+  \item Hohe Sicherheitsanforderungen aufgrund des Cash-Flows
+  \item Agiles Team von acht fähigen Entwicklern
+  \item Geldgeber wollen erste Auslieferung in zwei Wochen
+\end{itemize}
 
-Architekturen \ldots
+Das Team arbeitet agil nach Scrum und einigt sich in einer der ersten Planungsphasen auf ein \textit{Minimum Viable Product} (kurz MVP) mit Bestellung, Bezahlung und Versand.
+Abbildung \ref{fig:ecommerce-bpm} zeigt die Modellierung des Geschäftsprozesses für diesen MVP\@.
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/einleitung/ecommerce-order}
+  \caption{Geschäftsprozessmodell des MVPs des E-Commerce-Beispiels}
+  \label{fig:ecommerce-bpm}
+\end{figure}
+Die Anforderungen sind somit zwar grob strukturiert aber trotzdem ungewiss.
+Die rechtlichen Regularien sind unklar, was zu späten technischen Änderungen führen kann.
+Anfangs ist der erwartete Traffic vermutlich niedrig, später sollte dieser aus geschäftlicher Sicht bestenfalls ansteigen.
+Wie wird der erwartet hohe Traffic aus infrastruktureller Sicht vorgesehen und finanziert?
+Sind acht Entwickler ausreichend?
+Kann nach zwei Wochen schon geliefert werden?
 
-Komponenten \ldots
+All diese Fragen betreffen nicht nur die Software, sondern offensichtlich auch das Geschäft.
+Die Antworten dafür liefern Enterprise-Architekturen.
+Deren Ziel ist die Ausrichtung von Geschäft und IT, also die Unterstützung des Geschäfts durch die IT und umgekehrt \cite{eaprinciples}.
+Ein Enterprise Architektur-Muster ist dabei eine spezifische Strategie zur Umsetzung dieser Ausrichtung.
+Erwähnenswert ist hier die Nähe zur Bedeutung des lateinischen Wortes \textit{architectura}.
+Wörtlich übersetzt ist es die \textit{Wissenschaft der Baukunst} - meint aber sowohl das Produkt des Bauens als auch den Prozess des Bauens \footnote{https://www.duden.de/rechtschreibung/Architektur, abgerufen am 17.01.2025}.
+In Bezug dazu kann die Enterprise-Architektur also als Vision einer grundlegenden Struktur und Beziehungen von Komponenten eines Systems betrachtet werden.
+Wichtig ist hierbei die Abgrenzung zur Software-Architektur, der grundlegenden Struktur und Beziehungen von Teilen einer Software.
 
-\ldots
+Im Verlauf der Arbeit werden verschiedene Enterprise Architektur-Muster und deren Rolle in modernen Geschäftsprozessen untersucht
+und anschließend unter Einbeziehung technischer und struktureller Eigenschaften anhand ihrer Agilität bewertet.
+Dabei wird auch immer auf das eingangs erwähnte und in Abbildung \ref{fig:ecommerce-bpm} dargestellte E-Commerce-Beispiel zurückgegriffen.
+Die Arbeit ist wie folgt strukturiert:
 
+Zunächst wird in Abschnitt TODO auf die monolithische Architektur eingegangen, bevor die Modularisierung des Monolithen in Abschnitt TODO diskutiert wird.
+Danach wird in Abschnitt TODO die service-orientierte Architektur betrachtet.
+Folgend wird in Abschnitt TODO die Microservice-Architektur diskutiert.
+Anschließend wird in Abschnitt TODO untersucht, wie eine Schichten-Architektur andere, dienst-basierte Architekturen ergänzen kann.
+Daraufhin werden sowohl die event-basierte Architektur in Abschnitt TODO als auch die cloud-native Architektur in Abschnitt TODO erläutert.
+Als letztes Architektur-Muster wird in Abschnitt TODO die Microkernel-Architektur betrachtet.
+Abschließend werden die Architekturen in Abschnitt TODO nach technischen und agilen Kriterien verglichen und folglich die Ergebnisse dieser Arbeit zusammengefasst.
 
 \section{Klassische Enterprise-Architekturen}
-Blah \ldots
+\subsection{Monolithic Architecture}
+Der Begriff \textit{Monolith}, abgeleitet aus dem Altgriechischen und mit der Bedeutung
+\textit{einheitlicher Stein}\footnote{https://www.duden.de/rechtschreibung/Monolith, abgerufen am 17.01.2025},
+wird in der Softwarearchitektur verwendet, um ein Designmuster zu beschreiben, bei dem die gesamte Funktionalität
+einer Anwendung in einem einzigen, zusammenhängenden System integriert ist.
+In dieser Architektur übernimmt ein einzelner Prozess die Ausführung der gesamten Anwendung \cite[1]{mono}.
 
+Anwendungen, die diesem Architekturansatz folgen, bestehen aus eng miteinander verknüpften
+Komponenten, die wechselseitig voneinander abhängen.
+Diese Komponenten können weder unabhängig betrieben, noch in bestimmten Fällen,
+isoliert kompiliert werden \cite[485]{mono3}.
+
+Diese Architektur bietet insbesondere für kleinere Anwendungen mehrere Vorteile,
+wie etwa eine vereinfachte Testbarkeit, Logging, Deployment und Debugging. Ein
+weiterer Vorteil besteht darin, dass keine separate Datenbanksynchronisation
+erforderlich ist, da sämtliche Daten in einer einzigen Datenbank gespeichert
+werden \cite[20358]{mono4}.
+
+Betrachten wir das E-Commerce-Beispiel .
+Dafür definieren wir drei Klassen (Siehe Abb. ~\ref{fig:mono}):
+\begin{itemize}
+  \item \texttt{OrderService}: Klasse, die die Bestellungen verwaltet
+  \item \texttt{PaymentService}: Klasse, die die Zahlungen abwickelt
+  \item \texttt{ShipmentService}: Klasse, die die Lieferungen initiiert
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{images/mono/mono.pdf}
+  \caption{Monolith Architektur}
+  \label{fig:mono}
+\end{figure}
+
+Die Kommunikation zwischen den Klassen erfolgt über Methodenaufrufe. In diesem
+Zusammenhang stellt die Klasse \texttt{OrderService} die zentrale Komponente dar,
+die die Methoden anderer Klassen nutzt, um den Bestellprozess zu steuern. Ein
+wesentlicher Vorteil dieses Ansatzes liegt in der einfachen Kommunikation
+zwischen den Komponenten.
+Durch den direkten Einsatz von Methodenaufrufen
+wird die Komplexität verringert, die typischerweise mit der Interaktion zwischen
+verschiedenen verteilte Systemen verbunden wäre.
+
+Eine beispielhafte Implementierung des \texttt{PaymentService}s  in einer monolithischen
+Architektur ist im Anhang \ref{app:code:monolithic:paymentservice} dargestellt.
+Der vollständige Quellcode des E-Commerce-Beispiels kann zudem bei GitHub\footnote{https://github.com/Beleg-6-EAP/demo-monolith-ecommerce}
+eingesehen werden.
+
+Mit dem Wachstum und der zunehmenden Komplexität der Code-Basis treten jedoch
+einige Nachteile auf.
+Änderungen an einer Komponente können unerwartete kaskadierende
+Fehler auslösen, was die Weiterentwicklung in kleinen, autonomen Teams erschwert
+und verlangsamt.
+
+Ein weiterer Nachteil ergibt sich aus der engen Kopplung zwischen den Komponenten,
+die durch direkte Methodenaufrufe entsteht.
+Änderungen an der Implementierung oder
+der Signatur einer Methode können in der Folge die gesamte Anwendung beeinflussen.
+
+Zudem wird die Wiederverwendung von Funktionalitäten erschwert, da die Komponenten
+stark miteinander verknüpft sind.
+Dies führt zu einer Duplizierung von Code, was die Kosten für Änderungen erhöht,
+da diese an mehreren Stellen vorgenommen werden müssen.
+
+Die daraus resultierende Komplexität und die erschwerte Wartung führen zu längeren
+Iterationen.
+Da das Deployment nur als Ganzes erfolgen kann und die Iterationen
+sich verlängern, kommt es zu seltenen Auslieferungen.
+
+Ein weiteres Problem liegt in der erschwerten horizontalen Skalierung, da die Anwendung
+nur als Ganzes skaliert werden kann.
+Dies stellt eine Herausforderung dar, da bei wachsenden
+Anforderungen die gesamte Anwendung skaliert werden muss, anstatt einzelne Komponenten unabhängig
+voneinander zu skalieren.
+
+Insgesamt ist die monolithische Architektur eine geeignete Lösung für
+kleinere Anwendungen, jedoch weniger geeignet für größere Systeme, da sie die Agilität und
+Flexibilität erheblich einschränken kann.
+
+\subsection{Modular Monolith}
+Das Hauptproblem der zuvor beschriebenen Architektur liegt in der engen Kopplung der Komponenten,
+was zu einer erhöhten Komplexität und begrenzten Flexibilität führt.
+Die Modular Monolithic Architecture stellt eine Weiterentwicklung der Monolithic Architecture dar,
+indem sie die Vorteile des monolithischen Ansatzes bewahrt und gleichzeitig die Nachteile
+der engen Kopplung verringert.
+
+In diesem Architekturmodell wird die Code-Basis in mehrere Module unterteilt, die jeweils
+eine spezifische Teilfunktionalität der Anwendung implementieren.\cite[11]{modular-mono2}.
+
+Die Modularisierung trägt zudem zur Reduzierung der Komplexität bei und ermöglicht eine bessere
+Organisation der Code-Basis, was sich positiv auf die Wartbarkeit der Anwendung auswirkt \cite[23 - 24]{modular-mono4}.
+
+
+Betrachten wir erneut das E-Commerce-Beispiel.
+Diesmal wird die Anwendung in drei Hauptmodule aufgeteilt (Siehe Abb. ~\ref{fig:modular-mono}):
+\begin{itemize}
+  \item \texttt{order}: Modul, das für die Verwaltung der Bestellungen verantwortlich ist
+  \item \texttt{payment}: Modul, das für die Abwicklung der Zahlungen verantwortlich ist
+  \item \texttt{shipment}: Modul, das für die Initiierung der Lieferungen verantwortlich ist
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{images/mono/mono-example.pdf}
+  \caption{Modular Monolith Architektur}
+  \label{fig:modular-mono}
+\end{figure}
+
+Wie Abbildung \ref{fig:modular-mono} zeigt, ist jeder Service in einem eigenen Modul gekapselt.
+Ein konkretes Beispiel hierfür bietet die Implementierung des \texttt{OrderService}s, welche im Modul \texttt{order}
+realisiert ist (siehe Anhang \ref{app:code:modular:orderservice}). Die Logik des \texttt{OrderService} ist vollständig
+innerhalb des entsprechenden Moduls integriert, während die Kommunikation mit anderen Modulen durch klar definierte
+Spezifikationen geregelt wird.
+Für weiterführende Informationen und die vollständige Implementierung des E-Commerce-Beispiels
+wird auf das GitHub-Repository verwiesen\footnote{https://github.com/Beleg-6-EAP/demo-modulith-ecommerce}.
+
+Durch die Modularisierung sind die Komponenten weniger eng miteinander gekoppelt, was eine
+verbesserte Zusammenarbeit in kleinen, autonomen Teams fördert, im Vergleich zu traditionellen
+monolithischen Ansätzen.
+
+Ein Nachteil bleibt jedoch bestehen: Die Anwendung muss weiterhin als Ganzes deployed werden,
+was die Iterationen verlangsamt.
+Zudem bleibt die horizontale Skalierung weiterhin erschwert,
+und die Funktionalitäten können nicht wiederverwendet werden, da sie immer noch Teil einer
+einzigen Anwendung sind und eng miteinander gekoppelt bleiben.
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Microservices Architecture}\label{subsec:microservices}
@@ -236,7 +411,86 @@ Die wesentlichen Vorteile, die die Microkernel Architektur bietet, zeigen sich e
 Sowohl Iterationen als auch Auslieferungszeiten sind dann sehr kurz, da Module unabhängig voneinander entwickelt werden und die Anwendung schnell an neue Anforderungen angepasst werden kann.
 Diese Vorteile können die Architektur in ausgewählten Anwendungsfällen sehr geeignet für agile Entwicklungsumgebungen machen.
 
+\subsection{Microservice-Architecture}
+\label{subsec:microservice}
+
+\subsection{Layered-Architecture}
+\label{subsec:layered}
+Das Problem der redundanten Schnittstellenlogik in Microservices lässt sich durch die
+Anwendung der Layered Architecture effektiv lösen. Dieses Architekturmuster basiert auf
+der Grundidee, eine Anwendung in verschiedene Schichten (englisch \textit{layers})
+zu gliedern. Dabei bleiben sowohl die Anzahl der Schichten als auch deren spezifischen
+Aufgaben flexibel und werden nicht durch das Muster vorgeschrieben \cite[34]{layered2}.
+
+Diese Flexibilität erlaubt es Unternehmen, die Schichtstruktur individuell an ihre
+spezifischen Anforderungen anzupassen. Um jedoch Vorteile wie eine verbesserte Wartbarkeit,
+Skalierbarkeit und Wiederverwendbarkeit zu realisieren, ist die Einhaltung zentraler
+Prinzipien der Layered Architecture essenziell \cite[34]{layered2}.
+
+Ein grundlegendes Prinzip ist die Trennung der Zuständigkeiten (englisch \textit{Separation
+of Concerns}). Hierbei werden Komponenten mit unterschiedlichen Aufgaben in separate Schichten
+aufgeteilt, sodass jede Schicht ausschließlich für eine klar definierte und abgeschlossene
+Funktionalität verantwortlich ist \cite[34]{layered2}.
+
+Ein weiteres wesentliches Prinzip ist die Isolation der Schichten (englisch \textit{Layers
+of Isolation}), welches gewährleistet, dass Änderungen innerhalb einer Schicht lediglich
+deren eigene Komponenten betreffen und keine Auswirkungen auf andere Schichten haben \cite[3–4]{layered}.
+
+Die Layered Architecture bietet insbesondere für Unternehmen die Möglichkeit, häufig genutzte
+Funktionalitäten, wie etwa Authentifizierung oder Logging, in dedizierten Schichten zu kapseln
+und diese flexibel in verschiedenen Diensten wiederzuverwenden. Dabei sorgt eine klar definierte
+Schnittstelle jeder Schicht sowohl für eine reibungslose Kommunikation als auch für die
+Abstraktion der internen Implementierung.
+
+Zusätzlich lässt sich die Layered Architecture nahtlos mit modernen agilen Architekturmustern
+wie Microservices kombinieren, wodurch die Agilität eines Unternehmens weiter gesteigert werden
+kann.
+
+Ein praxisnahes Beispiel hierfür ist das E-Commerce-Beispiel mit Microservices.
+In der ursprünglichen Implementierung enthielt jeder Service ein eigenes Modul für die Authentifizierung. Diese
+redundante Struktur führte jedoch zu erheblichen Herausforderungen hinsichtlich Wartbarkeit
+und Kosten: Änderungen an der Authentifizierungslogik mussten in jedem einzelnen Service separat
+durchgeführt werden, was den Entwicklungsprozess verlangsamte und unnötig komplizierte.
+
+Eine Lösung für dieses Problem besteht darin, die Authentifizierungslogik in eine zentrale
+Schicht auszulagern.
+Diese Schicht kann direkt mit dem API-Gateway kommunizieren
+und somit eine einheitliche Authentifizierung gewährleisten (siehe Abb. ~\ref{fig:layered}).
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/layered/ecommerce-example}
+  \caption{Layered Microservice Architecture: Beispiel E-Commerce}
+  \label{fig:layered}
+\end{figure}
+
+Mit der Einführung einer zentralen Authentifizierungsschicht kann die Authentifizierungslogik
+an einer einzigen Stelle gebündelt und bei Bedarf angepasst werden, ohne Änderungen in den
+einzelnen Services vornehmen zu müssen.
+Dies bietet insbesondere in Unternehmen mit einer Vielzahl von Services signifikante Zeit- und Kosteneinsparungen.
+
+Ein weiterer Vorteil besteht darin, dass die Authentifizierung für sämtliche Dienste
+zentral über ein API-Gateway durchgeführt wird, wodurch eine wiederholte Authentifizierung
+auf Service-Ebene entfällt.
+Diese Entlastung erlaubt es den einzelnen Services, sich ausschließlich auf ihre
+Kernfunktionalität zu konzentrieren, während die Authentifizierung ausgelagert ist.
+
+Die vollständige Implementierung des E-Commerce-Beispiels mit geschichteter Microservice-Architektur
+ist bei GitHub \footnote{https://github.com/Beleg-6-EAP/demo-microservice-ecommerce} zu finden.
+
+Die klare Trennung der Verantwortlichkeiten fördert die Zusammenarbeit in kleinen, autonomen
+Teams, da jedes Team unabhängig an einer Schicht arbeiten kann.
+Zudem ermöglicht das Prinzip der Isolation der Schichten eine höhere Flexibilität gegenüber wechselnden Anforderungen.
+Durch die Wiederverwendbarkeit in der Layered Architecture wird Mehraufwand vermieden und duplizierter
+Code reduziert, was zu kürzeren Iterationen und häufigeren Auslieferungen führt.
+
+Das Beispiel verdeutlicht zudem, dass die Layered Architecture sich hervorragend mit agilen
+Architekturen wie Microservices kombinieren lässt.
+Diese Synergie trägt entscheidend dazu bei, die Agilität des Systems nachhaltig zu steigern.
+
+
 \subsection{Event-Driven Architecture}
+\label{subsec:eda}
 Die Event-Driven Architecture wählt als Basis einen anderen Ausgangspunkt als die bisherigen Architekturmuster.
 Während bei letzteren Komponenten Dienste bereitstellen, welche von anderen Komponenten explizit genutzt werden,
 verhalten sich Dienst-bereitstellende Komponenten in der Event-Driven Architecture reaktiv,
@@ -267,13 +521,13 @@ Abbildung \ref{fig:eda} stellt diesen Vertrag dar.
 \end{figure}
 
 Durch den Vertrag weisen die Events am Event-Bus starke Kohäsion und somit lose Kopplung auf.
-Diese lose Kopplung minimiert nicht nur kaskadierende Fehler, sondern ermöglicht agilen Entwickler-Teams durch klar abgegrenzte Features einfach definierbare Iterationen
-- eine Menge von Events, deren Erzeugung und Konsumierung.
+Diese lose Kopplung minimiert nicht nur kaskadierende Fehler, sondern ermöglicht kleinen und autonomen Entwickler-Teams
+die klare Abgrenzung von Features und folglich einfach definierbare Iterationen - eine Menge von Events, deren Erzeugung und Konsumierung.
 
 Weiter sind Events oft nah an dem, was Ereignisse in realen Prozessen sind, also domain-driven.
 Gebündelt ermöglichen obige Punkte die kontinuierliche Auslieferung von Software in kurzen Intervallen.
 
-Außerdem garantiert die asynchrone Behandlung von Ereignissen zusammen mit der loosen Kopplung maximale Skalierung.
+Außerdem garantiert die asynchrone Behandlung von Ereignissen zusammen mit der loosen Kopplung hohe Skalierung und die Möglichkeit für Echtzeit-Software.
 Daher sind Event-Driven Architekturen besonders für datenintensive Echtzeit-Anwendungen wie IoT (Internet of Things) und Analytics geeignet \cite{iotEda}.
 
 Betrachten wir erneut das E-Commerce-Beispiel aus der Einleitung.
@@ -284,7 +538,7 @@ Dafür definieren wir drei Arten von Events:
   \item \texttt{ShipmentInitiated}: Ein Event, das genau dann erzeugt wird, wenn die Bestellung versandt wird
 \end{itemize}
 
-Weiter teilen wir die Funktionalität ähnlich wie bei der Microservice-Architektur in die drei verschiedenen Dienste \texttt{OrderService}, \texttt{PaymentService} und \texttt{ShipmentService} auf.
+Analog zur Microservice-Architektur teilen wir die Funktionalitäten in drei verschiedene Dienste auf: \texttt{OrderService}, \texttt{PaymentService} und \texttt{ShipmentService}.
 
 \begin{figure}[!h]
   \centering
@@ -304,6 +558,60 @@ Aufgrund der Asynchronität der Behandlung von Ereignissen ist die Testung des S
 Mögliche Problemquellen schließen dabei unter anderem Event-Verlust, erhöhte Latenz und Inkonsistenz ein.
 Die hohen Anforderungen an die Entwickler verlangen viel Vertrauen in jene, einer der zentralen Punkte des agilen Manifests \cite{agileManifesto}.
 Insgesamt weist die Event-Driven Architecture also eine sehr hohe Agilität auf und ist damit besonders für moderne Software und ihre stetig wechselnden Anforderungen geeignet.
+
+\subsection{Cloud-Native Architecture}
+Die Cloud-Native Architecture beruht auf der Annahme, dass die Infrastruktur in ständigem Wandel ist und die Auslagerung jener in die Cloud mehr Agilität schafft \cite{cloudNative}.
+Als Cloud wird in diesem Fall die Infrastruktur eines oder mehrerer Cloud-Vendors bezeichnet.
+Ein Cloud-Vendor bietet seine Infrastruktur und deren Verwaltung dabei gegen eine Gebühr an.
+Unter anderem offeriert er:
+\begin{itemize}
+  \item Die globale Nutzung von Ressourcen durch Geo-Redundanz und somit starke Verteilung sowie hohe Verfügbarkeit von Software,
+  \item dynamische Skalierung bereitgestellter Ressourcen basierend auf der Nachfrage von Software (Auto-Scaling),
+  \item nutzungsbedingte Gebühren, sodass nur tatsächlich verwendete Ressourcen bezahlt werden (Pay-as-you-go),
+  \item unterbrechungsfreie Updates von Software (Zero Downtime).
+\end{itemize}
+
+Als cloud-nativ wird hierbei all jene Software bezeichnet, welche explizit für die Cloud entwickelt wurde.
+Grundsätzlich baut die cloud-native Architektur auf die in diesem Artikel bereits in Abschnitt \ref{subsec:microservice} erklärte Microservice-Architektur und die
+in Abschnitt \ref{subsec:eda} erklärte Event-Driven Architecture auf.
+Zusätzlich kommen sogenannte \textit{Fully Managed Cloud-Services} hinzu, was cloud-spezifische und vom Cloud-Vendor vollständig verwaltete Dienste sind.
+Jene umfassen alle von Datenbanken über Message-Queues bis hin zu Serverless-Functions und viele mehr.
+Charakterisiert werden diese durch die Eigenschaft, dass sich der Entwickler gänzlich auf die Business-Logik konzentrieren kann, da der Cloud-Provider
+die vollständige Verwaltung der Infrastruktur übernimmt.
+Zentral dabei ist der Aspekt der Containerisierung, bei welchem jede Komponente eines Systems in einen Container gepackt wird.
+Der Cloud-Vendor kann die Gesamtheit der Container dann dynamisch orchestrieren und somit gezielt den Ressourcenverbrauch optimieren.
+
+Im Folgenden greifen wir erneut das Beispiel E-Commerce aus der Einleitung auf und betrachten die Anpassung der in
+Abschnitt \ref{subsec:eda} angewendeten Event-Driven-Architecture auf die Cloud-Native Architecture mit Cloud-Vendor AWS\@.
+
+Dabei ersetzen wir den dort verwendeten Broker durch eine \textit{Event-Bridge} \footnote{https://aws.amazon.com/de/eventbridge/, abgerufen am 06.01.2025}
+- ein serverless Cloud-Service von AWS zum Routen von Ereignissen.
+Weiter werden die drei Services für Aufgeben einer Bestellung, Bearbeitung der Bezahlung und Initiierung des Versands als \textit{Lambda} \footnote{https://aws.amazon.com/de/lambda/, abgerufen am 06.01.2025},
+also Serverless-Function implementiert.
+Abbildung \ref{fig:cloudnativeecommerce} stellt diese cloud-native Architektur dar.
+Eine beispielhafte Implementierung des \texttt{ProcessPaymentLambda}s ist im Anhang \ref{app:code:cloudnative:paymentservice} und auf GitHub\footnote{https://github.com/Beleg-6-EAP/demo-cloud-native-ecommerce} zu finden.
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=\linewidth]{images/cloud-native/cloud-native-ecommerce.drawio}
+  \caption{E-Commerce-Beispiel mit Cloud-Native Architecture}
+  \label{fig:cloudnativeecommerce}
+\end{figure}
+
+Damit kombiniert die Cloud-Native Architecture die agilen Vorteile der Microservice- und Event-Driven Architecture.
+Weiter ermöglichen die Cloud-Vendors nahtlose und einfache Möglichkeiten zur Auslieferung der Software,
+wie beispielsweise Code-Deploy \footnote{https://aws.amazon.com/de/codedeploy/, abgerufen am 06.01.2024} bei AWS\@.
+Die Option, allen Fokus von der Infrastruktur auf die Entwicklung zu legen, ermöglicht gemeinsam mit der einfachen Auslieferung kurze Iterationen in agilen Teams
+und somit noch kürzere Zyklen in der Bereitstellung von Software.
+Dabei ist besonders die Time-to-Market sehr gering, sodass Tech-Start-Ups häufig cloud-native Architekturen für ihre Software wählen. % TODO: Quelle!
+
+Nicht zu vergessen ist zudem die extrem hohe Flexibilität der eingesetzten Ressourcen durch das Auto-Scaling.
+Das damit verbundene Pay-as-you-go ermöglicht weiter auch finanzielle Agilität, wodurch zum Beispiel keine Vorab-Investitionen für Infrastruktur notwendig sind.
+Jedoch ist zu betonen, dass aufgrund dessen auch Kostenrisiken durch möglicherweise unerwartete, extrem hohe Nachfrage der Software bestehen.
+Ebenfalls nicht zu vernachlässigen ist die enge Bindung an den Cloud-Vendor durch Verwendung seiner spezifischen Cloud-Dienste.
+Im Fall einer Migration zu einem anderen Cloud-Vendor könnten sowohl hohe Kosten beim vorherigen Cloud-Vendor, als auch Entwicklungskosten durch die notwendige
+Anpassung der genutzten spezifischen Cloud-Dienste anfallen.
+Obwohl das die Wahl des Cloud-Anbieters und der damit verbunden Entwicklung weniger agil macht, gilt die Cloud-Native Architecture besonders aufgrund der Auslagerung
+der Infrastruktur als eine - und vermutlich die agilste Architektur für moderne Software.
 
 \section{Fallstudien und Praxisbeispiele}
 Blah \ldots
@@ -325,18 +633,58 @@ Blah \ldots
 
 \section{Code-Beispiele}
 
-\subsection{Event-Driven-Architecture}
+\subsection{Monolithic Architecture}
+\label{app:code:monolithic:paymentservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{java}{code/monolithic/PaymentService.java}
+  \caption{Service-Implementierung des \texttt{PaymentService} in Java Spring Boot 3.4.1}
+\end{listing}
+
+\subsection{Modular Monolithic Architecture}
+\label{app:code:modular:orderservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{java}{code/modulithic/OrderServiceImpl.java}
+  \caption{Service-Implementierung des \texttt{OrderService} in Java Spring Boot 3.4.1}
+\end{listing}
+
+\subsection{Event-Driven Architecture}
 \label{app:code:eda:paymentservice}
 \begin{listing}[H]
   \tiny
   \inputminted[linenos=true]{java}{code/eda/PaymentService.java}
   \caption{Service-Implementierung des \texttt{PaymentService} in Java Spring Boot 3.4.1 mit Apache Kafka als Event-Broker}
-  \label{listing:semigroup}
+\end{listing}
+
+\subsection{Cloud-native Architecture}
+\label{app:code:cloudnative:paymentservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{haskell}{code/cloud/PaymentService.hs}
+  \caption{Implementierung des \texttt{ProcessPaymentLambda}s in Haskell}
 \end{listing}
 
 \section{Übungsaufgaben}
-\subsection{Übungsaufgabe 1 }
-Blah \ldots
+\subsection{Übungsaufgabe 1}
+Das E-Commerce-Beispiel aus der Einleitung soll um Nutzer-Authentifizierung erweitert werden.
+Sie haben sich zuvor für eine Microservice-Architektur entschieden und die in der Einleitung genannten Anforderungen implementiert.
+Die Authentifizierung wird in verschiedenen Komponenten benötigt.
+Erläutern Sie, wie Sie die Authentifizierung in die Architektur integrieren.
+
+\subsection{Übungsaufgabe 2}
+Das E-Commerce-Beispiel aus der Einleitung soll um Logging erweitert werden.
+Sie haben sich zuvor für eine cloud-native Event-Driven-Architektur entschieden und die in der Einleitung genannten Anforderungen implementiert.
+Das Logging wird in verschiedenen Komponenten benötigt.
+Erläutern Sie, wie Sie das Logging in die Architektur integrieren.
+Bedenken Sie dabei, dass Logs aus verschiedenen Komponenten möglicherweise zur Auswertung zusammengeführt werden müssen und somit die Reihenfolge von Logs relevant ist.
+
+\subsection{Übungsaufgabe 3}
+Das E-Commerce-Beispiel aus der Einleitung soll um ein E-Mail-Notifikationssystem erweitert werden.
+Dieses soll Nutzern E-Mails bei jeder Statusänderung einer ihrer Bestellungen zustellen.
+Untersuchen Sie für alle in diesem Papier betrachteten Architekturen, wie das E-Mail-Notifikationssystem in die bestehende Architektur integriert werden kann
+und welche Vor- und Nachteile diese Integration in die jeweilige Architektur mit sich bringt.
+Für welche der Architekturen ist die Integration des E-Mail-Notifikationssystems am einfachsten?
 
 \end{document}
 \endinput
