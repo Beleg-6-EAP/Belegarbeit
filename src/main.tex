@@ -92,11 +92,10 @@ Blah \ldots
 Die Microservices Architecture greift grundlegend das Konzept einer Service-oriented Architecture auf, legt den Fokus aber auf eine fein granuliertere Aufteilung mit dem Ziel der Isolation.
 
 Die bisher meist grob granulierten Dienste werden auf einzelne Funktionalitäten reduziert und bestenfalls vollständig voneinander isoliert.
-Die Services greifen, im Unterschied zur SOA, nicht mehr auf eine zentrale Persistenz Schicht zu und dienen hier nicht primär der Wiederverwendung innerhalb der Anwendung.
-Jeder Service hat seine eigene private, für andere nicht einsehbare Persistenz\cite[2]{microservicesArchitecture}.
+Im Gegensatz zu SOA greifen die Services nicht mehr auf eine zentrale Persistenz-Schicht zu, sondern haben private, für andere nicht einsehbare Persistenzen\cite[2]{microservicesArchitecture}.
 
 Wie in Abbildung~\ref{fig:microservices} dargestellt, werden alle von Clients ausgehenden API-Anfragen zunächst von einem API-Gateway entgegengenommen.
-Da Anfragen von Clients oft mehrere Services betreffen, wird das Gateway genutzt, um die Anfragen an die entsprechenden Services zu Orchestrieren.
+Da Anfragen von Clients oft mehrere Services betreffen, wird das Gateway als Vermittler genutzt, um die Anfragen an die entsprechenden Services zu orchestrieren.
 Dabei profitiert das Gateway von geringen Latenzen aufgrund von physikalischer Nähe zu den Service Komponenten und einer besseren Netzwerkanbindung im Vergleich zum Client.
 Bei Anfragen an mehrere Services akkumulieren sich diese Ersparnisse und Antwortzeit verkürzt sich insgesamt~\cite[30]{architecturePatterns}.
 Da Gateways keine Daten halten, sondern nur Anfragen weiterleiten, sind sie leicht horizontal skalierbar und können bei Bedarf um weitere Instanzen erweitert werden.
@@ -110,23 +109,22 @@ Da Gateways keine Daten halten, sondern nur Anfragen weiterleiten, sind sie leic
 
 Es besteht die Möglichkeit die Service-Komponenten mit unterschiedlichen Technologien zu entwickeln, da die Kommunikation über standardisierte Schnittstellen stattfindet.
 Diese Schnittstellen sind meist REST-Endpunkte, können aber mithilfe von alternativen Protokollen wie Messaging Queues, RPC oder Event-Streaming implementiert sein.
-Durch die Aufteilung in unabhängige Komponenten, kann die Entwicklung dieser auf kleine, autonome Teams verteilt werden.
+Durch die Aufteilung in isolierte Komponenten, kann die Entwicklung dieser auf kleine, autonome Teams verteilt werden.
 
-Ein maßgebendes Merkmal dieses Musters ist die Entkopplung der einzelnen Services voneinander.
+Damit ist die Entkopplung der einzelnen Services ein maßgebendes Merkmal dieses Musters.
 Dies wird dadurch erreicht, dass alle Services nur über ihre definierten Schnittstellen, miteinander kommunizieren können.
-Die hohe Entkopplung der Komponenten ermöglicht es, Services unabhängig voneinander zu entwickeln, zu testen und zu deployen.
-Pipeline- und Deploymentprozesse finden also isoliert voneinander statt, was die Auslieferung der Software beschleunigt~\cite[27]{architecturePatterns}.
+Die hohe Entkopplung der Komponenten ermöglicht es, Services unabhängig voneinander zu entwickeln, zu testen und auszuliefern.
+Pipeline- und Deploymentprozesse finden also ebenfalls isoliert voneinander statt, was die Auslieferung der Software beschleunigt~\cite[27]{architecturePatterns}.
 
 Der korrekte Entwurf der Architektur und die darin passend gewählte Granularität der Services ist entscheidend, um die Vorteile der Microservices Architecture voll auszuschöpfen und stellt hier die größte Herausforderung dar.
-Werden die Komponenten zu groß gewählt, so kann es passieren, dass die Vorteile der Microservices Architecture nicht mehr greifen.
-Innerhalb der Komponenten entstehen Abhängigkeiten, die das isolierte Entwickeln oder Testen von Features verhindern.
-Auf der anderen Seite führt eine zu geringe Granularität dazu, dass die Anzahl der Services zu groß wird die Kommunikation einen zu großen Overhead verursacht.
+Werden die Komponenten zu groß gewählt, dann könnten die Vorteile der Microservices Architecture nicht mehr greifen, weil innerhalb der Komponenten Abhängigkeiten entstehen, die das isolierte Entwickeln oder Testen von Features verhindern.
+Auf der anderen Seite führt eine zu geringe Granularität dazu, dass die Anzahl der Services zu groß wird und die Kommunikation einen zu großen Overhead verursacht.
 Jede Nachricht, die unter den Services ausgetauscht wird, verursacht Latenz, die sich akkumuliert und die Performance des Systems beeinträchtigt.
 Weiterhin werden Integrationstests durch die hohe Anzahl an Services aufwändiger und der Orchestrierungsaufwand des Gateways steigt an~\cite[32]{architecturePatterns}.
 
-Sollten eine serviceübergreifende Persistenz-Zugriffe notwendig sein, so kann diese über eine geteilte Datenbank stattfinden.
+Sollten serviceübergreifende Persistenz-Zugriffe notwendig sein, so könnten diese über eine geteilte Datenbank stattfinden.
 Dadurch werden ungewollte Abhängigkeiten zwischen Services vermieden und die Kopplung der Komponenten verringert.
-Dabei ist jedoch darauf zu achten, dass die Datenbank nicht zu einer zentralen Abhängigkeit wird, die die Vorteile der Microservices Architecture wieder zunichte macht~\cite[33]{architecturePatterns}.
+Dabei ist jedoch darauf zu achten, dass die Datenbank nicht zu einer zentralen Abhängigkeit wird, die die Vorteile der Microservices Architecture wieder rückgängig macht~\cite[33]{architecturePatterns}.
 
 \begin{figure}[!h]
   \centering
@@ -135,20 +133,21 @@ Dabei ist jedoch darauf zu achten, dass die Datenbank nicht zu einer zentralen A
   \label{fig:ecommerce-microservices}
 \end{figure}
 
-Der Aufbau der E-Commerce Anwendung ist in Abbildung~\ref{fig:ecommerce-microservices} dargestellt.
-Die Anwendung ist in drei Services aufgeteilt, die jeweils für die Verarbeitung von Bestellungen, Zahlungen und Versand verantwortlich sind.
+Betrachten wir nun, wie dieses Architekturmuster auf das Beispiel der E-Commerce Anwendung übertragen werden kann.
+Ein möglicher Aufbau der Anwendung ist in Abbildung~\ref{fig:ecommerce-microservices} dargestellt.
+Sie ist in drei Services aufgeteilt, die jeweils für die Verarbeitung von Bestellungen, Zahlungen und Versand verantwortlich sind.
 Jeder Service hat seine eigene Datenbank und REST-Schnittstelle, über die er mit anderen Services und dem Gateway kommuniziert.
-Änderungen am Bezahl- oder Versandprozess können so unabhängig vom eigentlichen Bestellprozess entwickelt und deployed werden.
+Änderungen am Bezahl- oder Versandprozess können so unabhängig vom eigentlichen Bestellprozess entwickelt und ausgeliefert werden.
 Auch besteht die Möglichkeit bei besonders hohen Lasten oder Engpässen, die Services unabhängig voneinander horizontal zu skalieren.
 
 Die Microservices Architecture löst viele der Probleme, die in klassischen monolithischen oder Service-oriented Architecture auftreten.
-Durch die Aufteilung der Anwendung in kleinere, separat deployte Services, entstehen inhärent robustere und besser skalierbare Systeme.
-Da Änderungen oft nur einzelne Service Komponenten betreffen, muss nicht das ganze System neu deployt werden.
+Durch die Aufteilung der Anwendung in kleinere, separat ausgelieferte Services, entstehen inhärent robustere und besser skalierbare Systeme.
+Da Änderungen oft nur einzelne Service Komponenten betreffen, muss nicht das ganze System neu ausgeliefert werden.
 Es reicht stattdessen, nur den betroffenen Service zu aktualisieren, was die Ausfallzeiten minimiert und die Wartbarkeit der Software erhöht.
 Vor allem in agilen Umgebungen, in denen viele Iterationen und schnelle Auslieferungen notwendig sind, ist die Microservices Architektur daher besonders geeignet~\cite[33]{architecturePatterns}.
 
-Auch können Services in Produktiven-Umgebungen ohne Ausfallzeiten ausgetauscht werden.
-Solange, wie der neue Service deployt wird, leitet das API-Gateway Anfragen an den alten Service weiter.
+Auch können Services in produktiven Umgebungen ohne Ausfallzeiten ausgetauscht werden.
+Solange, wie der neue Service ausgeliefert wird, leitet das API-Gateway Anfragen an den alten Service weiter.
 Erst wenn der neue Service bereit ist, werden Anfragen an diesen weitergeleitet und der alte Service kann abgeschaltet werden.
 
 Microservices sind außerdem sehr gut testbar.
@@ -156,7 +155,7 @@ Tests können durch die strikte Trennung der Funktionalitäten isoliert auf einz
 Auch Regressionstests nehmen dadurch weniger Zeit in Anspruch.
 Kleine Änderungen haben nicht zur Folge, dass die gesamte Anwendung neu getestet werden muss.
 
-Obwohl deployments schnell sind und parallel an verschiedenen Services gearbeitet werden kann, ist die initiale Entwicklungszeit einer Anwendung in Microservices Architecture oft länger.
+Obwohl die Auslieferungen schnell sind und parallel an verschiedenen Services gearbeitet werden kann, ist die initiale Entwicklungszeit einer Anwendung in Microservices Architecture oft groß.
 Im Vergleich zu monolithischen Anwendungen ist vor allem mit höherem Zeitaufwand durch Entwurf der Schnittstellen, Absprache unter den Entwicklungsteams und Planung der Architektur zu rechnen~\cite[6-7]{evolutionOfDistributedSystems}.
 
 Der größte Nachteil der sich hier ergibt, ist die vergleichsweise niedrige Performance aufgrund der verteilten Natur des Systems.
