@@ -139,100 +139,72 @@ Abschließend werden die Architekturen in Abschnitt TODO nach technischen und ag
 \section{Klassische Enterprise-Architekturen}
 
 \subsection{Service-oriented}
-Frühere Architekturmuster, wie die monolithische Architektur, zeichneten sich durch eine
-enge Kopplung der Funktionalitäten aus. Im Gegensatz dazu legt die Service-orientierte
-Architektur (SOA) einen starken Fokus auf die Wiederverwendbarkeit von Funktionalitäten,
-indem sie auf die Nutzung von Diensten (engl. \textit{services}) setzt.
+Bei der (modularen) monolithischen Architektur zeigte sich die enge Kopplung der Funktionalitäten als zentrales Problem.
+Dieses Problem löst die service-orientierte Architektur (kurz SOA), indem sie den Fokus auf die Nutzung wiederverwendbarer Dienste (englisch \textit{services}) setzt.
+Ein Dienst ist dabei eine meist grob-granulare Unternehmensfunktionalität.
 
-Eine Untersuchung der wissenschaftlichen Literatur zeigt, dass SOA in unterschiedlichen
-Kontexten verschieden definiert wird. Dennoch bleibt das Konzept der Dienste ein zentraler
-Bestandteil dieser Architektur.
-
-Ein Service in einer SOA ist lose gekoppelt, typischerweise grob granuliert und zeichnet
-sich durch mehrere zentrale Eigenschaften aus. Seine Auffindbarkeit wird durch eine
-Registry sichergestellt, während der Zugriff über einen Namen oder einen Endpoint
-mittels webbasierter Technologien erfolgt. Die Verfügbarkeit einer publizierten
-Spezifikation definiert wie die Interaktion mit dem Dienst erfolgt. Zudem kann der
-Dienst zur Laufzeit dynamisch lokalisiert sowie genutzt werden.
-\cite[16]{soa2}\cite[19]{soa4}
-
-Betrachten wir im Folgenden die Hauptbestandteile der SOA, wie die Abb. ~\ref{fig:soa} \cite{soa4} darstellt:
+Betrachten wir im Folgenden die Komponenten einer SOA:
 \begin{itemize}
-  \item Service Provider: Bietet einen spezifischen Dienst an
-  \item Service Bus: Dienst, das die Orchestrierung der Kommunikation zwischen Consumer und Provider gewährleistet
-  \item Service Consumer: Nutzt einen bereitgestellten Dienst, dieses kann einen End-User oder ein anderer Dienst sein
-  \item Service Registry: Dient als zentrale Sammlung von Meta-Daten über die verfügbare Dienste
+  \item Service Provider: Komponente, die einen spezifischen Dienst anbietet \cite{soa4}
+  \item Service Consumer: Komponente, die einen bereitgestellten Dienst nutzt
+  \item Service Registry: Komponente zur Sammlung von Metadaten über Dienste
+  \item Service Bus: Zentrale Komponente, die sowohl als Broker zwischen Providern und Konsumenten fungiert als auch zusätzliche Aufgaben wie beispielsweise Routing übernimmt
 \end{itemize}
 
+Die Beziehungen zwischen diesen Komponenten sind in Abbildung \ref{fig:soa} dargestellt.
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.8\linewidth]{images/soa/soa.pdf}
   \caption{Aufbau der Service-oriented Architecture}
   \label{fig:soa}
 \end{figure}
+Darin ist zu erkennen, dass Provider und Consumer sich nicht gegenseitig kennen.
+Damit ein Consumer trotzdem einen Dienst eines Providers nutzen kann, werden Metadaten zum Provider und dessen Dienst in einer Service-Registry gespeichert.
+Durch diese kann der Service-Bus auf Anfrage eines Consumers für einen spezifischen Dienst einen solchen in der Service-Registry suchen.
+Wenn ein solcher dort gelistet ist, dann kann der Consumer den Dienst des Providers per Kommunikation über den Service-Bus nutzen.
+Damit dient dieser offensichtlich als Vermittler zwischen Consumer und Provider, wobei der Consumer die Spezifikation einer Unternehmensfunktionalität nutzt,
+der Provider diese implementiert und die Registry jene persistiert \cite[16]{soa2}\cite[19-26]{soa4}.
+Daher sind Provider und Consumer lose zueinander gekoppelt.
+Um die Kommunikation am Bus zu vereinheitlichen, wird auf standardisierte Web-Kommunikation zurückgegriffen.
+Meist werden dafür zum Nachrichtenaustausch das Protokoll SOAP und die Schnittstellenbeschreibungssprache WSDL verwendet. % TODO: Quelle!!!
 
-Die Registry dient als Sammlung verfügbarer Dienste und deren Spezifikationen.
-Provider registrieren ihre Dienste in der Registry, während Consumer die
-Möglichkeit haben, diese Dienste dynamisch zur Laufzeit zu entdecken \cite[23-24]{soa4}.
-In der Dienstspezifikation wird beschrieben, wie ein Consumer mit dem Provider interagieren
-kann. Dies umfasst unter anderem die Definition der Anfrage und der Antwort.
-Zudem können weitere Informationen, wie etwa die Bedingungen für die Nutzung des Dienstes,
-in der Spezifikation enthalten sein \cite[26]{soa4}.
-
-Der Service Bus, insbesondere ein Enterprise Service Bus (ESB), stellt eine als Best Practice
-Vorgehensweise zur Implementierung von SOA dar.
-Hierbei handelt es sich um einen Messaging-Bus, dessen Funktion in der Orchestrierung
-sämtlicher Aspekte der Kommunikation zwischen Consumer und Provider besteht.
-Zu den typischen Aufgaben des Service Bus zählen unter anderem die Transformation von Nachrichtenformaten
-sowie die Weiterleitung von Nachrichten an den entsprechenden Dienst.
-\cite[37]{soa4}.
-
-In SOA ist es zusätzlich möglich, ein Broker zu verwenden, um die Kommunikation zwischen
-Consumer und Provider zu ermöglichen.\cite[2]{soa5}
-
-Betrachten wir im Folgenden eine mögliche Implementierung der SOA mit einem Broker anhand des E-Commerce-Beispiels.
-Dafür definieren wir drei Arten von Services:
+Betrachten wir im Folgenden die Anwendung einer SOA auf das E-Commerce-Beispiel.
+Dafür definieren wir drei verschiedene Services:
 \begin{itemize}
-  \item \texttt{OrderService}: Ein Dienst, das den gesamtenten Bestellvorgang initiiert
-  \item \texttt{PaymentService}: Ein Dienst, das der Bezahlvorgang darstellt
-  \item \texttt{ShipmentService}: Ein Dienst, das der Versandvorgang darstellt
+  \item \texttt{OrderService}: Ein Dienst, der den gesamten Bestellvorgang verwaltet
+  \item \texttt{PaymentService}: Ein Dienst, der den gesamten Bezahlvorgang verwaltet
+  \item \texttt{ShipmentService}: Ein Dienst, der den gesamten Versandvorgang verwaltet
 \end{itemize}
 
+Abbildung \ref{fig:soaecommerce} stellt die Anwendung der Architektur auf das Beispiel dar.
 \begin{figure}[!h]
   \centering
   \includegraphics[width=0.8\linewidth]{images/soa/soa-example.pdf}
   \caption{E-Commerce-Beispiel mit Service-oriented Architecture}
   \label{fig:soaecommerce}
 \end{figure}
+Alle drei Dienste agieren dabei offensichtlich als Provider und registrieren ihre Dienste bei der Registry.
+Der \texttt{OrderService} nutzt die Spezifikation der beiden Dienste für Bezahlung und Versand, ist also zusätzlich Konsument.
+Die Konsumierung der Dienste erfolgt dabei sequenziell, indem der \texttt{OrderService} nach Lokalisierung von \texttt{PaymentService} und \texttt{ShipmentService}
+erst mit ersterem und dann mit letzterem über den Bus via SOAP kommuniziert.
 
-Wie Abbildung \ref{fig:soaecommerce} zeigt, die Dienste\texttt{ShipmentService},
-\texttt{PaymentService} und \texttt{OrderService} registrieren ihre Dienste
-bei dem \texttt{Registry}.
+Da die Provider ihre Dienste dabei mit WSDL spezifizieren und die Registry diese speichert, können die Implementierungen leicht ausgetauscht werden.
+Im Beispiel könnte dabei möglicherweise ein spezifischer \texttt{PaymentService} von PayPal durch einen von Apple Pay ersetzt werden.
+Wenn sich die Spezifikation jener nicht ändert, dann ändert sich auch die Nutzung der Funktionalität beim Consumer nicht, sodass dieser einfach
+auf geänderte Anforderungen reagieren kann.
 
 Im Anhang \ref{app:code:soa:registry} ist eine beispielhafte Implementierung der \texttt{ServiceRegistry} zu finden
-und die vollständige Implementierung des E-Commerce-Beispiels kann bei
-GitHub\footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} ebenfalls eingesehen werden.
+Die vollständige Implementierung des E-Commerce-Beispiels kann bei GitHub\footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} eingesehen werden.
 
-In diesem Beispiel \texttt{OrderService} konsumiert die beiden anderen Dienste.
- Dieses erfolgt durch Anfragen über den Broker, der die \texttt{Registry} anspricht.
-Nach Erhalt der Meta-Daten, der \texttt{OrderService} kann die benötigten Dienste
- gemäß den Interface-Verträge nutzen.
+Wie schon bei der modularen Monolithen-Architektur in Abschnitt TODO ermöglicht die lose Kopplung kleine autonome Teams.
+Im Gegensatz zu jener Architektur können aufgrund der Eigenständigkeit der Services in einer SOA jene allerdings auch individuell pro Team ausgeliefert werden.
+Das ermöglicht kürzere Iterationen und somit häufigere Auslieferung als beim modularen Monolithen.
+Dadurch und durch die lose Kopplung kann außerdem flexibler auf wechselnde Anforderungen reagiert werden.
+Ebenfalls können Entwicklungszeit gesenkt und somit auch Kosten durch die Wiederverwendbarkeit von Diensten eingespart werden werden.
 
-Sollte sich die Implementierung oder die Schnittstellen der Provider ändern, ist
-der Consumer nicht davon betroffen, da die Dienste in der \texttt{Registry}
- dynamisch zu Laufzeit lokalisiert und genutzt werden.
+Die meist grobe Granularität der Dienste führt allerdings langfristig zu Abhängigkeiten zwischen Diensten.
+Aus diesem Grund und der zentralen Abhängigkeit der Dienste an den Service-Bus lassen sich Systeme mit SOA jedoch weiterhin schwer horizontal skalieren..
 
-Da jeder Service einen spezifischen Dienst anbieten und diese durch eine
- klar definite Schnittstellen, können Dienste unabhängig voneinander
- weiterentwickelt werden, was die kleine autonome Teams ermöglicht.
-
-Außerdem Dienste sind einständig und können getrennt deployt werden,
- was die häufige Auslieferung von Software in kürzere Iterationen ermöglicht.
-
-Skalierung ist hie bei auch möglich, da die Dienste unabhängig voneinander sind.
-
-Ein Nachteil der SOA ist jedoch, dass langfristig Abhängigkeit zwischen den Diensten
-entstehen können, besonders wenn die Dienste grob granuliert sind.
 \section{Moderne Enterprise-Architekturen}
 
 \subsection{Microkernel Architecture}\label{subsec:microkernel-architecture}
