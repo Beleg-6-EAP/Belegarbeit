@@ -8,6 +8,15 @@
   \providecommand\BibTeX{{%
     \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
 
+% Custom commands for green ticks and red crosses
+\usepackage{pifont} % For tick and cross symbols
+\definecolor{darkgreen}{RGB}{37, 112, 60}
+\newcommand{\cmark}{\textcolor{darkgreen}{\ding{51}}} % Green checkmark
+\newcommand{\xmark}{\textcolor{red}{\ding{55}}}   % Red cross
+
+% Command for rotating text 90 degrees
+\newcommand*\rot{\rotatebox{90}}
+
 \copyrightyear{2024}
 \acmYear{2024}
 \citestyle{acmauthoryear}
@@ -619,12 +628,62 @@ Blah \ldots
 \section{Diskussion}
 
 \section{Zusammenfassung und Ausblick}
-%(Überblick über die gesamte Arbeit, Rückführung auf Aussagen aus Kapitel 1 durchführen, offene Punkte als neue Forschungsfragen definieren)
+In dieser Arbeit wurden verschiedene Enterprise-Architektur-Muster untersucht und deren Eignung für moderne Geschäftsprozesse bewertet.
+Dabei wurde festgestellt, dass die Agilität im Entwicklungsprozess maßgeblich durch die Wahl des Architekturmusters beeinflusst wird.
 
+Die monolithische Architektur zeichnet sich durch die Verwendung einer einzigen Komponente aus, die alle Funktionalitäten der Anwendung bereitstellt.
+Modular monolithische Architekturen bauen auf dieser Idee auf, indem sie die monolithische Anwendung in Module unterteilen, um die Wartbarkeit zu verbessern.
+SOA teilt die Anwendung in grobe Dienste auf, was die Wiederverwendung von Funktionalitäten ermöglicht.
+Microservices verbessern die Skalierbarkeit und Wartbarkeit von SOA, indem sie die Dienste in noch kleinere, isolierte Komponenten aufteilen, die nur über standardisierte Schnittstellen kommunizieren.
+EDA zeichnet sich durch die asynchrone Reaktion auf Ereignisse aus, wodurch die Anwendung sehr flexibel und skalierbar wird.
+Cloud-native Architekturen lagern die Verwaltung der Infrastruktur an Cloud-Anbieter aus, sodass sich in der Entwicklung auf die Business-Logik konzentriert werden kann.
+Als Architektur für besonders erweiterbare Anwendungen zeichnen sich die Microkernel-Architektur aus, die die Anwendung auf einen Kern mit wenig Funktionalität und Plugins mit Business-Logik auftrennt.
 
+Eine Bewertung der Architekturen anhand von Agilen Kriterien ist in Tabelle~\ref{tab:overview} dargestellt.
 
+\begin{table}[H]
+    \scalebox{0.7}{
+        \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+            \hline
+            & \rot{Monolith}     & \rot{Mod. Monol.}  & \rot{SOA} & \rot{Microservices} & \rot{Layered} & \rot{EDA} & \rot{Cloud-Native}  & \rot{Microkernel} \\
+            \hline
+            Time-To-Market         & \cmark\cmark\cmark & \cmark\cmark\cmark & 0         & \xmark              & ?             & \xmark             & \cmark\cmark & \xmark\xmark\xmark \\
+            \hline
+            Skalierbarkeit         & \xmark\xmark\xmark & \xmark\xmark\xmark & \xmark    & \cmark\cmark\cmark  & ? & \cmark\cmark\cmark & \cmark\cmark\cmark & 0 \\
+            \hline
+            Kostenflexibilität     & \xmark\xmark       & \xmark\xmark       & \xmark    & \cmark              & ?             & \cmark             & \cmark\cmark\cmark & \xmark \\
+            \hline
+            Anforderungsänderungen & \xmark\xmark\xmark & \xmark\xmark       & \cmark    & \cmark\cmark\cmark & \cmark\cmark & \cmark\cmark\cmark & \cmark\cmark\cmark & \cmark\cmark \\
+            \hline
+            Erweiterbarkeit        & \xmark\xmark\xmark & \xmark\xmark       & 0         & \cmark\cmark        & \cmark\cmark  & \cmark\cmark & \cmark\cmark & \cmark\cmark\cmark \\
+            \hline
+            Auslieferung           & \xmark\xmark\xmark & \xmark\xmark\xmark & \cmark    & \cmark\cmark        & \cmark        & \cmark\cmark & \cmark\cmark\cmark & \cmark\cmark \\
+            \hline
+        \end{tabular}}
+    \caption{Vergleich der Architekturmuster}
+    \label{tab:overview}
+\end{table}
 
+Auffallend ist zum einen, dass monolithische Anwendungen zwar die beste Time-To-Market haben, den anderen Architekturmustern jedoch in allen anderen Kategorien unterlegen.
+Die Architekturen mit der besten Skalierbarkeit zeichnen sich durch die starke Isolation von Komponenten aus und sind hier Microservices, EDA und Cloud-Native Architekturen.
+Die einzige Architektur, die eine hohe Flexibilität bei den Kosten aufweist, ist die Cloud-Native Architektur, da nur die tatsächlich genutzten Ressourcen bezahlt werden.
+Auf Änderungen in den Anforderungen können alle modernen Architekturen sehr gut reagieren.
+Die beste Erweiterbarkeit weist die Microkernel Architektur auf, da die Business-Logik größtenteils durch Plugins realisiert wird.
+Betrachten wir die Auslieferung von Software, so schneiden traditionelle Architekturen hier am schlechtesten ab, da sie nur im Ganzen ausgetauscht werden können.
+Moderne Architekturen, insbesondere Microservices, EDA und Cloud-Native Architekturen, können Software in kleinen Teilen ausliefern und so schneller auf Änderungen der Anforderungen reagieren.
+Die Layered Architektur ist hier teilweise schwer einzuordnen, da sie meistens mit anderen Architekturmustern kombiniert wird, die einen wesentlichen Einfluss auf Time-To-Market, Skalierbarkeit und Kosten haben.
 
+Betrachten wir das E-Commerce-Beispiel und die anfangs gestellten Anforderungen, so zeigt sich, dass die Cloud-Native Architektur in diesem Fall die beste Wahl darstellt.
+Es kann schnell auf technische Änderungen reagiert werden, die in produktiv-Umgebungen einfach ausgerollt werden können.
+Wachsender Traffic, der später auftreten könnte, kann durch Auto-Scaling einfach bewältigt werden.
+Entwickler, die sich auf den Aufbau der Infrastruktur konzentrieren, sind nicht nötig und können sich an der Entwicklung der Business-Logik beteiligen.
+Die Kosten sind flexibel und nur abhängig von der tatsächlichen Nutzung der Ressourcen, was vor allem am Anfang bei geringen Nutzerzahlen Kosten spart.
+Aufgrund der geringen Time-To-Market ist es außerdem möglich, einen MVP schnell auf den Markt zu bringen und diesen dann iterativ zu verbessern.
+
+Unabhängig davon gilt jedoch, dass es kein universell bestes Architekturmuster gibt.
+Die Wahl der Architektur muss den spezifischen Anforderungen des Projekts angepasst sein und besteht meist aus einer Kombination mehrerer EA-Muster.
+
+Damit bleibt die Frage offen, wie hybride Architekturen aussehen könnten, die Elemente aus verschiedenen EA-Architekturen kombinieren, um alle agilen Anforderung bestmöglich zu erfüllen.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{main}
