@@ -1,4 +1,3 @@
-
 = Belegarbeit Enterprise Architektur-Muster
 
 Enterprise Architecture Patterns
@@ -8,3 +7,22 @@ Autoren: Abdellah Filali, Luca Franke und Julian Bruder.
 Modul “Software Engineering” (Prof. Dr. Andreas Both, Wintersemester 2024/2025) an der HTWK Leipzig
 
 Das dazugehörige Repository der Präsentation des Papiers kann unter https://github.com/Beleg-6-EAP/Presentation[Beleg-6-EAP/Presentation] gefunden werden.
+
+== Code-Beispiele
+
+Alle im Papier betrachteten Architekturen wurden für das im Papier erklärte E-Commerce-Beispiel aus Bestellungen, Bezahlungen und Versand implementiert.
+Die Code-Beispiele dienen der Demonstration und sind vollständig ausführbar und getestet.
+Genauere Anweisungen zu Build und Run sind in den folgenden Repositories zu finden:
+
+[cols="1,1,1"]
+|===
+|Architektur | Programmiersprache/Framework | Repository
+
+|Monolithic Architecture | Java Spring Boot | https://github.com/Beleg-6-EAP/demo-monolith-ecommerce[Beleg-6-EAP/demo-monolith-ecommerce]
+|Modular Monolithic Architecture | Java Spring Boot | https://github.com/Beleg-6-EAP/demo-modulith-ecommerce[Beleg-6-EAP/demo-modulith-ecommerce]
+|Service-oriented Architecture | Ruby on Rails | https://github.com/Beleg-6-EAP/demo-soa-ecommerce[Beleg-6-EAP/demo-soa-ecommerce]
+|Layered Microservice Architecture | Kotlin Spring Boot | https://github.com/Beleg-6-EAP/demo-microservice-ecommerce[Beleg-6-EAP/demo-microservice-ecommerce]
+|Event-Driven Architecture | Java Spring Boot | https://github.com/Beleg-6-EAP/demo-eda-ecommerce[Beleg-6-EAP/demo-eda-ecommerce]
+|Cloud-native Architecture | Haskell | https://github.com/Beleg-6-EAP/demo-cloud-native-ecommerce[Beleg-6-EAP/demo-cloud-native-ecommerce]
+
+|===
