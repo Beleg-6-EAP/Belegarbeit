@@ -24,5 +24,6 @@ Genauere Anweisungen zu Build und Run sind in den folgenden Repositories zu find
 |Layered Microservice Architecture | Kotlin Spring Boot | https://github.com/Beleg-6-EAP/demo-microservice-ecommerce[Beleg-6-EAP/demo-microservice-ecommerce]
 |Event-Driven Architecture | Java Spring Boot | https://github.com/Beleg-6-EAP/demo-eda-ecommerce[Beleg-6-EAP/demo-eda-ecommerce]
 |Cloud-native Architecture | Haskell | https://github.com/Beleg-6-EAP/demo-cloud-native-ecommerce[Beleg-6-EAP/demo-cloud-native-ecommerce]
+|Microkernel Architecture | Kotlin Spring Boot | https://github.com/Beleg-6-EAP/demo-microkernel-ecommerce[Beleg-6-EAP/demo-microkernel-ecommerce]
 
 |===
