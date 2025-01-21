@@ -183,6 +183,7 @@ Abbildung \ref{fig:soaecommerce} stellt die Anwendung der Architektur auf das Be
   \caption{E-Commerce-Beispiel mit Service-oriented Architecture}
   \label{fig:soaecommerce}
 \end{figure}
+
 Alle drei Dienste agieren dabei offensichtlich als Provider und registrieren ihre Dienste bei der Registry.
 Der \texttt{OrderService} nutzt die Spezifikation der beiden Dienste für Bezahlung und Versand, ist also zusätzlich Konsument.
 Die Konsumierung der Dienste erfolgt dabei sequenziell, indem der \texttt{OrderService} nach Lokalisierung von \texttt{PaymentService} und \texttt{ShipmentService}
@@ -193,7 +194,7 @@ Im Beispiel könnte dabei möglicherweise ein spezifischer \texttt{PaymentServic
 Wenn sich die Spezifikation jener nicht ändert, dann ändert sich auch die Nutzung der Funktionalität beim Consumer nicht, sodass dieser einfach
 auf geänderte Anforderungen reagieren kann.
 
-Im Anhang \ref{app:code:soa:registry} ist eine beispielhafte Implementierung der \texttt{ServiceRegistry} zu finden
+Im Anhang \ref{app:code:soa:registry} ist eine beispielhafte Implementierung der Service-Registry zu finden.
 Die vollständige Implementierung des E-Commerce-Beispiels kann bei GitHub\footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} eingesehen werden.
 
 Wie schon bei der modularen Monolithen-Architektur in Abschnitt TODO ermöglicht die lose Kopplung kleine autonome Teams.
