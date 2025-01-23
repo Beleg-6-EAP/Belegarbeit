@@ -8,6 +8,20 @@ Modul “Software Engineering” (Prof. Dr. Andreas Both, Wintersemester 2024/20
 
 Das dazugehörige Repository der Präsentation des Papiers kann unter https://github.com/Beleg-6-EAP/Presentation[Beleg-6-EAP/Presentation] gefunden werden.
 
+== Abstrakt
+
+In diesem Papier werden verschiedene Enterprise Architektur-Muster und deren Rolle in modernen Geschäftsprozessen untersucht
+und anschließend unter Einbeziehung technischer und struktureller Eigenschaften anhand ihrer Agilität bewertet.
+Dabei orientiert sich die Reihenfolge der Betrachtung jener Architektur-Muster am historischen Verlauf derer Entwicklung und der Notwendigkeit dieser.
+Genauer werden die monolithische Architektur, modulare monolithische Architektur, serviceorientierte Architektur, Microservice-Architektur, Schichtenarchitektur,
+Event-driven Architektur, Cloud-native Architektur und die Microkernel-Architektur betrachtet.
+
+Insgesamt zeigt sich, dass klassische Enterprise Architektur-Muster zwar mit geringer initialer Komplexität punkten,
+mit weiterführender Entwicklung allerdings Flexibilitätsprobleme bedingen.
+Dem entgegen zeichnen sich die modernen Architektur-Muster durch hohe Agilität und damit hoher Flexibilität gegenüber den in der modernen Geschäftswelt ständig
+wechselnden Anforderungen aus.
+Besonders die Cloud-native Architektur wird diesen Anforderungen gerecht.
+
 == Code-Beispiele
 
 Alle im Papier betrachteten Architekturen wurden für das im Papier erklärte E-Commerce-Beispiel aus Bestellungen, Bezahlungen und Versand implementiert.
