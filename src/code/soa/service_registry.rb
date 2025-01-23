@@ -7,8 +7,8 @@ class ServiceRegistry
     @instance ||= ServiceRegistry.new
   end
 
-  def register_service(name, description, endpoint)
-    @services << { name: name, description: description, endpoint: endpoint }
+  def register_service(name, wsdl_url)
+    @services << { name: name, wsdl_url: wsdl_url }
   end
 
   def find_service(name)
