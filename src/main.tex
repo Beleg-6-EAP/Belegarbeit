@@ -276,13 +276,13 @@ Dadurch wird die Kopplung verschiedener Systeme zwar reduziert, ideal wäre aber
 \label{sec:soa}
 Bei der (modularen) monolithischen Architektur zeigte sich die enge Kopplung der Funktionalitäten als zentrales Problem.
 Dieses Problem löst die service-orientierte Architektur (kurz SOA), indem sie den Fokus auf die Nutzung wiederverwendbarer Dienste (englisch \textit{services}) setzt.
-Ein Dienst ist dabei eine meist grob-granulare Unternehmensfunktionalität.
+Ein Dienst ist dabei eine meist grob-granulare Unternehmensfunktionalität \cite{soa4}.
 
 Betrachten wir im Folgenden die Komponenten einer SOA:
 \begin{itemize}
-  \item Service Provider: Komponente, die einen spezifischen Dienst anbietet \cite{soa4}
+  \item Service Provider: Komponente, die einen spezifischen Dienst anbietet
   \item Service Consumer: Komponente, die einen bereitgestellten Dienst nutzt
-  \item Service Registry: Komponente zur Sammlung von Metadaten über Dienste
+  \item Service Registry: Komponente zur Sammlung von Metadaten über Dienste und deren Provider
   \item Service Bus: Zentrale Komponente, die sowohl als Broker zwischen Providern und Konsumenten fungiert als auch zusätzliche Aufgaben wie beispielsweise Routing übernimmt
 \end{itemize}
 
@@ -332,11 +332,11 @@ auf geänderte Anforderungen reagieren kann.
 Im Anhang \ref{app:code:soa:registry} ist eine beispielhafte Implementierung der Service-Registry zu finden.
 Die vollständige Implementierung des E-Commerce-Beispiels kann bei GitHub\footnote{https://github.com/Beleg-6-EAP/demo-soa-ecommerce} eingesehen werden.
 
-Wie schon bei der modularen Monolithen-Architektur in Abschnitt TODO ermöglicht die lose Kopplung kleine autonome Teams.
+Wie schon bei der modularen Monolithen-Architektur in Abschnitt \ref{sec:modulith} ermöglicht die lose Kopplung kleine autonome Teams.
 Im Gegensatz zu jener Architektur können aufgrund der Eigenständigkeit der Services in einer SOA jene allerdings auch individuell pro Team ausgeliefert werden.
 Das ermöglicht kürzere Iterationen und somit häufigere Auslieferung als beim modularen Monolithen.
 Dadurch und durch die lose Kopplung kann außerdem flexibler auf wechselnde Anforderungen reagiert werden.
-Ebenfalls können Entwicklungszeit gesenkt und somit auch Kosten durch die Wiederverwendbarkeit von Diensten eingespart werden werden.
+Ebenfalls können Entwicklungszeit gesenkt und somit auch Kosten durch die Wiederverwendbarkeit von Diensten eingespart werden.
 
 Die meist grobe Granularität der Dienste führt allerdings langfristig zu Abhängigkeiten zwischen Diensten.
 Aus diesem Grund und der zentralen Abhängigkeit der Dienste an den Service-Bus lassen sich Systeme mit SOA jedoch weiterhin schwer horizontal skalieren.
@@ -351,7 +351,7 @@ Im Gegensatz zu SOA greifen die Services nicht mehr auf eine zentrale Persistenz
 Wie in Abbildung~\ref{fig:microservices} dargestellt, werden alle von Clients ausgehenden API-Anfragen zunächst von einem API-Gateway entgegengenommen.
 Da Anfragen von Clients oft mehrere Services betreffen, wird das Gateway als Vermittler genutzt, um die Anfragen an die entsprechenden Services zu orchestrieren.
 Dabei profitiert das Gateway von geringen Latenzen aufgrund von physikalischer Nähe zu den Service Komponenten und einer besseren Netzwerkanbindung im Vergleich zum Client.
-Bei Anfragen an mehrere Services akkumulieren sich diese Ersparnisse und Antwortzeit verkürzt sich insgesamt~\cite[30]{architecturePatterns}.
+Bei Anfragen an mehrere Services akkumulieren sich diese Ersparnisse und die Antwortzeit verkürzt sich insgesamt~\cite[30]{architecturePatterns}.
 Da Gateways keine Daten halten, sondern nur Anfragen weiterleiten, sind sie leicht horizontal skalierbar und können bei Bedarf um weitere Instanzen erweitert werden.
 
 \begin{figure}[!h]
@@ -394,8 +394,8 @@ Jeder Service hat seine eigene Datenbank und REST-Schnittstelle, über die er mi
 Änderungen am Bezahl- oder Versandprozess können so unabhängig vom eigentlichen Bestellprozess entwickelt und ausgeliefert werden.
 Auch besteht die Möglichkeit bei besonders hohen Lasten oder Engpässen, die Services unabhängig voneinander horizontal zu skalieren.
 
-Die Microservices Architecture löst viele der Probleme, die in klassischen monolithischen oder Service-oriented Architecture auftreten.
-Durch die Aufteilung der Anwendung in kleinere, separat ausgelieferte Services, entstehen inhärent robustere und besser skalierbare Systeme.
+Die Microservices Architecture löst viele der Probleme, die in klassischen monolithischen oder der Service-oriented Architecture auftreten.
+Durch die Aufteilung der Anwendung, in kleinere separat ausgelieferte Services, entstehen inhärent robustere und besser skalierbare Systeme.
 Da Änderungen oft nur einzelne Service Komponenten betreffen, muss nicht das ganze System neu ausgeliefert werden.
 Es reicht stattdessen, nur den betroffenen Service zu aktualisieren, was die Ausfallzeiten minimiert und die Wartbarkeit der Software erhöht.
 Vor allem in agilen Umgebungen, in denen viele Iterationen und schnelle Auslieferungen notwendig sind, ist die Microservices Architektur daher besonders geeignet~\cite[33]{architecturePatterns}.
@@ -409,11 +409,14 @@ Tests können durch die strikte Trennung der Funktionalitäten isoliert auf einz
 Auch Regressionstests nehmen dadurch weniger Zeit in Anspruch.
 Kleine Änderungen haben nicht zur Folge, dass die gesamte Anwendung neu getestet werden muss.
 
-Obwohl die Auslieferungen schnell sind und parallel an verschiedenen Services gearbeitet werden kann, ist die initiale Entwicklungszeit einer Anwendung in Microservices Architecture oft groß.
+Obwohl die Auslieferungen schnell sind und parallel an verschiedenen Services gearbeitet werden kann, ist die initiale Entwicklungszeit einer Anwendung mit Microservices Architecture oft groß.
 Im Vergleich zu monolithischen Anwendungen ist vor allem mit höherem Zeitaufwand durch Entwurf der Schnittstellen, Absprache unter den Entwicklungsteams und Planung der Architektur zu rechnen~\cite[6-7]{evolutionOfDistributedSystems}.
 
 Der größte Nachteil der sich hier ergibt, ist die vergleichsweise niedrige Performance aufgrund der verteilten Natur des Systems.
 Die Kommunikation zwischen Services findet meist über das Netzwerk statt, was zu erhöhten Latenzen führen kann\cite[34]{architecturePatterns}.
+
+Nicht zu vernachlässigen ist ebenfalls der Mehraufwand bei der Implementierung von Schnittstellenlogik wie Logging und Authentifizierung.
+Aufgrund der hohen Isolation der Microservices müssen diese meist äquivalenten Funktionalitäten in allen Microservices separat implementiert werden.
 
 \section{Layered-Architecture}
 \label{sec:layered}
