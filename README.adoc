@@ -4,7 +4,7 @@ Enterprise Architecture Patterns
 
 Autoren: Abdellah Filali, Luca Franke und Julian Bruder.
 
-Modul “Software Engineering” (Prof. Dr. Andreas Both, Wintersemester 2024/2025) an der HTWK Leipzig
+Modul “Software Engineering” (https://wse-research.org/team/anbo[Prof. Dr. Andreas Both], Wintersemester 2024/2025) an der https://www.htwk-leipzig.de/[HTWK Leipzig]
 
 Das dazugehörige Repository der Präsentation des Papiers kann unter https://github.com/Beleg-6-EAP/Presentation[Beleg-6-EAP/Presentation] gefunden werden.
 
