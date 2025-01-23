@@ -276,7 +276,7 @@ Dadurch wird die Kopplung verschiedener Systeme zwar reduziert, ideal wäre aber
 \label{sec:soa}
 Bei der (modularen) monolithischen Architektur zeigte sich die enge Kopplung der Funktionalitäten als zentrales Problem.
 Dieses Problem löst die service-orientierte Architektur (kurz SOA), indem sie den Fokus auf die Nutzung wiederverwendbarer Dienste (englisch \textit{services}) setzt.
-Ein Dienst ist dabei eine meist grob-granulare Unternehmensfunktionalität \cite{soa4}.
+Ein Dienst ist dabei eine meist grob-granulare Unternehmensfunktionalität \cite[19]{soa4}.
 
 Betrachten wir im Folgenden die Komponenten einer SOA:
 \begin{itemize}
@@ -298,10 +298,10 @@ Damit ein Consumer trotzdem einen Dienst eines Providers nutzen kann, werden Met
 Durch diese kann der Service-Bus auf Anfrage eines Consumers für einen spezifischen Dienst einen solchen in der Service-Registry suchen.
 Wenn ein solcher dort gelistet ist, dann kann der Consumer den Dienst des Providers per Kommunikation über den Service-Bus nutzen.
 Damit dient dieser offensichtlich als Vermittler zwischen Consumer und Provider, wobei der Consumer die Spezifikation einer Unternehmensfunktionalität nutzt,
-der Provider diese implementiert und die Registry jene persistiert \cite[16]{soa2}\cite[19-26]{soa4}.
+der Provider diese implementiert und die Registry jene persistiert \cite[3]{soa2}\cite[37]{soa4}.
 Daher sind Provider und Consumer lose zueinander gekoppelt.
 Um die Kommunikation am Bus zu vereinheitlichen, wird auf standardisierte Web-Kommunikation zurückgegriffen.
-Meist werden dafür zum Nachrichtenaustausch das Protokoll SOAP und die Schnittstellenbeschreibungssprache WSDL verwendet. % TODO: Quelle!!!
+Meist werden dafür zum Nachrichtenaustausch das Protokoll SOAP und die Schnittstellenbeschreibungssprache WSDL verwendet \cite[4]{soa2}.
 
 Betrachten wir im Folgenden die Anwendung einer SOA auf das E-Commerce-Beispiel.
 Dafür definieren wir drei verschiedene Services:
