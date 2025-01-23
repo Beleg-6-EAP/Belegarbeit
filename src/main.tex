@@ -393,6 +393,7 @@ Sie ist in drei Services aufgeteilt, die jeweils für die Verarbeitung von Beste
 Jeder Service hat seine eigene Datenbank und REST-Schnittstelle, über die er mit anderen Services und dem Gateway kommuniziert.
 Änderungen am Bezahl- oder Versandprozess können so unabhängig vom eigentlichen Bestellprozess entwickelt und ausgeliefert werden.
 Auch besteht die Möglichkeit bei besonders hohen Lasten oder Engpässen, die Services unabhängig voneinander horizontal zu skalieren.
+Die vollständige Implementierung dieses Beispiels ist auf GitHub\footnote{https://github.com/Beleg-6-EAP/demo-microservice-ecommerce} einsehbar.
 
 Die Microservices Architecture löst viele der Probleme, die in klassischen monolithischen oder Service-oriented Architecture auftreten.
 Durch die Aufteilung der Anwendung in kleinere, separat ausgelieferte Services, entstehen inhärent robustere und besser skalierbare Systeme.
@@ -673,6 +674,7 @@ Sowohl Zahlungs- als auch Versandfunktionalitäten könnten, wie in Abbildung~\r
 
 Logik zum Verarbeiten der Zahlungen und Versandinformationen wird dann in den Modulen implementiert, die auf den Kern der Anwendung aufbauen.
 Dabei ist jedoch ein Großteil der Business-Logik im Kern der Anwendung enthalten, was nicht dem eigentlichen Gedanken der Microkernel Architektur entspricht.
+Die Implementierung dieses Beispiels ist auf GitHub\footnote{https://github.com/Beleg-6-EAP/demo-microkernel-ecommerce} zu finden.
 
 Abgesehen davon erhöhen Microkernel Architekturen inhärent die Testbarkeit der Software, da Module nur lose Kopplung gekoppelt sind.
 Jedes Modul kann unabhängig voneinander getestet werden und fehlende Module durch Stubs ersetzt werden, wodurch sich während der Entwicklung auf einzelne Module isoliert konzentriert werden kann~\cite[26]{architecturePatterns}.
@@ -769,6 +771,22 @@ Damit bleibt die Frage offen, wie hybride Architekturen aussehen könnten, die E
   \tiny
   \inputminted[linenos=true]{java}{code/modulithic/OrderServiceImpl.java}
   \caption{Service-Implementierung des \texttt{OrderService} in Java Spring Boot 3.4.1}
+\end{listing}
+
+\subsection{Microservices Architecture}
+\label{app:code:microservices:orderservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{kotlin}{code/microservices/OrderServiceImpl.kt}
+  \caption{Service-Implementierung des \texttt{OrderService} in Kotlin Spring Boot 3.4.1}
+\end{listing}
+
+\subsection{Layered Architecture}
+\label{app:code:layered:loggingservice}
+\begin{listing}[H]
+  \tiny
+  \inputminted[linenos=true]{kotlin}{code/layered/LoggingServiceImpl.kt}
+  \caption{Service-Implementierung des \texttt{LoggingService} in Kotlin Spring Boot 3.4.1}
 \end{listing}
 
 \subsection{Event-Driven Architecture}
